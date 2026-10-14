@@ -1,0 +1,26 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "dev:a": "cross-env NEXT_DIST_DIR=.next-a PORT=3000 next dev",
+    "dev:b": "cross-env NEXT_DIST_DIR=.next-b PORT=3001 next dev",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "next": "16.3.4",
+    "node-localstorage": "^3.0.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "babel-plugin-react-compiler": "1.0.0",
+    "cross-env": "^10.1.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.4"
+  }
+}
