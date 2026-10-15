@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Pin from "./Pin";
 
-export default function PinList({id_log, botonOnClick}) {
+export default function PinList({botonOnClick}) {
 
     const [pines, setPines] = useState([]);
 
@@ -18,11 +18,7 @@ export default function PinList({id_log, botonOnClick}) {
         .then(response => response.json())
         .then(data => {
             console.log('Datos', data);
-            if (data.id_usuario == id_log) {
-                setPines(data.pines);
-            } else {
-                setPines([])
-            }
+            setPines(data.pines);
         });
 
     },[])
@@ -31,7 +27,7 @@ export default function PinList({id_log, botonOnClick}) {
         <>
            {pines.map((pin, index) => {
                 return(
-                    <Pin key={index} link={pin.foto} me_gusta={pin.me_gusta} onClick={() => botonOnClick(pin.id_chat)}>
+                    <Pin key={index} link={pin.link} me_gusta={pin.me_gusta} onclick={() => botonOnClick(pin.id_pin)}>
                     </Pin>
                 )
            })} 

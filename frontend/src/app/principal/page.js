@@ -4,26 +4,35 @@
 
 
 import PinList from "@/components/PinList";
+import Pin from "@/components/Pin";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import Button from "@/components/Button";
 
-export default function Page() {
+export default function PrincipalPage() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const id_user = 2//parseInt(searchParams.get("id_user"))
 
-    function clickChat(idPin) {
+    function clickPin(idPin) {
         console.log(idPin)
         router.push("/pin?id="+idPin)
+    }
+
+    function nuevoPin(){
+        router.push("/subirpin?user="+id_user)
     }
 
     return (
         <>
             <h1>Contactos</h1>
 
-            <PinList id_log={id_user} botonOnClick={clickChat}></PinList>
+            <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
+            <br></br>
+
+            <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
         </>
     )
 }
