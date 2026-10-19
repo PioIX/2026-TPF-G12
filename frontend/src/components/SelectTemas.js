@@ -1,8 +1,8 @@
 "use client"
 
-export default function SelectTemas({nombre}){
+export default function SelectTemas({nombre, onchangefunc}){
     return(
-        <select name={nombre}>
+        <select name={nombre} onChange={onchangefunc}>
             <option value={""}>Nada (dejar vacio)</option>
             <option value={"comida"}>Comida</option>
             <option value={"memes"}>Memes</option>
