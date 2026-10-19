@@ -94,25 +94,21 @@ export default function HomePage() {
     <div>
       <div id="login-1">
 
-        <img src="C:\Users\alumnodigitales1\Documents\GitHub\2026-TPF-G12\frontend\public\Pionterest logo.png"></img>
+        <img src="/PionterestLogo.png"></img>
         <h1>Login</h1>
 
-        <Button text="Iniciar Sesion" onClick={() => setRegistrar(false)}></Button>
-        <Button text="Registrarse" onClick={() => setRegistrar(true)}></Button>
+        <Button texto="Iniciar Sesion" funcion={() => setRegistrar(false)}></Button>
+        <Button texto="Registrarse" funcion={() => setRegistrar(true)}></Button>
 
         {registrar ? (
           <div>
-
             <h2>Registro</h2>
-
             <Input text="Ej: Sayu.Crack" id="nombre" onChange={getNombre}></Input>
             <Input text="sayu@gmail.com" id="mail" onChange={getMail}></Input>
             <Input text="papita123" id="contraseña" onChange={getContrasenia}></Input>
             <Input id="fotoContacto" text="link" onChange={getFoto}></Input>
-
-            <Button text="Validar" onClick={crearCuenta}></Button>
+            <Button texto="Validar" funcion={crearCuenta}></Button>
           </div>
-
 
         ) : (
           <div>
@@ -121,18 +117,18 @@ export default function HomePage() {
             <Input text="sayu@gmail.com" id="mail" onChange={getMail}></Input>
             <Input text="papita123" id="contraseña" onChange={getContrasenia}></Input>
 
-            <Button text="Validar" onClick={iniciarSesion}></Button>
+            <Button texto="Validar" funcion={iniciarSesion}></Button>
           </div>
         )}
       </div>
 
       <div id="login-2">
-        <img src="@/public\Pionterest gatossssssssssssssss.png"></img>
+        <img src="/PionterestGatos.png"></img>
       </div>
 
       <footer>
 
       </footer>
     </div>
-  );
+  )
 }

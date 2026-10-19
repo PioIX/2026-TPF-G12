@@ -1,6 +1,6 @@
 "use client"
-export default function Input({idInput, text, onChange}) {
+export default function Input({id, text, onChange}) {
     return (
-        <input id={idInput} placeholder={text} type="text" onChange={onChange}></input>
+        <input id={id} placeholder={text} type="text" onChange={onChange}></input>
     )
 }
