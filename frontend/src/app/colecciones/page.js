@@ -1,6 +1,6 @@
 "use client"
 
-import pin from "@/app/pin"
+import styles from "./colecciones.css"
 import { useState } from "react";
 
 export default function colecciones() {
@@ -8,17 +8,8 @@ export default function colecciones() {
 const [coleccion, setColeccion] = useState(false)
 
 
-useState (() =>{
-
-    if (setColeccion = 0)
-        coleccion = false
-    else {
-        coleccion = true
-    }
-}
 
 
-)
 
 
 
@@ -28,18 +19,29 @@ useState (() =>{
 
 return (
     <div>
-    {colecciones(false) ? (
+    {coleccion ? (
         <> 
 
         <P>soy farfadox y estas son mis farlands</P>
 
-        <image></image>
+       
 
         </>
     ):(
         <>
-        
-        
+            <div>
+
+                <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH6HV6kZHk-dS5dAH6v_ZJ1olPc7Ff8dGdyKo4OArRwJkN_EJxFURkrQE&s=10" alt = "hola"/>
+
+                <h2>Nombre de la coleccion</h2>
+
+                <p>numero de imagenes</p>
+
+                <button>Hola manola</button>
+
+                <button>Hola manolo</button>
+
+            </div>
         
 
 
