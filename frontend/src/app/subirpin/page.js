@@ -11,7 +11,7 @@ import SelectTemas from "@/components/SelectTemas";
 export default function SubirPinPage(){
     const router = useRouter()
     const searchParams = useSearchParams()
-    const user = parseInt(searchParams.get("user"))
+    const user = 1//parseInt(searchParams.get("user"))
     const [descripcion, setDescripcion] = useState("")
     const [link, setLink] = useState("")
     const [tag1, setTag1] = useState("")
@@ -23,7 +23,7 @@ export default function SubirPinPage(){
     }
 
     function postPin(){
-        console.log(tag1)
+        console.log("tag 1: "+tag1)
     }
 
     
@@ -33,8 +33,8 @@ export default function SubirPinPage(){
             <h1>Nuevo Pin</h1>
             <Button funcion={volver} texto={"Volver"}></Button>
             <br></br>
-            <SelectTemas nombre={"tag1"} onChange={(select) => setTag1(select.target.value)}></SelectTemas>
-            <SelectTemas nombre={"tag2"}></SelectTemas>
+            <SelectTemas nombre={"tag1"} onChange={(select) => console.log(select.target.value)}></SelectTemas>
+            <SelectTemas nombre={"tag2"} onChange={(select) => setTag2(select.target.value)}></SelectTemas>
 
             <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder="link de la imagen"></input>
             <input type="text" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} placeholder="descripcion"></input>

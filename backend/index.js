@@ -241,41 +241,13 @@ app.post('/login', async function (req, res) {
 app.post('/pinnuevo', async function (req, res) {
   try {
     console.log(req.body)
-    let id_usuario2 = await realizarQuery(`
-        Select  id_usuario  From Usuarios_tpf
-        Where mail = "${req.body.mail}"
-        `)
-
-    let foto_usuario2 = await realizarQuery(`
-        Select  foto  From Usuarios_tpf
-        Where mail = "${req.body.mail}"
-      `)
-    if (id_usuario2.length != 0) {
+    
       await realizarQuery(`
-        INSERT INTO Chats_tpi2(nombre_chat, foto) VALUES 
-        ("${req.body.nombre_chat}", "${foto_usuario2[0].foto}")
+        INSERT INTO Pines_tpf(link, tag1, tag2, descripcion, me_gusta, id_usuario) VALUES 
+        ("${req.body.link}", "${req.body.tag1}", "${req.body.tag2}", "${req.body.descripcion}", ${0}, "${req.body.id_usuario}")
       `)
-
-      let id_chat = await realizarQuery(`
-          SELECT id_chat FROM Chats_tpi2 WHERE nombre_chat = "${req.body.nombre_chat}"
-        `)
-
-      if (id_chat.length != 0) {
-        let respuesta1 = await realizarQuery(`
-            INSERT INTO Chats_por_usuario_tpi2(id_usuario, id_chat) VALUES 
-            (${id_usuario2[0].id_usuario}, ${id_chat[0].id_chat})
-            `)
-
-        let respuesta2 = await realizarQuery(`
-            INSERT INTO Chats_por_usuario_tpi2(id_usuario, id_chat) VALUES 
-            (${req.body.id_usuario}, ${id_chat[0].id_chat})
-            `)
-      }
-
       res.send({ mensaje: "Chat agregado", ok: true })
-    } else {
-      res.send({ mensaje: "Este dato ya existe", ok: false })
-    }
+
   } catch {
     res.send({ mensaje: "Error del try" })
   }
