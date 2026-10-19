@@ -165,7 +165,15 @@ app.post('/getPinesMain', async function (req, res) {
   res.send(obj)
 })
 
+app.post('/getpinespec', async function (req, res) {
+  let obj = {
+    pin: ""
+  }
+  let respuesta = await realizarQuery(` SELECT  *  From Pines_tpf Where id_pin = "${req.body.id_pin}" `);
 
+  obj.pin = respuesta
+  res.send(obj)
+})
 
 /* app.get('/getusuarioschatespec', async function (req, res) {
   let respuesta;
