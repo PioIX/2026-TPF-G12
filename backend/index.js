@@ -215,12 +215,12 @@ app.post('/login', async function (req, res) {
   console.log(req.body)
   let respuesta = await realizarQuery(`
         Select  *  From Usuarios_tpf
-        Where nombre = "${req.body.nombre}" AND contrasenia = "${req.body.contrasenia}"
+        Where mail = "${req.body.mail}" AND contrasenia = "${req.body.contrasenia}"
         `)
   if (respuesta.length == 0) {
-    res.send({ mensaje: "No se encontró el usuario ingresado" })
+    res.send({ mensaje: "No se encontró el usuario ingresado", ok: false })
   } else {
-    res.send({ mensaje: "Usuario encontrado" })
+    res.send({ mensaje: "Usuario encontrado", ok: true, id_user: respuesta[0].id_usuario, es_admin: respuesta[0].es_admin})
   }
 })
 

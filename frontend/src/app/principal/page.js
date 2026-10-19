@@ -25,9 +25,15 @@ export default function PrincipalPage() {
         router.push("/subirpin?user="+id_user)
     }
 
+    function cerrarSesion(){
+        
+    }
+
     return (
         <>
-            <h1>Contactos</h1>
+            <h1>FEED</h1>
+
+            <Button funcion={cerrarSesion} texto={"Cerrar Sesión"}></Button>
 
             <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
             <br></br>

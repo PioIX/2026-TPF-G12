@@ -11,7 +11,7 @@ export default function HomePage() {
 
   const [registrar, setRegistrar] = useState(false);
 
-  let [foto, setFoto] = useState("");
+  let [foto_perfil, setFoto] = useState("");
   const [mail, setMail] = useState("");
   const [contrasenia, setContrasenia] = useState("");
   const [nombre, setNombre] = useState("");
@@ -35,7 +35,7 @@ export default function HomePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ mail, contrasenia })
+        body: JSON.stringify({ mail: mail, contrasenia: contrasenia })
       })
 
       let res = await response.json()
@@ -45,7 +45,7 @@ export default function HomePage() {
 
         alert("Usuario VERIFICADO")
 
-        if (res.es_admin == false) {
+        if (res.es_admin == 0) {
           router.push(`/principal?id_user=${id_user}`);
         } else {
           router.push(`/paginaAdmin?id_user=${id_user}`);
@@ -58,13 +58,13 @@ export default function HomePage() {
   }
 
   async function crearCuenta() {
-    let es_admin = false
+    let es_admin = 0
 
     if (nombre == "" || mail == "" || contrasenia == "") {
       alert("Todos los campos deben estar completos")
     } else {
-      if (foto == "") {
-        foto = "https://i.redd.it/h5abcfxalwtb1.png"
+      if (foto_perfil == "") {
+        foto_perfil = "https://i.redd.it/h5abcfxalwtb1.png"
       }
 
       let response = await fetch("http://localhost:4000/register", {
@@ -72,7 +72,7 @@ export default function HomePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ nombre, mail, contrasenia, foto, es_admin })
+        body: JSON.stringify({ nombre, mail, contrasenia, foto_perfil, es_admin })
       })
       let res = await response.json()
 
