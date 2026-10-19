@@ -1,71 +1,138 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
 
-export default function Home() {
+import { useState } from 'react';
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import { useRouter } from "next/navigation";
 
+
+export default function HomePage() {
+  let id_user = -1
+
+  const [registrar, setRegistrar] = useState(false);
+
+  let [foto, setFoto] = useState("");
+  const [mail, setMail] = useState("");
+  const [contrasenia, setContrasenia] = useState("");
+  const [nombre, setNombre] = useState("");
+
+  const router = useRouter();
+
+
+  const getFoto = (event) => { setFoto(event.target.value) }
+  const getMail = (event) => { setMail(event.target.value) }
+  const getContrasenia = (event) => { setContrasenia(event.target.value) }
+  const getNombre = (event) => { setNombre(event.target.value) }
+
+
+
+  async function iniciarSesion() {
+    if (mail == "" || contrasenia == "") {
+      alert("Todos los campos deben estar completos")
+    } else {
+      let response = await fetch("http://localhost:4000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ mail, contrasenia })
+      })
+
+      let res = await response.json()
+
+      if (res.ok == true) {
+        id_user = res.id_user
+
+        alert("Usuario VERIFICADO")
+
+        if (res.es_admin == false) {
+          router.push(`/principal?id_user=${id_user}`);
+        } else {
+          router.push(`/paginaAdmin?id_user=${id_user}`);
+        }
+
+      } else {
+        alert("Usuario o contraseña incorrectos")
+      }
+    }
+  }
+
+  async function crearCuenta() {
+    let es_admin = false
+
+    if (nombre == "" || mail == "" || contrasenia == "") {
+      alert("Todos los campos deben estar completos")
+    } else {
+      if (foto == "") {
+        foto = "https://i.redd.it/h5abcfxalwtb1.png"
+      }
+
+      let response = await fetch("http://localhost:4000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre, mail, contrasenia, foto, es_admin })
+      })
+      let res = await response.json()
+
+      if (res.ok == true) {
+        id_user = res.id_user
+
+        alert("u uwa wa uwa")
+
+        router.push(`/principal?id_user=${id_user}`);
+
+
+      } else {
+        alert("Ya existe la cuenta")
+      }
+    }
+  }
 
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div>
+      <div id="login-1">
+
+        <img src="C:\Users\alumnodigitales1\Documents\GitHub\2026-TPF-G12\frontend\public\Pionterest logo.png"></img>
+        <h1>Login</h1>
+
+        <Button text="Iniciar Sesion" onClick={() => setRegistrar(false)}></Button>
+        <Button text="Registrarse" onClick={() => setRegistrar(true)}></Button>
+
+        {registrar ? (
+          <div>
+
+            <h2>Registro</h2>
+
+            <Input text="Ej: Sayu.Crack" id="nombre" onChange={getNombre}></Input>
+            <Input text="sayu@gmail.com" id="mail" onChange={getMail}></Input>
+            <Input text="papita123" id="contraseña" onChange={getContrasenia}></Input>
+            <Input id="fotoContacto" text="link" onChange={getFoto}></Input>
+
+            <Button text="Validar" onClick={crearCuenta}></Button>
+          </div>
+
+
+        ) : (
+          <div>
+            <h2>Inicio de sesión</h2>
+
+            <Input text="sayu@gmail.com" id="mail" onChange={getMail}></Input>
+            <Input text="papita123" id="contraseña" onChange={getContrasenia}></Input>
+
+            <Button text="Validar" onClick={iniciarSesion}></Button>
+          </div>
+        )}
+      </div>
+
+      <div id="login-2">
+        <img src="@/public\Pionterest gatossssssssssssssss.png"></img>
+      </div>
+
+      <footer>
+
+      </footer>
     </div>
   );
 }
