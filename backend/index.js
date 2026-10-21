@@ -165,6 +165,26 @@ app.post('/getPinesMain', async function (req, res) {
   res.send(obj)
 })
 
+app.post('/getpinespec', async function (req, res) {
+  let obj = {
+    pin: ""
+  }
+  let respuesta = await realizarQuery(` SELECT  *  From Pines_tpf Where id_pin = "${req.body.id_pin}" `);
+
+  obj.pin = respuesta
+  res.send(obj)
+})
+
+app.post('/getnombreuser', async function (req, res) {
+  let obj = {
+    nombre: ""
+  }
+  let respuesta = await realizarQuery(` SELECT  nombre  From Usuarios_tpf Where id_usuario = "${req.body.id_usuario}" `);
+
+  obj.nombre = respuesta
+  res.send(obj)
+})
+
 
 
 /* app.get('/getusuarioschatespec', async function (req, res) {
@@ -241,46 +261,36 @@ app.post('/login', async function (req, res) {
 app.post('/pinnuevo', async function (req, res) {
   try {
     console.log(req.body)
-    let id_usuario2 = await realizarQuery(`
-        Select  id_usuario  From Usuarios_tpf
-        Where mail = "${req.body.mail}"
-        `)
-
-    let foto_usuario2 = await realizarQuery(`
-        Select  foto  From Usuarios_tpf
-        Where mail = "${req.body.mail}"
-      `)
-    if (id_usuario2.length != 0) {
+    
       await realizarQuery(`
-        INSERT INTO Chats_tpi2(nombre_chat, foto) VALUES 
-        ("${req.body.nombre_chat}", "${foto_usuario2[0].foto}")
+        INSERT INTO Pines_tpf(link, tag1, tag2, descripcion, me_gusta, id_usuario) VALUES 
+        ("${req.body.link}", "${req.body.tag1}", "${req.body.tag2}", "${req.body.descripcion}", ${0}, "${req.body.id_usuario}")
       `)
-
-      let id_chat = await realizarQuery(`
-          SELECT id_chat FROM Chats_tpi2 WHERE nombre_chat = "${req.body.nombre_chat}"
-        `)
-
-      if (id_chat.length != 0) {
-        let respuesta1 = await realizarQuery(`
-            INSERT INTO Chats_por_usuario_tpi2(id_usuario, id_chat) VALUES 
-            (${id_usuario2[0].id_usuario}, ${id_chat[0].id_chat})
-            `)
-
-        let respuesta2 = await realizarQuery(`
-            INSERT INTO Chats_por_usuario_tpi2(id_usuario, id_chat) VALUES 
-            (${req.body.id_usuario}, ${id_chat[0].id_chat})
-            `)
-      }
-
       res.send({ mensaje: "Chat agregado", ok: true })
-    } else {
-      res.send({ mensaje: "Este dato ya existe", ok: false })
-    }
+
   } catch {
     res.send({ mensaje: "Error del try" })
   }
 
 })
+
+app.put('/darlike', async function (req, res) {
+  try {
+    console.log(req.body)
+    
+      await realizarQuery(`
+        UPDATE Pines_tpf
+        SET me_gusta =  ("${req.body.nuevolike}")
+        WHERE id_pin = ("${req.body.id_pin}")
+      `)
+      res.send({ mensaje: "likes actualizados", ok: true })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
+
+
 
 // creacion chat grupal
 app.post('/gruponuevo', async function (req, res) {

@@ -1,8 +1,5 @@
 "use client"
 
-
-
-
 import PinList from "@/components/PinList";
 import Pin from "@/components/Pin";
 import { useEffect } from "react";
@@ -19,12 +16,7 @@ export default function PrincipalPage() {
 
 
     function clickPin(idPin) {
-        console.log(idPin)
-        router.push("/pin?id=" + idPin)
-    }
-
-    function nuevoPin() {
-        router.push("/subirpin?user=" + id_user)
+        router.push("/pin?idpin="+idPin+"&user="+id_user)
     }
 
     function cerrarSesion() {
