@@ -61,6 +61,15 @@ export default function PinPage() {
         });
     },[idUsuario])
 
+
+
+
+
+
+    function volver(){
+        router.back()
+    }
+
     function darLike() {
         
         fetch('http://localhost:4000/darlike', {
@@ -88,11 +97,14 @@ export default function PinPage() {
 
     return (
         <>
+            <Button funcion={volver} texto={"Volver"}></Button>
             <h1>Pin de {nombreUsuario} (id: {idUsuario}) </h1>
 
             <img src={link}></img>
 
             <p>Descripción: {descripcion}</p>
+
+            <p><b>Id de la imagen: {idPin} </b></p>
 
             {tag1 == "" ? (
                  <p>Tags: {tag2}</p>
