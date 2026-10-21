@@ -14,19 +14,26 @@ import Button from "@/components/Button";
 export default function PrincipalPage() {
     const router = useRouter()
     const searchParams = useSearchParams()
-    const id_user = 2//parseInt(searchParams.get("id_user"))
+    let id_user = parseInt(searchParams.get("id_user"))
+    console.log("id user: " + id_user)
+
 
     function clickPin(idPin) {
         console.log(idPin)
-        router.push("/pin?id="+idPin)
+        router.push("/pin?id=" + idPin)
     }
 
-    function nuevoPin(){
-        router.push("/subirpin?user="+id_user)
+    function nuevoPin() {
+        router.push("/subirpin?user=" + id_user)
     }
 
-    function cerrarSesion(){
-        
+    function cerrarSesion() {
+        let cerrar = confirm("Desea cerrar la sesión?")
+        if (cerrar) {
+            id_user = -1
+            console.log("id user: " + id_user)
+            router.push("/")
+        }
     }
 
     return (
