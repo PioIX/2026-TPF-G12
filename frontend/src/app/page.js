@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { useRouter } from "next/navigation";
-
+import styles from "./footer.module.css";
 
 export default function HomePage() {
   let id_user = -1
@@ -126,9 +126,7 @@ export default function HomePage() {
         <img src="/PionterestGatos.png"></img>
       </div>
 
-      <footer>
-
-      </footer>
+      <Footer> </Footer>
     </div>
   )
 }
