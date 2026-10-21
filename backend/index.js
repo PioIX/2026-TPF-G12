@@ -175,6 +175,18 @@ app.post('/getpinespec', async function (req, res) {
   res.send(obj)
 })
 
+app.post('/getnombreuser', async function (req, res) {
+  let obj = {
+    nombre: ""
+  }
+  let respuesta = await realizarQuery(` SELECT  nombre  From Usuarios_tpf Where id_usuario = "${req.body.id_usuario}" `);
+
+  obj.nombre = respuesta
+  res.send(obj)
+})
+
+
+
 /* app.get('/getusuarioschatespec', async function (req, res) {
   let respuesta;
   if (req.query.idchat != undefined) {
@@ -261,6 +273,24 @@ app.post('/pinnuevo', async function (req, res) {
   }
 
 })
+
+app.put('/darlike', async function (req, res) {
+  try {
+    console.log(req.body)
+    
+      await realizarQuery(`
+        UPDATE Pines_tpf
+        SET me_gusta =  ("${req.body.nuevolike}")
+        WHERE id_pin = ("${req.body.id_pin}")
+      `)
+      res.send({ mensaje: "likes actualizados", ok: true })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
+
+
 
 // creacion chat grupal
 app.post('/gruponuevo', async function (req, res) {

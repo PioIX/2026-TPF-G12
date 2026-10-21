@@ -17,8 +17,7 @@ export default function PrincipalPage() {
     const id_user = 2//parseInt(searchParams.get("id_user"))
 
     function clickPin(idPin) {
-
-        router.push("/pin?id="+idPin)
+        router.push("/pin?idpin="+idPin+"&user="+id_user)
     }
 
     function nuevoPin(){
