@@ -28,6 +28,10 @@ export default function PrincipalPage() {
         }
     }
 
+    function nuevoPin(){
+        router.push("/subirpin?user="+id_user)
+    }
+
     return (
         <>
             <h1>FEED</h1>

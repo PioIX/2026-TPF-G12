@@ -11,7 +11,7 @@ import SelectTemas from "@/components/SelectTemas";
 export default function SubirPinPage(){
     const router = useRouter()
     const searchParams = useSearchParams()
-    const user = 1//parseInt(searchParams.get("user"))
+    const user = parseInt(searchParams.get("user"))
     const [descripcion, setDescripcion] = useState("")
     const [link, setLink] = useState("")
     const [tag1, setTag1] = useState("")
