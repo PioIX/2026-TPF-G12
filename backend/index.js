@@ -103,36 +103,91 @@ app.get('/', function (req, res) {
   });
 });
 
+
+
+
+
+
+
+
+
+
+
+
 //  ---------------- GETS GENERALES  --------------------------------
 // Tablas:
-// Chats_por_usuario_tpi2
-// Chats_tpi2
-// Usuarios_tpi2
-// Mensajes_tpi2
+// Colecciones_por_usuario_tpf
+// Colecciones_tpf
+// Usuarios_tpf
+// Pines_por_coleccion_tpf
+// Pines_tpf
 
 app.get('/getUsuarios', async function (req, res) {
-  let respuesta = await realizarQuery("SELECT * FROM Usuarios_tpi2");
+  let respuesta = await realizarQuery("SELECT * FROM Usuarios_tpf");
   console.log({ respuesta })
   res.send(respuesta);
 })
 
-app.get('/getChats', async function (req, res) {
-  let respuesta = await realizarQuery("SELECT * FROM Chats_tpi2");
+app.get('/getColecciones', async function (req, res) {
+  let respuesta = await realizarQuery("SELECT * FROM Colecciones_tpf");
   res.send(respuesta);
 })
 
-app.get('/getMensajes', async function (req, res) {
-  let respuesta = await realizarQuery("SELECT * FROM Mensajes_tpi2");
+app.get('/getPines', async function (req, res) {
+  let respuesta = await realizarQuery("SELECT * FROM Pines_tpf");
   res.send(respuesta);
 })
 
-app.get('/getChatsPorUsuario', async function (req, res) {
-  let respuesta = await realizarQuery("SELECT * FROM Chats_por_usuario_tpi2");
+app.get('/getcoleccionesporusuario', async function (req, res) {
+  let respuesta = await realizarQuery("SELECT * FROM Colecciones_por_usuario_tpf");
   res.send(respuesta);
 })
+
+app.get('/getpinesporcoleccion', async function (req, res) {
+  let respuesta = await realizarQuery("SELECT * FROM Pines_por_coleccion_tpf");
+  console.log({ respuesta })
+  res.send(respuesta);
+})
+
+
+
+
 
 // GETS ESPECIFICOS  (Pasar el parámetro como: localhost:3000/nombreDelPedido?parametro1=valor1)
-app.get('/getusuarioschatespec', async function (req, res) {
+app.post('/getPinesMain', async function (req, res) {
+  let obj = {
+    pines: []
+  }
+  let respuesta = await realizarQuery("SELECT * FROM Pines_tpf");
+ // res.send(respuesta);
+
+  obj.pines = respuesta
+  res.send(obj)
+})
+
+app.post('/getpinespec', async function (req, res) {
+  let obj = {
+    pin: ""
+  }
+  let respuesta = await realizarQuery(` SELECT  *  From Pines_tpf Where id_pin = "${req.body.id_pin}" `);
+
+  obj.pin = respuesta
+  res.send(obj)
+})
+
+app.post('/getnombreuser', async function (req, res) {
+  let obj = {
+    nombre: ""
+  }
+  let respuesta = await realizarQuery(` SELECT  nombre  From Usuarios_tpf Where id_usuario = "${req.body.id_usuario}" `);
+
+  obj.nombre = respuesta
+  res.send(obj)
+})
+
+
+
+/* app.get('/getusuarioschatespec', async function (req, res) {
   let respuesta;
   if (req.query.idchat != undefined) {
     respuesta = await realizarQuery(`SELECT id_usuario FROM Chats_por_usuario_tpi2 where id_chat = ${req.query.idchat}`)
@@ -142,6 +197,17 @@ app.get('/getusuarioschatespec', async function (req, res) {
   res.send(respuesta);
 })
 
+*/
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -150,15 +216,15 @@ app.get('/getusuarioschatespec', async function (req, res) {
 app.post('/register', async function (req, res) {
   console.log(req.body) //Los pedidos post reciben los datos del req.body
   let respuesta = await realizarQuery(`
-        Select  *  From Usuarios_tpi2
+        Select  *  From Usuarios_tpf
         Where nombre = "${req.body.nombre}"
         `)
   if (respuesta.length == 0) {
     await realizarQuery(`
-        INSERT INTO Usuarios_tpi2(nombre, mail, contrasenia, foto) VALUES 
-        ("${req.body.nombre}","${req.body.mail}","${req.body.contrasenia}", "${req.body.foto}")
+        INSERT INTO Usuarios_tpf(nombre, contrasenia, mail, foto_perfil, es_admin) VALUES 
+        ("${req.body.nombre}","${req.body.contrasenia}","${req.body.mail}", "${req.body.foto_perfil}", ${0})
     `)
-    let respuesta2 = await realizarQuery(`SELECT id_usuario FROM Usuarios_tpi2 WHERE nombre="${req.body.nombre}"`)
+    let respuesta2 = await realizarQuery(`SELECT id_usuario FROM Usuarios_tpf WHERE nombre="${req.body.nombre}"`)
     res.send({ mensaje: "Usuario agregado", ok: true, id_user: respuesta2[0].id_usuario })
   } else {
     res.send({ mensaje: "Este dato ya existe", ok: false })
@@ -168,7 +234,7 @@ app.post('/register', async function (req, res) {
 app.post('/login', async function (req, res) {
   console.log(req.body)
   let respuesta = await realizarQuery(`
-        Select  *  From Usuarios_tpi2
+        Select  *  From Usuarios_tpf
         Where nombre = "${req.body.nombre}" AND contrasenia = "${req.body.contrasenia}"
         `)
   if (respuesta.length == 0) {
@@ -178,50 +244,53 @@ app.post('/login', async function (req, res) {
   }
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // creacion de un chat de a 2
-app.post('/chatnuevo', async function (req, res) {
+app.post('/pinnuevo', async function (req, res) {
   try {
     console.log(req.body)
-    let id_usuario2 = await realizarQuery(`
-        Select  id_usuario  From Usuarios_tpi2
-        Where mail = "${req.body.mail}"
-        `)
-
-    let foto_usuario2 = await realizarQuery(`
-        Select  foto  From Usuarios_tpi2
-        Where mail = "${req.body.mail}"
-      `)
-    if (id_usuario2.length != 0) {
+    
       await realizarQuery(`
-        INSERT INTO Chats_tpi2(nombre_chat, foto) VALUES 
-        ("${req.body.nombre_chat}", "${foto_usuario2[0].foto}")
+        INSERT INTO Pines_tpf(link, tag1, tag2, descripcion, me_gusta, id_usuario) VALUES 
+        ("${req.body.link}", "${req.body.tag1}", "${req.body.tag2}", "${req.body.descripcion}", ${0}, "${req.body.id_usuario}")
       `)
-
-      let id_chat = await realizarQuery(`
-          SELECT id_chat FROM Chats_tpi2 WHERE nombre_chat = "${req.body.nombre_chat}"
-        `)
-
-      if (id_chat.length != 0) {
-        let respuesta1 = await realizarQuery(`
-            INSERT INTO Chats_por_usuario_tpi2(id_usuario, id_chat) VALUES 
-            (${id_usuario2[0].id_usuario}, ${id_chat[0].id_chat})
-            `)
-
-        let respuesta2 = await realizarQuery(`
-            INSERT INTO Chats_por_usuario_tpi2(id_usuario, id_chat) VALUES 
-            (${req.body.id_usuario}, ${id_chat[0].id_chat})
-            `)
-      }
-
       res.send({ mensaje: "Chat agregado", ok: true })
-    } else {
-      res.send({ mensaje: "Este dato ya existe", ok: false })
-    }
+
   } catch {
     res.send({ mensaje: "Error del try" })
   }
 
 })
+
+app.put('/darlike', async function (req, res) {
+  try {
+    console.log(req.body)
+    
+      await realizarQuery(`
+        UPDATE Pines_tpf
+        SET me_gusta =  ("${req.body.nuevolike}")
+        WHERE id_pin = ("${req.body.id_pin}")
+      `)
+      res.send({ mensaje: "likes actualizados", ok: true })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
+
+
 
 // creacion chat grupal
 app.post('/gruponuevo', async function (req, res) {
@@ -252,7 +321,7 @@ app.post('/metergente', async function (req, res) {
     console.log(req.body)
     let id_chat = null
     let id_usuario2 = await realizarQuery(`
-        Select  id_usuario  From Usuarios_tpi2
+        Select  id_usuario  From Usuarios_tpf
         Where mail = "${req.body.mail}"
       `)
     console.log(id_usuario2)
