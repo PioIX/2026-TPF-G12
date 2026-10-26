@@ -7,7 +7,7 @@ import ChatItem from "./ChatItem";
 export default function ChatList({id_log, botonOnClick}) {
 
 
-    const [chats, setChats] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:4000/getUsuariosChats', {
@@ -20,17 +20,16 @@ export default function ChatList({id_log, botonOnClick}) {
         .then(response => response.json())
         .then(data => {
             console.log('Datos', data);
-            setChats(data.usuarios);
-            setChats([])
+            setUsuarios(data.usuarios);
         });
 
     },[])
     
     return (
         <>
-           {chats.map((chat, index) => {
+           {usuarios.map((usuario, index) => {
                 return(
-                    <ChatItem key={index} foto={chat.foto} nombre={chat.nombre_chat} onClick={() => botonOnClick(chat.id_chat)}>
+                    <ChatItem key={index} id={usuario.id_usuario} foto={usuario.foto_perfil} nombre={usuario.nombre} onClick={() => botonOnClick(usuario.id_usuario)}>
                     </ChatItem>
                 )
            })} 

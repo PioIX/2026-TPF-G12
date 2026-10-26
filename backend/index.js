@@ -69,6 +69,7 @@ io.on("connection", (socket) => {
     io.to(req.session.room).emit("chat-messages", {
       user: req.session.user,
       room: req.session.room,
+      sender: req.session.sender
     });
   });
 
@@ -83,6 +84,7 @@ io.on("connection", (socket) => {
     io.to(data.room).emit("newMessage", {
       room: data.room,
       message: data.message,
+      sender: data.sender
     });
   });
 

@@ -2,7 +2,8 @@
 
 import Button from "./Button";
 
-export default function ChatItem({foto, nombre, onClick}) {
+export default function ChatItem({id, idfunc, foto, nombre, onClick}) {
+
 
     
     return (
@@ -10,6 +11,8 @@ export default function ChatItem({foto, nombre, onClick}) {
             <img src={foto}></img>
             <h5>{nombre}</h5>
             <Button funcion={onClick} texto={"Conversar con este usuario"}></Button>
+
+
         </div>
     );
 }

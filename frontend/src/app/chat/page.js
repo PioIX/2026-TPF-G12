@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import Button from "@/components/Button";
 
 export default function SocketPage() {
 
@@ -13,9 +14,10 @@ export default function SocketPage() {
     const [contador, setContador] = useState(0) 
     const router = useRouter()
     const searchParams = useSearchParams()
-    const conversacion = parseInt(searchParams.get("conv"))
+    const conversacion = parseInt(searchParams.get("sala"))
     const user = parseInt(searchParams.get("user"))
     const [texto, setTexto] = useState("")
+    const [sender, setSender] = useState("")
 
     useEffect(() => {
         if (!socket) return;
@@ -31,13 +33,9 @@ export default function SocketPage() {
         socket.on("newMessage", (data) => {
             console.log("recibido")
             console.log(data);
-            setMensaje((prev) => [...prev, data.message])
+            setMensaje((prev) => [...prev, [data.message, data.sender]])
         });
 
-        socket.on("pingAll", (data) => {
-            console.log(data);
-            setMensaje((prev) => [...prev, data.message.msg])
-        });
     
 }, [socket]);
 
@@ -48,6 +46,7 @@ export default function SocketPage() {
                 console.log("conectado")
                 socket.emit("joinRoom", {room: conversacion})
                 console.log("sala:", conversacion)
+                console.log("usuario:" + user)
             }        
     }, [isConnected]);
 
@@ -56,28 +55,12 @@ export default function SocketPage() {
         console.log(mensaje)
     }, [mensaje])
 
-    function pingAll() {
-        socket.emit("pingAll", { msg: "Hola desde mi compu" });
-        }
 
     function mandarMensaje() {
-        socket.emit("sendMessage", {message: texto, room: parseInt(conversacion)})
+        socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user})
     }
 
-    useEffect(() => {
-    async function cargarMensajes() {
-        {
-            const response = await fetch(
-                `http://localhost:4000/mensajes/conversacion`
-            );
-
-            const data = await response.json();
-            setMensaje(data);
-        } 
-    }
-        cargarMensajes();
-
-    }, [conversacion]);
+   
 
         
 
@@ -91,19 +74,12 @@ export default function SocketPage() {
                 <p>🔴 Desconectado</p>
              )}
 
+            <input type="text" value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Escribir mensaje aca"></input>
 
-             <button onClick={pingAll}>
-                Enviar ping a todos
-            </button>
-
-            <input type="text" value={texto} onChange={(e) => setTexto(e.target.value)}></input>
-
-            <button onClick={mandarMensaje}>
-                mandar mensaje
-            </button>
+            <Button funcion={mandarMensaje} texto={"Mandar Mensaje"}></Button>
 
             
-            {mensaje.map((texto, index) =>  <p key={index}> mensaje numero: {index + 1} de {user}: {texto}</p>)}
+            {mensaje.map((datos, index) =>  <p key={index}> mensaje de {datos[1]}: {datos[0]}</p>)}
 
             <p> Contador: {contador}</p>
         </>
