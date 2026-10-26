@@ -2,6 +2,6 @@
 
 export default function Button({funcion, texto}){
     return(
-    <button onClick={funcion}>{texto}</button>
+          <button onClick={funcion}>{texto}</button>
     )
 }

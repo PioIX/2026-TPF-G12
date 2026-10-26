@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+
+import Footer from "@/components/Footer"
+import Header from '@/components/Header';
 import Button from "@/components/Button";
 
 export default function PrincipalPage() {
@@ -16,7 +19,7 @@ export default function PrincipalPage() {
 
 
     function clickPin(idPin) {
-        router.push("/pin?idpin="+idPin+"&user="+id_user)
+        router.push("/pin?idpin=" + idPin + "&user=" + id_user)
     }
 
     function cerrarSesion() {
@@ -28,16 +31,27 @@ export default function PrincipalPage() {
         }
     }
 
+    function nuevoPin() {
+
+    }
+
+    function irColeccion() {
+
+    }
+
     return (
         <>
+            <Header funcion2={cerrarSesion} texto={"Cerrar Sesión"} funcion1={irColeccion}></Header>
+
             <h1>FEED</h1>
 
-            <Button funcion={cerrarSesion} texto={"Cerrar Sesión"}></Button>
+            {/* <Button funcion={cerrarSesion} texto={"Cerrar Sesión"}></Button> */}
 
             <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
             <br></br>
 
             <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
+            <Footer> </Footer>
         </>
     )
 }
