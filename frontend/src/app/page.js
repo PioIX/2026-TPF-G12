@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { useRouter } from "next/navigation";
 import styles from "./footer.module.css";
+import Footer from "@/components/Footer"
 
 export default function HomePage() {
   let id_user = -1
@@ -125,7 +126,7 @@ export default function HomePage() {
       <div id="login-2">
         <img src="/PionterestGatos.png"></img>
       </div>
-
+      <Header></Header>
       <Footer> </Footer>
     </div>
   )
