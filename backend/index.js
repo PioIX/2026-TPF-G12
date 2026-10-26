@@ -185,6 +185,17 @@ app.post('/getnombreuser', async function (req, res) {
   res.send(obj)
 })
 
+app.post('/getUsuariosChats', async function (req, res) {
+  let obj = {
+    usuarios: []
+  }
+  let respuesta = await realizarQuery("SELECT * FROM Usuarios_tpf");
+ // res.send(respuesta);
+
+  obj.usuarios = respuesta
+  res.send(obj)
+})
+
 
 
 /* app.get('/getusuarioschatespec', async function (req, res) {

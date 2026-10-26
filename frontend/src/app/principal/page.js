@@ -32,6 +32,10 @@ export default function PrincipalPage() {
         router.push("/subirpin?user="+id_user)
     }
 
+    function irAConversaciones(){
+        router.push("/conversaciones?user="+id_user)
+    }
+
     return (
         <>
             <h1>FEED</h1>
@@ -40,6 +44,7 @@ export default function PrincipalPage() {
 
             <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
             <br></br>
+            <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
 
             <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
         </>
