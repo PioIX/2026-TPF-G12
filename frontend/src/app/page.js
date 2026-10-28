@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { useRouter } from "next/navigation";
 
+import Footer from "@/components/Footer"
 
 export default function HomePage() {
   let id_user = -1
@@ -96,7 +97,7 @@ export default function HomePage() {
 
         <img src="/PionterestLogo.png"></img>
         <h1>Login</h1>
-
+        
         <Button texto="Iniciar Sesion" funcion={() => setRegistrar(false)}></Button>
         <Button texto="Registrarse" funcion={() => setRegistrar(true)}></Button>
 
@@ -125,10 +126,7 @@ export default function HomePage() {
       <div id="login-2">
         <img src="/PionterestGatos.png"></img>
       </div>
-
-      <footer>
-
-      </footer>
+      <Footer> </Footer>
     </div>
   )
 }
