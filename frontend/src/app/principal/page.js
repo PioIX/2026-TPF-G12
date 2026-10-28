@@ -31,12 +31,10 @@ export default function PrincipalPage() {
         }
     }
 
-    function nuevoPin() {
-
-    }
-
     function irColeccion() {
-
+      
+    function nuevoPin(){
+        router.push("/subirpin?user="+id_user)
     }
 
     return (

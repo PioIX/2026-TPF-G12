@@ -11,10 +11,10 @@ export default function PinPage() {
 
     const router = useRouter()
     const searchParams = useSearchParams()
-    const user = 1//parseInt(searchParams.get("user"))
+    const user = parseInt(searchParams.get("user"))
     const idPin = parseInt(searchParams.get("idpin"))
     const [descripcion, setDescripcion] = useState("")
-    const [link, setLink] = useState("")
+    const [link, setLink] = useState(null)
     const [tag1, setTag1] = useState("")
     const [tag2, setTag2] = useState("")
     const [meGusta, setMeGusta] = useState(0)
@@ -55,25 +55,30 @@ export default function PinPage() {
         .then(response => response.json())
         .then(data => {
             console.log('Datos', data.nombre);
-            setNombreUsuario(data.nombre[0].nombre);
+            if (data.nombre.length != 0) {
+                setNombreUsuario(data.nombre[0].nombre);
+            }
         });
     },[idUsuario])
 
     function darLike() {
-        setMeGusta(meGusta + 1)
-
-        fetch('http://localhost:4000/getnombreuser', {
+        
+        fetch('http://localhost:4000/darlike', {
     
-            method: 'POST',
+            method: 'PUT',
             headers: {
             'Content-Type': 'application/json'
             },
-            body: JSON.stringify({id_usuario: idUsuario})
+            body: JSON.stringify({nuevolike: meGusta +1 , id_pin: idPin})
         })
         .then(response => response.json())
         .then(data => {
             console.log('Datos', data.nombre);
-            setNombreUsuario(data.nombre[0].nombre);
+            if (data.ok == true) {
+                router.push("/principal?id_user="+user)
+            } else {
+                console.log("error")
+            }
         });
 
     }
