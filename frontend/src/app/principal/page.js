@@ -45,8 +45,6 @@ export default function PrincipalPage() {
 
             <h1>FEED</h1>
 
-            {/* <Button funcion={cerrarSesion} texto={"Cerrar Sesión"}></Button> */}
-
             <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
             <br></br>
 
