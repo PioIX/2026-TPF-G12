@@ -19,8 +19,18 @@ export default function ConversacionesPage(){
         router.push("/chat?user="+id_user+"&sala="+idChat)
     }
 
+    function volver(){
+        router.back()
+    }
+
 
     return(
-        <ChatList id_log={id_user} botonOnClick={irAChat} />
+        <>
+            <h1>Conversaciones</h1>
+            <Button funcion={volver} texto={"Volver"}></Button>
+            <br></br>
+            <ChatList id_log={id_user} botonOnClick={irAChat} />
+        </>
+        
     )
 }

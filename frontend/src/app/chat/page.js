@@ -18,6 +18,7 @@ export default function SocketPage() {
     const user = parseInt(searchParams.get("user"))
     const [texto, setTexto] = useState("")
     const [sender, setSender] = useState("")
+    const [nombre, setNombre] = useState("")
 
     useEffect(() => {
         if (!socket) return;
@@ -60,6 +61,29 @@ export default function SocketPage() {
         socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user})
     }
 
+    function volver(){
+        router.back()
+    }
+
+
+    useEffect(() => {
+        fetch('http://localhost:4000/getnombreuser', {
+    
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id_usuario: conversacion})
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos', data);
+            if (data.nombre.length != 0) {
+                setNombre(data.nombre[0].nombre);
+            }
+        });
+    },[])
+
    
 
         
@@ -74,6 +98,19 @@ export default function SocketPage() {
                 <p>🔴 Desconectado</p>
              )}
 
+            <h1>Chat de {nombre}</h1>
+            <Button funcion={volver} texto={"Volver"}></Button>
+            <br></br>
+            
+
+            {
+                conversacion == user ? (
+                    <p><b>¡Esta es tu sala!</b></p>
+                ) : (
+                    <p></p>
+                )
+            }
+
             <input type="text" value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Escribir mensaje aca"></input>
 
             <Button funcion={mandarMensaje} texto={"Mandar Mensaje"}></Button>
@@ -81,7 +118,7 @@ export default function SocketPage() {
             
             {mensaje.map((datos, index) =>  <p key={index}> mensaje de {datos[1]}: {datos[0]}</p>)}
 
-            <p> Contador: {contador}</p>
+            
         </>
     )
 }

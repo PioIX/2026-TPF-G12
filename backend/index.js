@@ -157,45 +157,58 @@ app.get('/getpinesporcoleccion', async function (req, res) {
 
 // GETS ESPECIFICOS  (Pasar el parámetro como: localhost:3000/nombreDelPedido?parametro1=valor1)
 app.post('/getPinesMain', async function (req, res) {
-  let obj = {
-    pines: []
-  }
-  let respuesta = await realizarQuery("SELECT * FROM Pines_tpf");
- // res.send(respuesta);
+  try {
+      let obj = {
+      pines: []
+    }
+    let respuesta = await realizarQuery("SELECT * FROM Pines_tpf");
+    // res.send(respuesta);
 
-  obj.pines = respuesta
-  res.send(obj)
+    obj.pines = respuesta
+    res.send(obj)
+
+  } catch {res.send({mensaje: "error del try"})}
 })
 
 app.post('/getpinespec', async function (req, res) {
-  let obj = {
-    pin: ""
-  }
-  let respuesta = await realizarQuery(` SELECT  *  From Pines_tpf Where id_pin = "${req.body.id_pin}" `);
+  try {
+    let obj = {
+      pin: ""
+    }
+    let respuesta = await realizarQuery(` SELECT  *  From Pines_tpf Where id_pin = "${req.body.id_pin}" `);
 
-  obj.pin = respuesta
-  res.send(obj)
+    obj.pin = respuesta
+    res.send(obj)
+  } catch {res.send({mensaje: "error del try"})}
+
+  
 })
 
 app.post('/getnombreuser', async function (req, res) {
-  let obj = {
-    nombre: ""
-  }
-  let respuesta = await realizarQuery(` SELECT  nombre  From Usuarios_tpf Where id_usuario = "${req.body.id_usuario}" `);
+  try {
+    let obj = {
+      nombre: ""
+    }
+    let respuesta = await realizarQuery(` SELECT  nombre  From Usuarios_tpf Where id_usuario = "${req.body.id_usuario}" `);
 
-  obj.nombre = respuesta
-  res.send(obj)
+    obj.nombre = respuesta
+    res.send(obj)
+  } catch {res.send({mensaje: "error del try"})}
+  
 })
 
 app.post('/getUsuariosChats', async function (req, res) {
-  let obj = {
-    usuarios: []
-  }
-  let respuesta = await realizarQuery("SELECT * FROM Usuarios_tpf");
- // res.send(respuesta);
+  try {
+    let obj = {
+      usuarios: []
+    }
+    let respuesta = await realizarQuery("SELECT * FROM Usuarios_tpf"); 
+  // res.send(respuesta);
 
-  obj.usuarios = respuesta
-  res.send(obj)
+    obj.usuarios = respuesta
+    res.send(obj)
+  } catch {res.send({mensaje: "error del try"})}
+  
 })
 
 
