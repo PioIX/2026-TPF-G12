@@ -31,7 +31,7 @@ export default function PrincipalPage() {
         }
     }
 
-    function irColeccion() {
+    function irColeccion() {}
       
     function nuevoPin(){
         router.push("/subirpin?user="+id_user)
