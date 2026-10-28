@@ -21,17 +21,6 @@ export default function PrincipalPage() {
     function clickPin(idPin) {
         router.push("/pin?idpin=" + idPin + "&user=" + id_user)
     }
-
-    function cerrarSesion() {
-        let cerrar = confirm("Desea cerrar la sesión?")
-        if (cerrar) {
-            id_user = -1
-            console.log("id user: " + id_user)
-            router.push("/")
-        }
-    }
-
-    function irColeccion() {
       
     function nuevoPin(){
         router.push("/subirpin?user="+id_user)
@@ -39,7 +28,7 @@ export default function PrincipalPage() {
 
     return (
         <>
-            <Header funcion2={cerrarSesion} texto={"Cerrar Sesión"} funcion1={irColeccion}></Header>
+            <Header></Header>
 
             <h1>FEED</h1>
 
