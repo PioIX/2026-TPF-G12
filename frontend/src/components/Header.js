@@ -16,7 +16,7 @@ export default function Header({}) {
     }
 
     function irColeccion() {
-        router.push("/colecciones")
+        router.push("/vercolecciones")
     }
 
 
