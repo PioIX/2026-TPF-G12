@@ -19,7 +19,8 @@ export default function SocketPage() {
     const [texto, setTexto] = useState("")
     const [sender, setSender] = useState("")
     const [nombre, setNombre] = useState("")
-
+    const [idPin, setIdPin] = useState("")
+    
     useEffect(() => {
         if (!socket) return;
         //Aquí entrará cuando reciba un evento
@@ -57,9 +58,7 @@ export default function SocketPage() {
     }, [mensaje])
 
 
-    function mandarMensaje() {
-        socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user})
-    }
+  
 
     function volver(){
         router.back()
@@ -84,9 +83,57 @@ export default function SocketPage() {
         });
     },[])
 
-   
 
-        
+
+
+
+      function mandarMensaje() {
+        socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user})
+         const cuerpo = {
+            link: link,
+            tag1: tag1,
+            tag2: tag2,
+            descripcion: descripcion,
+            id_usuario: user
+        }
+
+
+        fetch('http://localhost:4000/pinnuevo', {
+    
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cuerpo)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos', data);
+            if (data.ok == true) {
+                console.log("funciona el post")
+                
+            } else {
+                console.log("error")
+                
+            }
+        });
+    }
+
+
+
+    function mandarImagen(){
+        console.log("imagen")
+    }
+
+    function mandarLink(){
+        console.log("link")
+    }
+
+    function mandarPin(){
+        console.log(idPin)
+    }
+    
+    
 
         
 
@@ -105,7 +152,7 @@ export default function SocketPage() {
 
             {
                 conversacion == user ? (
-                    <p><b>¡Esta es tu sala!</b></p>
+                    <h4><b>¡Esta es tu sala!</b></h4>
                 ) : (
                     <p></p>
                 )
@@ -114,6 +161,14 @@ export default function SocketPage() {
             <input type="text" value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Escribir mensaje aca"></input>
 
             <Button funcion={mandarMensaje} texto={"Mandar Mensaje"}></Button>
+            <Button funcion={mandarImagen} texto={"Enviar como imagen"}></Button>
+            <Button funcion={mandarLink} texto={"Enviar como link"}></Button>
+            <br></br>
+            <input type="number" value={idPin} onChange={(e) =>{if(e.target.value<=999) setIdPin(e.target.value)} } placeholder="Escribir el id del pin acá"></input>
+            {
+                //poner el boton de mandar el pin en un use effect que verifique que el pin existe
+            }
+            <Button funcion={mandarPin} texto={"Enviar un Pin"}></Button>
 
             
             {mensaje.map((datos, index) =>  <p key={index}> mensaje de {datos[1]}: {datos[0]}</p>)}

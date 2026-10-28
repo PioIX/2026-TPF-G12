@@ -16,7 +16,7 @@ export default function PrincipalPage() {
 
 
     function clickPin(idPin) {
-        router.push("/pin?idpin="+idPin+"&user="+id_user)
+        router.push("/pin?idpin="+idPin) // +"&user="+id_user
     }
 
     function cerrarSesion() {

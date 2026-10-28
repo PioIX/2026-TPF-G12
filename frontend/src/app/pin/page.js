@@ -84,7 +84,7 @@ export default function PinPage() {
         .then(data => {
             console.log('Datos', data.nombre);
             if (data.ok == true) {
-                router.push("/principal?id_user="+user)
+                router.back()//router.push("/principal?id_user="+user)
             } else {
                 console.log("error")
             }
