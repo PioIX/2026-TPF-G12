@@ -6,7 +6,7 @@ export default function Coleccion({ nombre, usuarios }) {
     const router = useRouter()
 
     function irEditar() {
-        router.push("/modcoleccion")
+        router.push("/modcoleccion?id_coleccion="+id_coleccion)
     }
 
     function borrarColeccion() {
@@ -15,6 +15,22 @@ export default function Coleccion({ nombre, usuarios }) {
             console.log("Se borró la colección")
         }
     }
+
+
+//     async function borrarPalabras() {
+//     let id_pregunta = document.getElementById("select-preguntas").value
+//     const resultado = await fetch("http://localhost:4000/borrarpalabrasdepregunta", {
+//         method: "DELETE",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ id_pregunta: id_pregunta })
+//     })
+//     console.log(resultado)
+//     if (resultado.ok == true) {
+//         return true
+//     }
+// }
 
 
     return (
@@ -26,3 +42,5 @@ export default function Coleccion({ nombre, usuarios }) {
         </div>
     );
 }
+
+//acá solo hago lo de editar y borrar

@@ -186,6 +186,20 @@ app.post('/getnombreuser', async function (req, res) {
 })
 
 
+app.post('/getColecciones', async function (req, res) {
+  let obj = {
+    pines: []
+  }
+  let respuesta = await realizarQuery(`SELECT Colecciones_tpf.nombre_coleccion, Colecciones_tpf.id_coleccion FROM Colecciones_tpf
+    INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion 
+    WHERE Colecciones_por_usuario_tpf.id_usuario = ${req.body.id_usuario}`);
+
+  obj.pines = respuesta
+  res.send(obj)
+})
+
+
+
 
 /* app.get('/getusuarioschatespec', async function (req, res) {
   let respuesta;
@@ -406,3 +420,21 @@ app.post('/getchatsej4', async function (req, res) {
   obj.chats = respuesta
   res.send(obj)
 })
+
+
+
+// DELETESSSSSS
+
+app.delete('/deletecoleccion', function(req,res) {
+    try{
+    console.log(req.body) 
+    realizarQuery(`
+    DELETE From Usuarios Where id_usuario = ${req.body.id_usuario}
+    `)
+    res.send("Usuario eliminado")
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+// DELETE coleccion, colecc_por_usuario, pines_coleccion
