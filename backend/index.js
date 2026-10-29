@@ -151,6 +151,11 @@ app.get('/getpinesporcoleccion', async function (req, res) {
   res.send(respuesta);
 })
 
+app.get('/getmensajes', async function (req, res) {
+  let respuesta = await realizarQuery("SELECT * FROM Mensajes_tpf");
+  console.log({ respuesta })
+  res.send(respuesta);
+})
 
 
 
@@ -210,6 +215,23 @@ app.post('/getUsuariosChats', async function (req, res) {
   } catch {res.send({mensaje: "error del try"})}
   
 })
+
+app.post('/getMensajesComponente', async function (req, res) {
+  try {
+      let obj = {
+      mensajes: []
+    }
+    let respuesta = await realizarQuery("SELECT * FROM Mensajes_tpf");
+    // res.send(respuesta);
+
+    obj.mensajes = respuesta
+    res.send(obj)
+
+  } catch {res.send({mensaje: "error del try"})}
+})
+
+
+
 
 
 
@@ -283,7 +305,8 @@ app.post('/login', async function (req, res) {
 
 
 
-// creacion de un chat de a 2
+// pines
+
 app.post('/pinnuevo', async function (req, res) {
   try {
     console.log(req.body)
@@ -300,6 +323,8 @@ app.post('/pinnuevo', async function (req, res) {
 
 })
 
+
+
 app.put('/darlike', async function (req, res) {
   try {
     console.log(req.body)
@@ -315,6 +340,28 @@ app.put('/darlike', async function (req, res) {
     res.send({ mensaje: "Error del try" })
   }
 })
+
+
+app.post('/mensajenuevo', async function (req, res) {
+  try {
+    console.log(req.body)
+    
+      await realizarQuery(`
+        INSERT INTO Mensajes_tpf(contenido, es_imagen, es_link, sender, id_usuario) VALUES 
+        ("${req.body.contenido}", "${req.body.es_imagen}", "${req.body.es_link}", "${req.body.sender}", "${req.body.id_usuario}")
+      `)
+      res.send({ mensaje: "Mensaje agregado", ok: true })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+
+})
+
+
+
+
+
 
 
 

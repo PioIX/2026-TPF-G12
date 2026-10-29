@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/Button";
+import Mensaje from "@/components/Mensaje";
 
 export default function SocketPage() {
 
@@ -17,7 +18,6 @@ export default function SocketPage() {
     const conversacion = parseInt(searchParams.get("sala"))
     const user = parseInt(searchParams.get("user"))
     const [texto, setTexto] = useState("")
-    const [sender, setSender] = useState("")
     const [nombre, setNombre] = useState("")
     const [idPin, setIdPin] = useState("")
     
@@ -90,15 +90,15 @@ export default function SocketPage() {
       function mandarMensaje() {
         socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user})
          const cuerpo = {
-            link: link,
-            tag1: tag1,
-            tag2: tag2,
-            descripcion: descripcion,
-            id_usuario: user
+            contenido: texto,
+            es_imagen: 0,
+            es_link: 0,
+            sender: user,
+            id_usuario: conversacion
         }
 
 
-        fetch('http://localhost:4000/pinnuevo', {
+        fetch('http://localhost:4000/mensajenuevo', {
     
             method: 'POST',
             headers: {
@@ -171,9 +171,12 @@ export default function SocketPage() {
             <Button funcion={mandarPin} texto={"Enviar un Pin"}></Button>
 
             
-            {mensaje.map((datos, index) =>  <p key={index}> mensaje de {datos[1]}: {datos[0]}</p>)}
+            <Mensaje></Mensaje>
+            
 
             
         </>
     )
 }
+
+//  {mensaje.map((datos, index) =>  <p key={index}> mensaje de {datos[1]}: {datos[0]}</p>)}
