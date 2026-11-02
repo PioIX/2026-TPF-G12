@@ -8,6 +8,8 @@ export default function Coleccion({ nombre, usuarios, funcion1, funcion2 }) {
             <p>Usuarios: {usuarios}</p>
             <Button funcion={funcion1} texto="Editar"></Button>
             <Button funcion={funcion2} texto="Borrar"></Button>
+            <Button funcion={funcion3} texto="Ver"></Button>
+
         </div>
     );
 }

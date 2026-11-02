@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Coleccion from "./Coleccion";
 
-export default function ColeccionList({ }) {
+export default function ColeccionList({ funcion1, funcion2}) {
     const [colecciones, setColecciones] = useState([]);
-    const router = useRouter()
-
+    const [id_coleccion, setId_coleccion] = useState("")
 
     useEffect(() => {
         fetch('http://localhost:4000/getColecciones', {
@@ -20,30 +19,11 @@ export default function ColeccionList({ }) {
             .then(data => {
                 console.log('Datos', data);
                 setColecciones(data.colecciones);
+                setId_coleccion(data.id_coleccion)
+
             });
 
     }, [])
-
-    function irEditar() {
-        router.push("/modcoleccion?id_coleccion=" + id_coleccion)
-    }
-
-    function borrarColeccion() {
-        let borrar = confirm("¿Desea borrar la colección?")
-        if (borrar) {
-            const resultado = fetch("http://localhost:4000/deletecoleccion", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id_coleccion: id_coleccion })
-            })
-            console.log(resultado)
-            
-            console.log("Se borró la colección")
-        }
-    }
-
 
 
 
@@ -51,7 +31,7 @@ export default function ColeccionList({ }) {
         <>
             {colecciones.map((col, i) => {
                 return (
-                    <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={col.nombre} funcion1={irEditar} funcion2={borrarColeccion}>
+                    <Coleccion key={i} nombre={col.nombre_coleccion} funcion1={funcion1} funcion2={funcion2} funcion3={funcion3}>
                     </Coleccion>
                 )
             })}
