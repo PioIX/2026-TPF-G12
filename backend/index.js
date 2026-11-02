@@ -84,7 +84,10 @@ io.on("connection", (socket) => {
     io.to(data.room).emit("newMessage", {
       room: data.room,
       message: data.message,
-      sender: data.sender
+      sender: data.sender,
+      es_link: data.es_link,
+      es_imagen: data.es_imagen,
+      id_mensaje: data.id_mensaje
     });
   });
 
@@ -221,7 +224,7 @@ app.post('/getMensajesComponente', async function (req, res) {
       let obj = {
       mensajes: []
     }
-    let respuesta = await realizarQuery("SELECT * FROM Mensajes_tpf");
+    let respuesta = await realizarQuery(`SELECT * FROM Mensajes_tpf WHERE id_usuario = "${req.body.id_usuario}"`);
     // res.send(respuesta);
 
     obj.mensajes = respuesta
@@ -350,13 +353,17 @@ app.post('/mensajenuevo', async function (req, res) {
         INSERT INTO Mensajes_tpf(contenido, es_imagen, es_link, sender, id_usuario) VALUES 
         ("${req.body.contenido}", "${req.body.es_imagen}", "${req.body.es_link}", "${req.body.sender}", "${req.body.id_usuario}")
       `)
-      res.send({ mensaje: "Mensaje agregado", ok: true })
+
+      let id=  await realizarQuery(`SELECT id_mensaje FROM Mensajes_tpf;`)
+      res.send({ mensaje: "Mensaje agregado", ok: true, id_mensaje: id[id.length-1].id_mensaje })
 
   } catch {
     res.send({ mensaje: "Error del try" })
   }
 
 })
+
+
 
 
 

@@ -20,7 +20,10 @@ export default function SocketPage() {
     const [nombre, setNombre] = useState("")
     const [idPin, setIdPin] = useState("")
     const [prueba, setPrueba] = useState(0)
+    const [pinExiste, setPinExiste] = useState(0)
     
+
+// ------------------------------------- socket --------------------------------------
     useEffect(() => {
         if (!socket) return;
         //Aquí entrará cuando reciba un evento
@@ -31,11 +34,11 @@ export default function SocketPage() {
         socket.on("newMessage", (data) => {
             console.log("recibido")
             console.log(data);
-            const msg = {msg: data.message, sender: data.sender, es_link: data.es_link, es_imagen: data.es_imagen, id_mensaje: data.id_mensaje}
+            const msg = {contenido: data.message, sender: data.sender, es_link: data.es_link, es_imagen: data.es_imagen, id_mensaje: data.id_mensaje}
             setMensajes((prev) => [...prev, msg])
             setPrueba(2)
         });
-}, [socket]);
+    }, [socket]);
 
 
 
@@ -51,16 +54,55 @@ export default function SocketPage() {
     }, [isConnected]);
 
 
+
+
+
+
+
+
+
+
+
+// ------------------------------- funciones pequeñas ---------------------------------------
     useEffect(()=>{
         console.log(mensajes)
     }, [mensajes])
 
-
-  
-
     function volver(){
         router.back()
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --------------------------------- use effects ----------------------------------------------
+
+    useEffect(() => {
+        fetch("http://localhost:4000/getMensajesComponente", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id_usuario: conversacion})
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Datos de los mensajes:", data);
+            //console.log("es imagen: " +mensaje.es_imagen)
+            //console.log("contenido: " +mensaje.contenido)
+            //console.log("link: "+ mensaje.es_link)
+            setMensajes(data.mensajes);
+        });
+  }, []);
 
 
     useEffect(() => {
@@ -82,16 +124,46 @@ export default function SocketPage() {
     },[])
 
 
+    useEffect(() => {
+        fetch("http://localhost:4000/getpinespec", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id_pin: idPin})
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Datos del pin especifico:", data);            
+        });
+    },[idPin])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------------------------------- botones de mandar -------------------------------------------
+
       function mandarMensaje() {
-        socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user})
-         const cuerpo = {
+        
+        const cuerpo = {
             contenido: texto,
             es_imagen: 0,
             es_link: 0,
             sender: user,
             id_usuario: conversacion
         }
-
 
         fetch('http://localhost:4000/mensajenuevo', {
     
@@ -107,6 +179,7 @@ export default function SocketPage() {
             if (data.ok == true) {
                 console.log("funciona el post")
                 setPrueba(1)
+                socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user, es_link: 0, es_imagen: 0, id_mensaje: data.id_mensaje})
                 
             } else {
                 console.log("error")
@@ -118,15 +191,99 @@ export default function SocketPage() {
 
 
     function mandarImagen(){
-        console.log("imagen")
+        const cuerpo = {
+            contenido: texto,
+            es_imagen: 1,
+            es_link: 0,
+            sender: user,
+            id_usuario: conversacion
+        }
+
+        fetch('http://localhost:4000/mensajenuevo', {
+    
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cuerpo)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos', data);
+            if (data.ok == true) {
+                console.log("funciona el post")
+                setPrueba(1)
+                socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user, es_link: 0, es_imagen: 1, id_mensaje: data.id_mensaje})
+                
+            } else {
+                console.log("error")
+                
+            }
+        });
     }
 
     function mandarLink(){
-        console.log("link")
+        const cuerpo = {
+            contenido: texto,
+            es_imagen: 0,
+            es_link: 1,
+            sender: user,
+            id_usuario: conversacion
+        }
+
+        fetch('http://localhost:4000/mensajenuevo', {
+    
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cuerpo)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos', data);
+            if (data.ok == true) {
+                console.log("funciona el post")
+                setPrueba(1)
+                socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user, es_link: 1, es_imagen: 0, id_mensaje: data.id_mensaje})
+                
+            } else {
+                console.log("error")
+                
+            }
+        });
     }
 
     function mandarPin(){
-        console.log(idPin)
+        const cuerpo = {
+            contenido: "http://localhost:3000/pin?idpin="+idPin,
+            es_imagen: 0,
+            es_link: 1,
+            sender: user,
+            id_usuario: conversacion
+        }
+
+        fetch('http://localhost:4000/mensajenuevo', {
+    
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cuerpo)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos', data);
+            if (data.ok == true) {
+                console.log("funciona el post")
+                setPrueba(1)
+                socket.emit("sendMessage", {message: "http://localhost:3000/pin?idpin="+idPin, room: parseInt(conversacion), sender: user, es_link: 1, es_imagen: 0, id_mensaje: data.id_mensaje})
+                
+            } else {
+                console.log("error")
+                
+            }
+        });
     }
     
     
@@ -167,12 +324,10 @@ export default function SocketPage() {
             <Button funcion={mandarPin} texto={"Enviar un Pin"}></Button>
 
             
-            <Mensaje pruebaEffect={prueba} nuevoMensaje={mensajes}></Mensaje>
+            <Mensaje pruebaEffect={prueba} nuevosMensajes={mensajes}></Mensaje>
             
 
             
         </>
     )
 }
-
-//  {mensaje.map((datos, index) =>  <p key={index}> mensaje de {datos[1]}: {datos[0]}</p>)}
