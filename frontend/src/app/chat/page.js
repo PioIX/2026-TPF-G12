@@ -11,8 +11,7 @@ import Mensaje from "@/components/Mensaje";
 export default function SocketPage() {
 
     const { socket, isConnected } = useSocket();
-    const [mensaje, setMensaje] = useState([])
-    const [contador, setContador] = useState(0) 
+    const [mensajes, setMensajes] = useState([])
     const router = useRouter()
     const searchParams = useSearchParams()
     const conversacion = parseInt(searchParams.get("sala"))
@@ -20,6 +19,7 @@ export default function SocketPage() {
     const [texto, setTexto] = useState("")
     const [nombre, setNombre] = useState("")
     const [idPin, setIdPin] = useState("")
+    const [prueba, setPrueba] = useState(0)
     
     useEffect(() => {
         if (!socket) return;
@@ -28,18 +28,16 @@ export default function SocketPage() {
             console.log("conectado")
         }
 
-        socket.on("respuestaPersonalizada", (data) => {
-            setContador(data.contador);
-        });
-
         socket.on("newMessage", (data) => {
             console.log("recibido")
             console.log(data);
-            setMensaje((prev) => [...prev, [data.message, data.sender]])
+            const msg = {msg: data.message, sender: data.sender, es_link: data.es_link, es_imagen: data.es_imagen, id_mensaje: data.id_mensaje}
+            setMensajes((prev) => [...prev, msg])
+            setPrueba(2)
         });
-
-    
 }, [socket]);
+
+
 
     useEffect(() => {
             if (!socket) return;
@@ -54,8 +52,8 @@ export default function SocketPage() {
 
 
     useEffect(()=>{
-        console.log(mensaje)
-    }, [mensaje])
+        console.log(mensajes)
+    }, [mensajes])
 
 
   
@@ -84,9 +82,6 @@ export default function SocketPage() {
     },[])
 
 
-
-
-
       function mandarMensaje() {
         socket.emit("sendMessage", {message: texto, room: parseInt(conversacion), sender: user})
          const cuerpo = {
@@ -111,6 +106,7 @@ export default function SocketPage() {
             console.log('Datos', data);
             if (data.ok == true) {
                 console.log("funciona el post")
+                setPrueba(1)
                 
             } else {
                 console.log("error")
@@ -171,7 +167,7 @@ export default function SocketPage() {
             <Button funcion={mandarPin} texto={"Enviar un Pin"}></Button>
 
             
-            <Mensaje></Mensaje>
+            <Mensaje pruebaEffect={prueba} nuevoMensaje={mensajes}></Mensaje>
             
 
             

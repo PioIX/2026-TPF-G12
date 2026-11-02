@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function Mensaje({}) {
+export default function Mensaje({pruebaEffect, nuevosMensajes}) {
   const [mensajes, setMensajes] = useState([]);
 
   useEffect(() => {
@@ -22,15 +22,15 @@ export default function Mensaje({}) {
       });
   }, []);
 
-  useEffect(() => {
-    console.log("mensajes state:", mensajes);
-  }, [mensajes]);
+  
+
+  
 
   return (
     <div>
-      {mensajes.map((mensaje, index) => {
+      {nuevosMensajes && nuevosMensajes.map((mensaje, index) => {
         return (<div key={mensaje.id_mensaje}>
-          <p>Mensaje de {mensaje.sender}: </p>
+          <p><b>Mensaje de {mensaje.sender}: </b></p>
           {mensaje.es_imagen == 1 ? (
             <img src={mensaje.contenido}></img>
           ) : mensaje.es_link == 1 ? (
