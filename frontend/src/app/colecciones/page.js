@@ -2,13 +2,18 @@
 
 import styles from "./colecciones.css"
 import coleccion from "../components/coleccion";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function colecciones() {
 
 const [coleccion, setColeccion] = useState(false)
+const router = useRouter()
 
-
+ function clickColeccion(idColeccion) {
+        console.log(idColeccion)
+        router.push("/coleccion?id="+idColeccion)
+    }
 
 
 
