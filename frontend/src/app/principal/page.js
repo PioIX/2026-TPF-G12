@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+
+import Footer from "@/components/Footer"
+import Header from '@/components/Header';
 import Button from "@/components/Button";
 
 export default function PrincipalPage() {
@@ -28,6 +31,8 @@ export default function PrincipalPage() {
         }
     }
 
+    function irColeccion() {}
+      
     function nuevoPin(){
         router.push("/subirpin?user="+id_user)
     }
@@ -38,15 +43,16 @@ export default function PrincipalPage() {
 
     return (
         <>
-            <h1>FEED</h1>
+            <Header funcion2={cerrarSesion} texto={"Cerrar Sesión"} funcion1={irColeccion}></Header>
 
-            <Button funcion={cerrarSesion} texto={"Cerrar Sesión"}></Button>
+            <h1>FEED</h1>
 
             <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
             <br></br>
             <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
 
             <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
+            <Footer> </Footer>
         </>
     )
 }
