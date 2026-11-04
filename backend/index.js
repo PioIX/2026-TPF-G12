@@ -193,10 +193,16 @@ app.post('/getColeccionespagina', async function (req, res) {
   let respuesta = await realizarQuery(`SELECT Colecciones_tpf.nombre_coleccion, Colecciones_tpf.id_coleccion, Usuarios_tpf.nombre FROM Colecciones_tpf
     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
     INNER JOIN Usuarios_tpf On Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
-    WHERE Colecciones_por_usuario_tpf.id_usuario = "${req.body.id_usuario}" AND Usuarios_tpf.id_usuario = "${req.body.id_usuario}" `);
+    WHERE Colecciones_por_usuario_tpf.id_usuario = "${req.body.id_usuario}"  `);
+    //AND Usuarios_tpf.id_usuario = "${req.body.id_usuario}"
 
+  let respuesta2 = await realizarQuery(`SELECT Usuarios_tpf.nombre FROM Usuarios_tpf
+    INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
+    INNER JOIN Colecciones_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
+    WHERE Colecciones_por_usuario_tpf.id_coleccion = "${respuesta[0].id_coleccion}" `)
+  
   obj.colecciones = respuesta
-  res.send(obj)
+  res.send([obj, respuesta2])
 })
 
 

@@ -8,6 +8,7 @@ import Coleccion from "./Coleccion";
 
 export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
     const [colecciones, setColecciones] = useState([]);
+    const [nombres, setNombres] = useState([])
     const searchParams = useSearchParams()
 
     let id_user = parseInt(searchParams.get("id_user"))
@@ -23,8 +24,8 @@ export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
             .then(response => response.json())
             .then(data => {
                 console.log('Datos', data);
-                setColecciones(data.colecciones);
-
+                setColecciones(data[0].colecciones);
+                setNombres(data[1])
             });
 
     }, [])
@@ -33,13 +34,12 @@ export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
 
     return (
         <>
-            {
-                colecciones.length == 0 ? (
+            {colecciones.length == 0 ? (
                     <p>no hay nada tonto</p>
                 ) : (
                     colecciones.map((col, i) => {
                         return (
-                            <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={col.nombre} funcion1={funcion1} funcion2={funcion2} funcion3={funcion3}>
+                            <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={nombres} funcion1={funcion1} funcion2={funcion2} funcion3={funcion3}>
                             </Coleccion>
                         )
                     })
@@ -56,3 +56,5 @@ export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
 // ver como mostrar todos los nombres de los usuarios de la coleccion
 
 // en deletecoleccion (backend) ver si tiene sentido lo de los res1,2,3
+
+
