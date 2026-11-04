@@ -1,22 +1,26 @@
 "use client"
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 
-export default function Header({}) {
+export default function Header({ }) {
     const router = useRouter()
+    const searchParams = useSearchParams()
+    let id_user = parseInt(searchParams.get("id_user"))
 
     function cerrarSesion() {
         let cerrar = confirm("Desea cerrar la sesión?")
         if (cerrar) {
+            console.log("ANTES id user: " + id_user)
             id_user = -1
-            console.log("id user: " + id_user)
+            console.log("AHORA (-1) id user: " + id_user)
             router.push("/")
         }
     }
 
     function irColeccion() {
-        router.push("/vercolecciones")
+        router.push("/vercolecciones?id_user="+id_user)
     }
 
 

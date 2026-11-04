@@ -186,16 +186,16 @@ app.post('/getnombreuser', async function (req, res) {
 })
 
 
-app.post('/getColecciones', async function (req, res) {
+app.post('/getColeccionespagina', async function (req, res) {
   let obj = {
-    pines: []
+    colecciones: []
   }
   let respuesta = await realizarQuery(`SELECT Colecciones_tpf.nombre_coleccion, Colecciones_tpf.id_coleccion, Usuarios_tpf.nombre FROM Colecciones_tpf
     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
     INNER JOIN Usuarios_tpf On Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
-    WHERE Colecciones_por_usuario_tpf.id_usuario = "${req.body.id_usuario}" AND Usuarios_tpf.id_usuario = Colecciones_por_usuario_tpf.id_usuario `);
+    WHERE Colecciones_por_usuario_tpf.id_usuario = "${req.body.id_usuario}" AND Usuarios_tpf.id_usuario = "${req.body.id_usuario}" `);
 
-  obj.pines = respuesta
+  obj.colecciones = respuesta
   res.send(obj)
 })
 
@@ -239,7 +239,7 @@ app.post('/register', async function (req, res) {
         INSERT INTO Usuarios_tpf(nombre, contrasenia, mail, foto_perfil, es_admin) VALUES 
         ("${req.body.nombre}","${req.body.contrasenia}","${req.body.mail}", "${req.body.foto_perfil}", ${0})
     `)
-    let respuesta2 = await realizarQuery(`SELECT id_usuario FROM Usuarios_tpf WHERE nombre="${req.body.nombre}"`)
+    let respuesta2 = await realizarQuery(`SELECT * FROM Usuarios_tpf WHERE nombre="${req.body.nombre}"`)
     res.send({ mensaje: "Usuario agregado", ok: true, id_user: respuesta2[0].id_usuario })
   } else {
     res.send({ mensaje: "Este dato ya existe", ok: false })
