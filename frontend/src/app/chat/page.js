@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/Button";
 import Mensaje from "@/components/Mensaje";
+import { pingPrefetchScheduler } from "next/dist/client/components/segment-cache/scheduler";
 
 export default function SocketPage() {
 
@@ -134,7 +135,15 @@ export default function SocketPage() {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log("Datos del pin especifico:", data);            
+            console.log("Datos del pin especifico:", data);
+            if (data.pin.length == 0){
+                console.log("vacio")
+                setPinExiste(0)
+                console.log(pinExiste)
+            } else {
+                setPinExiste(1)
+                console.log(pinExiste)
+            }            
         });
     },[idPin])
 
@@ -319,9 +328,13 @@ export default function SocketPage() {
             <br></br>
             <input type="number" value={idPin} onChange={(e) =>{if(e.target.value<=999) setIdPin(e.target.value)} } placeholder="Escribir el id del pin acá"></input>
             {
-                //poner el boton de mandar el pin en un use effect que verifique que el pin existe
+                pinExiste == 1? (
+                    <Button funcion={mandarPin} texto={"Enviar un Pin"}></Button>
+                ):(
+                    <p><b>¡Este Pin no existe!</b></p>
+                )
             }
-            <Button funcion={mandarPin} texto={"Enviar un Pin"}></Button>
+            
 
             
             <Mensaje pruebaEffect={prueba} nuevosMensajes={mensajes}></Mensaje>
