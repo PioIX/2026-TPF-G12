@@ -69,6 +69,7 @@ io.on("connection", (socket) => {
     io.to(req.session.room).emit("chat-messages", {
       user: req.session.user,
       room: req.session.room,
+      sender: req.session.sender
     });
   });
 
@@ -83,6 +84,10 @@ io.on("connection", (socket) => {
     io.to(data.room).emit("newMessage", {
       room: data.room,
       message: data.message,
+      sender: data.sender,
+      es_link: data.es_link,
+      es_imagen: data.es_imagen,
+      id_mensaje: data.id_mensaje
     });
   });
 
@@ -149,41 +154,87 @@ app.get('/getpinesporcoleccion', async function (req, res) {
   res.send(respuesta);
 })
 
+app.get('/getmensajes', async function (req, res) {
+  let respuesta = await realizarQuery("SELECT * FROM Mensajes_tpf");
+  console.log({ respuesta })
+  res.send(respuesta);
+})
 
 
 
 
 // GETS ESPECIFICOS  (Pasar el parámetro como: localhost:3000/nombreDelPedido?parametro1=valor1)
 app.post('/getPinesMain', async function (req, res) {
-  let obj = {
-    pines: []
-  }
-  let respuesta = await realizarQuery("SELECT * FROM Pines_tpf");
- // res.send(respuesta);
+  try {
+      let obj = {
+      pines: []
+    }
+    let respuesta = await realizarQuery("SELECT * FROM Pines_tpf");
+    // res.send(respuesta);
 
-  obj.pines = respuesta
-  res.send(obj)
+    obj.pines = respuesta
+    res.send(obj)
+
+  } catch {res.send({mensaje: "error del try"})}
 })
 
 app.post('/getpinespec', async function (req, res) {
-  let obj = {
-    pin: ""
-  }
-  let respuesta = await realizarQuery(` SELECT  *  From Pines_tpf Where id_pin = "${req.body.id_pin}" `);
+  try {
+    let obj = {
+      pin: ""
+    }
+    let respuesta = await realizarQuery(` SELECT  *  From Pines_tpf Where id_pin = "${req.body.id_pin}" `);
 
-  obj.pin = respuesta
-  res.send(obj)
+    obj.pin = respuesta
+    res.send(obj)
+  } catch {res.send({mensaje: "error del try"})}
+
+  
 })
 
 app.post('/getnombreuser', async function (req, res) {
-  let obj = {
-    nombre: ""
-  }
-  let respuesta = await realizarQuery(` SELECT  nombre  From Usuarios_tpf Where id_usuario = "${req.body.id_usuario}" `);
+  try {
+    let obj = {
+      nombre: ""
+    }
+    let respuesta = await realizarQuery(` SELECT  nombre  From Usuarios_tpf Where id_usuario = "${req.body.id_usuario}" `);
 
-  obj.nombre = respuesta
-  res.send(obj)
+    obj.nombre = respuesta
+    res.send(obj)
+  } catch {res.send({mensaje: "error del try"})}
+  
 })
+
+app.post('/getUsuariosChats', async function (req, res) {
+  try {
+    let obj = {
+      usuarios: []
+    }
+    let respuesta = await realizarQuery("SELECT * FROM Usuarios_tpf"); 
+  // res.send(respuesta);
+
+    obj.usuarios = respuesta
+    res.send(obj)
+  } catch {res.send({mensaje: "error del try"})}
+  
+})
+
+app.post('/getMensajesComponente', async function (req, res) {
+  try {
+      let obj = {
+      mensajes: []
+    }
+    let respuesta = await realizarQuery(`SELECT * FROM Mensajes_tpf WHERE id_usuario = "${req.body.id_usuario}"`);
+    // res.send(respuesta);
+
+    obj.mensajes = respuesta
+    res.send(obj)
+
+  } catch {res.send({mensaje: "error del try"})}
+})
+
+
+
 
 
 
@@ -257,7 +308,8 @@ app.post('/login', async function (req, res) {
 
 
 
-// creacion de un chat de a 2
+// pines
+
 app.post('/pinnuevo', async function (req, res) {
   try {
     console.log(req.body)
@@ -274,6 +326,8 @@ app.post('/pinnuevo', async function (req, res) {
 
 })
 
+
+
 app.put('/darlike', async function (req, res) {
   try {
     console.log(req.body)
@@ -289,6 +343,32 @@ app.put('/darlike', async function (req, res) {
     res.send({ mensaje: "Error del try" })
   }
 })
+
+
+app.post('/mensajenuevo', async function (req, res) {
+  try {
+    console.log(req.body)
+    
+      await realizarQuery(`
+        INSERT INTO Mensajes_tpf(contenido, es_imagen, es_link, sender, id_usuario) VALUES 
+        ("${req.body.contenido}", "${req.body.es_imagen}", "${req.body.es_link}", "${req.body.sender}", "${req.body.id_usuario}")
+      `)
+
+      let id=  await realizarQuery(`SELECT id_mensaje FROM Mensajes_tpf;`)
+      res.send({ mensaje: "Mensaje agregado", ok: true, id_mensaje: id[id.length-1].id_mensaje })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+
+})
+
+
+
+
+
+
+
 
 
 

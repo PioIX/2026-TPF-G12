@@ -19,7 +19,7 @@ export default function PrincipalPage() {
 
 
     function clickPin(idPin) {
-        router.push("/pin?idpin=" + idPin + "&user=" + id_user)
+        router.push("/pin?idpin="+idPin) // +"&user="+id_user
     }
 
     function cerrarSesion() {
@@ -37,6 +37,10 @@ export default function PrincipalPage() {
         router.push("/subirpin?user="+id_user)
     }
 
+    function irAConversaciones(){
+        router.push("/conversaciones?user="+id_user)
+    }
+
     return (
         <>
             <Header funcion2={cerrarSesion} texto={"Cerrar Sesión"} funcion1={irColeccion}></Header>
@@ -45,6 +49,7 @@ export default function PrincipalPage() {
 
             <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
             <br></br>
+            <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
 
             <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
             <Footer> </Footer>
