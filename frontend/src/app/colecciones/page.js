@@ -1,6 +1,7 @@
 "use client"
 
 import styles from "./colecciones.css"
+import coleccion from "../components/coleccion";
 import { useState } from "react";
 
 export default function colecciones() {
