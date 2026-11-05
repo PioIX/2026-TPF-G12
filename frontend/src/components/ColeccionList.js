@@ -19,15 +19,15 @@ export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({id_usuario: id_user})
+            body: JSON.stringify({ id_usuario: id_user })
         })
             .then(response => response.json())
             .then(data => {
                 console.log('Datos', data);
-                setColecciones(data[0].colecciones);
-                setNombres(data[1])
+                if (data.ok == 1) {}
+                else{setColecciones(data[0].colecciones);
+                    setNombres(data[1])}
             });
-
     }, [])
 
 
@@ -35,15 +35,15 @@ export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
     return (
         <>
             {colecciones.length == 0 ? (
-                    <p>no hay nada tonto</p>
-                ) : (
-                    colecciones.map((col, i) => {
-                        return (
-                            <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={nombres} funcion1={funcion1} funcion2={funcion2} funcion3={funcion3}>
-                            </Coleccion>
-                        )
-                    })
-                )
+                <p>no hay nada tonto</p>
+            ) : (
+                colecciones.map((col, i) => {
+                    return (
+                        <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={nombres} funcion1={funcion1} funcion2={funcion2} funcion3={funcion3}>
+                        </Coleccion>
+                    )
+                })
+            )
             }
 
         </>

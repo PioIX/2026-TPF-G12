@@ -1,5 +1,7 @@
 "use client"
 import Button from "@/components/Button";
+import styles from "./header.module.css";
+
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
@@ -25,7 +27,7 @@ export default function Header({ }) {
 
 
     return (
-        <div>
+        <div className={styles.header}>
             <img src="/PionterestLogo.png"></img>
             <input></input>
             <Button funcion={irColeccion} texto="Mis Colecciones"></Button>

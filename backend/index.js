@@ -186,6 +186,27 @@ app.post('/getnombreuser', async function (req, res) {
 })
 
 
+// app.post('/getColeccionespagina', async function (req, res) {
+//   let obj = {
+//     colecciones: []
+//   }
+//   let respuesta = await realizarQuery(`SELECT Colecciones_tpf.nombre_coleccion, Colecciones_tpf.id_coleccion, Usuarios_tpf.nombre FROM Colecciones_tpf
+//     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
+//     INNER JOIN Usuarios_tpf On Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
+//     WHERE Colecciones_por_usuario_tpf.id_usuario = "${req.body.id_usuario}"  `);
+//     //AND Usuarios_tpf.id_usuario = "${req.body.id_usuario}"
+//     // res1 = trae el nombre de la coleccion, su id, y el nombre del usuario logueado / Si es q tiene
+
+//   let respuesta2 = await realizarQuery(`SELECT Usuarios_tpf.nombre FROM Usuarios_tpf
+//     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
+//     INNER JOIN Colecciones_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
+//     WHERE Colecciones_por_usuario_tpf.id_coleccion = "${respuesta[0].id_coleccion}" `)
+//     // res 2 = trae los nombres de los demas usuarios
+
+//   obj.colecciones = respuesta
+//   res.send([obj, respuesta2])
+// })
+
 app.post('/getColeccionespagina', async function (req, res) {
   let obj = {
     colecciones: []
@@ -194,18 +215,20 @@ app.post('/getColeccionespagina', async function (req, res) {
     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
     INNER JOIN Usuarios_tpf On Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
     WHERE Colecciones_por_usuario_tpf.id_usuario = "${req.body.id_usuario}"  `);
-    //AND Usuarios_tpf.id_usuario = "${req.body.id_usuario}"
 
-  let respuesta2 = await realizarQuery(`SELECT Usuarios_tpf.nombre FROM Usuarios_tpf
+  obj.colecciones = respuesta
+
+  if (respuesta.length != 0) {
+    let respuesta2 = await realizarQuery(`SELECT Usuarios_tpf.nombre FROM Usuarios_tpf
     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
     INNER JOIN Colecciones_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
     WHERE Colecciones_por_usuario_tpf.id_coleccion = "${respuesta[0].id_coleccion}" `)
-  
-  obj.colecciones = respuesta
-  res.send([obj, respuesta2])
+
+    res.send([obj, respuesta2])
+  } else {
+    res.send({ obj, ok: 1 })
+  }
 })
-
-
 
 
 /* app.get('/getusuarioschatespec', async function (req, res) {
@@ -219,13 +242,6 @@ app.post('/getColeccionespagina', async function (req, res) {
 })
 
 */
-
-
-
-
-
-
-
 
 
 
