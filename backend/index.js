@@ -503,6 +503,7 @@ app.post('/getchatsej4', async function (req, res) {
   res.send(obj)
 })
 
+<<<<<<< Updated upstream
 
 
 // DELETESSSSSS
@@ -523,3 +524,27 @@ app.delete('/deletecoleccion', async function (req, res) {
 })
 
 // DELETE coleccion, colecc_por_usuario, pines_coleccion
+=======
+app.post('/coleccionnueva', async function (req, res) {
+  try {
+    const { nombre, pins, usuarios } = req.body
+
+    await realizarQuery(`INSERT INTO Colecciones_tpf(nombre_coleccion) VALUES ("${nombre}")`)
+    let col = await realizarQuery(`SELECT id_coleccion FROM Colecciones_tpf ORDER BY id_coleccion DESC LIMIT 1`)
+    const id_coleccion = col[0].id_coleccion
+
+    for (const id_pin of pins) {
+      await realizarQuery(`INSERT INTO Pines_por_coleccion_tpf(id_pin, id_coleccion) VALUES (${id_pin}, ${id_coleccion})`)
+    }
+    for (const nombreUsuario of usuarios) {
+      let u = await realizarQuery(`SELECT id_usuario FROM Usuarios_tpf WHERE nombre = "${nombreUsuario}"`)
+      if (u.length != 0) {
+        await realizarQuery(`INSERT INTO Colecciones_por_usuario_tpf(id_usuario, id_coleccion) VALUES (${u[0].id_usuario}, ${id_coleccion})`)
+      }
+    }
+    res.send({ mensaje: "Colección creada", ok: true })
+  } catch {
+    res.send({ mensaje: "Error al crear la coleccion", ok: false })
+  }
+})
+>>>>>>> Stashed changes

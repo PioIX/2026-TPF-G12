@@ -5,7 +5,7 @@ export default function Footer({ }) {
         <div>
             <footer className={styles.footer}>
                 <h3>Integrantes</h3>
-                <p>Sayuri Balbin, Liz Contrera, Mauricio Gianotti, Juan Bautista Sallaberry</p>
+                <p>Sayuri Balbin, Liz Contrera, Mauricio Gianotti, Juan Bautista Sallaberry Algán</p>
                 <h3>Curso</h3>
                 <p> 5toB</p>
             </footer>
