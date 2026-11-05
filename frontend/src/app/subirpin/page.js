@@ -17,6 +17,7 @@ export default function SubirPinPage(){
     const [tag1, setTag1] = useState("")
     const [tag2, setTag2] = useState("")
     const [subido, setSubido] = useState(false)
+    const [errorSubida, setErrorSubida] = useState(false)
     
 
     function volver(){
@@ -47,8 +48,10 @@ export default function SubirPinPage(){
             console.log('Datos', data);
             if (data.ok == true) {
                 setSubido(true)
+                setErrorSubida(false)
             } else {
                 console.log("error")
+                setErrorSubida(true)
             }
         });
 
@@ -84,6 +87,14 @@ export default function SubirPinPage(){
                             <Button funcion={postPin} texto={"Subir"}></Button>
                         )
                     )
+                )
+            }
+
+            {
+                errorSubida ? (
+                    <p><b>¡Error! El link es demasiado largo, usá otro</b></p>
+                ):(
+                    <p></p>
                 )
             }
 
