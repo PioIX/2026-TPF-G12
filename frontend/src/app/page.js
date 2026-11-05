@@ -84,7 +84,6 @@ export default function HomePage() {
 
         router.push(`/principal?id_user=${id_user}`);
 
-
       } else {
         alert("Ya existe la cuenta")
       }
@@ -97,7 +96,7 @@ export default function HomePage() {
 
         <img src="/PionterestLogo.png"></img>
         <h1>Login</h1>
-        
+
         <Button texto="Iniciar Sesion" funcion={() => setRegistrar(false)}></Button>
         <Button texto="Registrarse" funcion={() => setRegistrar(true)}></Button>
 
