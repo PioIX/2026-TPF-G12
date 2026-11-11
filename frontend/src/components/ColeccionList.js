@@ -39,7 +39,7 @@ export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
             ) : (
                 colecciones.map((col, i) => {
                     return (
-                        <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={nombres} funcion1={funcion1} funcion2={funcion2} funcion3={funcion3} id_coleccion={col.id_coleccion} >
+                        <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={nombres} funcion1={() => funcion1(col.id_coleccion)} funcion2={() => funcion2(col.id_coleccion)} funcion3={() => funcion3(col.id_coleccion)}  >
                         </Coleccion>
                     )
                 })
@@ -49,12 +49,3 @@ export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
         </>
     );
 }
-
-//falta obtener los usuarios q tienen la coleccion
-
-// ver si editar y borrar van en coleccLIST o colecc
-// ver como mostrar todos los nombres de los usuarios de la coleccion
-
-// en deletecoleccion (backend) ver si tiene sentido lo de los res1,2,3
-
-

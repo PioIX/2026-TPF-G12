@@ -2,7 +2,7 @@
 import Button from "@/components/Button";
 import { useEffect, useState } from "react";
 
-export default function Coleccion({ nombre, usuarios, funcion1, funcion2, funcion3 }) {
+export default function Coleccion({ nombre, usuarios, funcion1, funcion2, funcion3, id_coleccion }) {
 
     const [usuariosTexto, setUsuariosTexto] = useState("")
 

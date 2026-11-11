@@ -519,24 +519,8 @@ app.delete('/deletecoleccion', async function (req, res) {
   }
 })
 
-// app.delete('/deletecoleccion', async function (req, res) {
-//   try {
-//     console.log(req.body)
-//     let res1 = realizarQuery(`DELETE FROM Colecciones_por_usuario_tpf WHERE id_coleccion = "${req.body.id_coleccion}"`)
-//     let res2 = realizarQuery(`DELETE FROM Pines_por_coleccion_tpf  WHERE id_coleccion = "${req.body.id_coleccion}" `)
-//     let res3 = realizarQuery(`DELETE FROM Colecciones_tpf WHERE id_coleccion = "${req.body.id_coleccion}" `)
-//     res.send("Coleccion eliminada")
-//   } catch {
-//     res.send({ error: "error del try" })
-//   }
-// })
 
-
-// DELETE coleccion, colecc_por_usuario, pines_coleccion
-
-// crear colecciones nuevas en mysql
-
-/*
+/* crear colecciones nuevas en mysql
 INSERT INTO Colecciones_tpf (id_coleccion, nombre_coleccion)
 VALUES (4, 'Coleccion4');
 
