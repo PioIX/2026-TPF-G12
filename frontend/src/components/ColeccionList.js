@@ -39,7 +39,7 @@ export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
             ) : (
                 colecciones.map((col, i) => {
                     return (
-                        <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={nombres} funcion1={funcion1} funcion2={funcion2} funcion3={funcion3}>
+                        <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={nombres} funcion1={funcion1} funcion2={funcion2} funcion3={funcion3} id_coleccion={col.id_coleccion} >
                         </Coleccion>
                     )
                 })
