@@ -165,7 +165,7 @@ app.get('/getmensajes', async function (req, res) {
 // GETS ESPECIFICOS  (Pasar el parámetro como: localhost:3000/nombreDelPedido?parametro1=valor1)
 app.post('/getPinesMain', async function (req, res) {
   try {
-      let obj = {
+    let obj = {
       pines: []
     }
     let respuesta = await realizarQuery("SELECT * FROM Pines_tpf");
@@ -174,7 +174,7 @@ app.post('/getPinesMain', async function (req, res) {
     obj.pines = respuesta
     res.send(obj)
 
-  } catch {res.send({mensaje: "error del try"})}
+  } catch { res.send({ mensaje: "error del try" }) }
 })
 
 app.post('/getpinespec', async function (req, res) {
@@ -186,9 +186,9 @@ app.post('/getpinespec', async function (req, res) {
 
     obj.pin = respuesta
     res.send(obj)
-  } catch {res.send({mensaje: "error del try"})}
+  } catch { res.send({ mensaje: "error del try" }) }
 
-  
+
 })
 
 app.post('/getnombreuser', async function (req, res) {
@@ -200,8 +200,8 @@ app.post('/getnombreuser', async function (req, res) {
 
     obj.nombre = respuesta
     res.send(obj)
-  } catch {res.send({mensaje: "error del try"})}
-  
+  } catch { res.send({ mensaje: "error del try" }) }
+
 })
 
 app.post('/getUsuariosChats', async function (req, res) {
@@ -209,18 +209,18 @@ app.post('/getUsuariosChats', async function (req, res) {
     let obj = {
       usuarios: []
     }
-    let respuesta = await realizarQuery("SELECT * FROM Usuarios_tpf"); 
-  // res.send(respuesta);
+    let respuesta = await realizarQuery("SELECT * FROM Usuarios_tpf");
+    // res.send(respuesta);
 
     obj.usuarios = respuesta
     res.send(obj)
-  } catch {res.send({mensaje: "error del try"})}
-  
+  } catch { res.send({ mensaje: "error del try" }) }
+
 })
 
 app.post('/getMensajesComponente', async function (req, res) {
   try {
-      let obj = {
+    let obj = {
       mensajes: []
     }
     let respuesta = await realizarQuery(`SELECT * FROM Mensajes_tpf WHERE id_usuario = "${req.body.id_usuario}"`);
@@ -229,7 +229,7 @@ app.post('/getMensajesComponente', async function (req, res) {
     obj.mensajes = respuesta
     res.send(obj)
 
-  } catch {res.send({mensaje: "error del try"})}
+  } catch { res.send({ mensaje: "error del try" }) }
 })
 
 
@@ -374,14 +374,14 @@ app.put('/darlike', async function (req, res) {
 app.post('/mensajenuevo', async function (req, res) {
   try {
     console.log(req.body)
-    
-      await realizarQuery(`
+
+    await realizarQuery(`
         INSERT INTO Mensajes_tpf(contenido, es_imagen, es_link, sender, id_usuario) VALUES 
         ("${req.body.contenido}", "${req.body.es_imagen}", "${req.body.es_link}", "${req.body.sender}", "${req.body.id_usuario}")
       `)
 
-      let id=  await realizarQuery(`SELECT id_mensaje FROM Mensajes_tpf;`)
-      res.send({ mensaje: "Mensaje agregado", ok: true, id_mensaje: id[id.length-1].id_mensaje })
+    let id = await realizarQuery(`SELECT id_mensaje FROM Mensajes_tpf;`)
+    res.send({ mensaje: "Mensaje agregado", ok: true, id_mensaje: id[id.length - 1].id_mensaje })
 
   } catch {
     res.send({ mensaje: "Error del try" })
@@ -511,15 +511,28 @@ app.delete('/deletecoleccion', async function (req, res) {
   try {
     console.log(req.body)
     let res1 = realizarQuery(`DELETE FROM Colecciones_por_usuario_tpf WHERE id_coleccion = "${req.body.id_coleccion}"`)
-
-    let res2 = realizarQuery(`DELETE FROM Colecciones_tpf WHERE id_coleccion = "${req.body.id_coleccion}" `)
-
-    let res3 = realizarQuery(`DELETE FROM Pines_por_coleccion_tpf  WHERE id_coleccion = "${req.body.id_coleccion}" `)
-
+    let res2 = realizarQuery(`DELETE FROM Pines_por_coleccion_tpf  WHERE id_coleccion = "${req.body.id_coleccion}" `)
+    let res3 = realizarQuery(`DELETE FROM Colecciones_tpf WHERE id_coleccion = "${req.body.id_coleccion}" `)
     res.send("Coleccion eliminada")
   } catch {
     res.send({ error: "error del try" })
   }
 })
 
-// DELETE coleccion, colecc_por_usuario, pines_coleccion
+
+/* crear colecciones nuevas en mysql
+INSERT INTO Colecciones_tpf (id_coleccion, nombre_coleccion)
+VALUES (4, 'Coleccion4');
+
+//usu 1 y 2
+insert into Colecciones_por_usuario_tpf(id_coleccion_por_usuario, id_usuario, id_coleccion)
+values(5, 3, 4);
+insert into Colecciones_por_usuario_tpf(id_coleccion_por_usuario, id_usuario, id_coleccion)
+values(6, 6, 4);
+
+// pin 1 y pin 2
+insert into Pines_por_coleccion_tpf(id_pines_por_coleccion, id_pin, id_coleccion)
+values(4, 10, 4);
+insert into Pines_por_coleccion_tpf(id_pines_por_coleccion, id_pin, id_coleccion)
+values(5, 11, 4);
+*/
