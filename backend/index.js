@@ -503,7 +503,6 @@ app.post('/getchatsej4', async function (req, res) {
   res.send(obj)
 })
 
-<<<<<<< Updated upstream
 
 
 // DELETESSSSSS
@@ -524,15 +523,42 @@ app.delete('/deletecoleccion', async function (req, res) {
 })
 
 // DELETE coleccion, colecc_por_usuario, pines_coleccion
-=======
-app.post('/coleccionnueva', async function (req, res) {
+app.get('/coleccion/:id', async function (req, res) {
   try {
-    const { nombre, pins, usuarios } = req.body
-
-    await realizarQuery(`INSERT INTO Colecciones_tpf(nombre_coleccion) VALUES ("${nombre}")`)
-    let col = await realizarQuery(`SELECT id_coleccion FROM Colecciones_tpf ORDER BY id_coleccion DESC LIMIT 1`)
-    const id_coleccion = col[0].id_coleccion
-
+    const id = Number(req.params.id)
+ 
+    const col = await realizarQuery(`SELECT nombre_coleccion FROM Colecciones_tpf WHERE id_coleccion = ${id}`)
+    if (col.length == 0) {
+      return res.send({ mensaje: "La colección no existe", ok: false })
+    }
+ 
+    const pins = await realizarQuery(`SELECT id_pin FROM Pines_por_coleccion_tpf WHERE id_coleccion = ${id}`)
+    const usuarios = await realizarQuery(
+      `SELECT u.nombre FROM Colecciones_por_usuario_tpf cu
+       INNER JOIN Usuarios_tpf u ON u.id_usuario = cu.id_usuario
+       WHERE cu.id_coleccion = ${id}`
+    )
+ 
+    res.send({
+      ok: true,
+      nombre: col[0].nombre_coleccion,
+      pins: pins.map(p => p.id_pin),
+      usuarios: usuarios.map(u => u.nombre),
+    })
+  } catch {
+    res.send({ mensaje: "Error al traer la colección", ok: false })
+  }
+})
+ 
+// Editar coleccion
+app.put('/coleccioneditar', async function (req, res) {
+  try {
+    const { id_coleccion, nombre, pins, usuarios } = req.body
+ 
+    await realizarQuery(`UPDATE Colecciones_tpf SET nombre_coleccion = "${nombre}" WHERE id_coleccion = ${id_coleccion}`)
+    await realizarQuery(`DELETE FROM Pines_por_coleccion_tpf WHERE id_coleccion = ${id_coleccion}`)
+    await realizarQuery(`DELETE FROM Colecciones_por_usuario_tpf WHERE id_coleccion = ${id_coleccion}`)
+ 
     for (const id_pin of pins) {
       await realizarQuery(`INSERT INTO Pines_por_coleccion_tpf(id_pin, id_coleccion) VALUES (${id_pin}, ${id_coleccion})`)
     }
@@ -542,9 +568,42 @@ app.post('/coleccionnueva', async function (req, res) {
         await realizarQuery(`INSERT INTO Colecciones_por_usuario_tpf(id_usuario, id_coleccion) VALUES (${u[0].id_usuario}, ${id_coleccion})`)
       }
     }
-    res.send({ mensaje: "Colección creada", ok: true })
+ 
+    res.send({ mensaje: "Colección editada", ok: true })
   } catch {
-    res.send({ mensaje: "Error al crear la coleccion", ok: false })
+    res.send({ mensaje: "Error al editar la coleccion", ok: false })
   }
 })
->>>>>>> Stashed changes
+
+app.get('/miscolecciones/:id_usuario', async function (req, res) {
+  try {
+    const id_usuario = Number(req.params.id_usuario)
+ 
+    const colecciones = await realizarQuery(
+      `SELECT c.id_coleccion, c.nombre_coleccion
+       FROM Colecciones_tpf c
+       INNER JOIN Colecciones_por_usuario_tpf cu ON cu.id_coleccion = c.id_coleccion
+       WHERE cu.id_usuario = ${id_usuario}`
+    )
+ 
+    const resultado = []
+    for (const c of colecciones) {
+      const usuarios = await realizarQuery(
+        `SELECT u.nombre
+         FROM Colecciones_por_usuario_tpf cu
+         INNER JOIN Usuarios_tpf u ON u.id_usuario = cu.id_usuario
+         WHERE cu.id_coleccion = ${c.id_coleccion}`
+      )
+      resultado.push({
+        id_coleccion: c.id_coleccion,
+        nombre: c.nombre_coleccion,
+        usuarios: usuarios.map(u => u.nombre),
+      })
+    }
+ 
+    res.send(resultado)
+  } catch {
+    res.send([])
+  }
+})
+ 

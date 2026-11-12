@@ -1,14 +1,19 @@
 "use client"
 
-import nuevaColeccion from "@/app/nuevacoleccion.js/page";
-export default function coleccion() {
+import { useRouter } from "next/navigation"
+
+export default function Coleccion({ id_coleccion, nombre, usuarios, onBorrar }) {
+    const router = useRouter()
+
     return (
         <div>
-                <h1>  </h1>
+            <h2>{nombre}</h2>
+            <h3>Usuarios:</h3>
+            <p>{usuarios.join(", ")}</p>
 
-
-
+            <button onClick={() => router.push("/nuevaColeccion?id=" + id_coleccion)}>Editar</button>
+            <button onClick={() => onBorrar(id_coleccion)}>Borrar</button>
         </div>
-    
-);
-};
+    )
+}
+
