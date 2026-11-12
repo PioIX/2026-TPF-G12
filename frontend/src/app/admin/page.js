@@ -54,6 +54,9 @@ export default function AdminPage() {
         }
     }
 
+    function volver() { router.back() }
+
+
 
     return (
         <div>
@@ -66,6 +69,10 @@ export default function AdminPage() {
             <h2>Eliminar PIN</h2>
             <Input id={pin} texto={"ID PIN"} funcion={getPin}></Input>
             <Button funcion={() => matarPin(pin)} texto={"MATAR"}> </Button>
+
+            <br></br>
+            <Button funcion={volver} texto={"Volver"}></Button>
+
         </div>
     )
 }

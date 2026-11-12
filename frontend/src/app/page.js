@@ -49,7 +49,8 @@ export default function HomePage() {
         if (res.es_admin == 0) {
           router.push(`/principal?id_user=${id_user}`);
         } else {
-          router.push(`/paginaAdmin?id_user=${id_user}`);
+          console.log("ADMIN ALERT")
+          router.push(`/admin?id_user=${id_user}`);
         }
 
       } else {
