@@ -48,6 +48,8 @@ export default function ColeccionesPage() {
     router.push("/modcoleccion?id_coleccion=" + id_coleccion);
   }
 
+  function volver(){router.back()}
+
   return (
     <>
       <Header></Header>
@@ -60,6 +62,7 @@ export default function ColeccionesPage() {
         funcion3={irColeccion}
       ></ColeccionList>
 
+      <Button funcion={volver} texto={"Volver"}></Button>
       <Button funcion={nuevaColeccion} texto={"+"}></Button>
 
       <Footer> </Footer>
