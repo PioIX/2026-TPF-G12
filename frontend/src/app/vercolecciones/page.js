@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";

@@ -103,10 +103,10 @@ export default function HomePage() {
         {registrar ? (
           <div>
             <h2>Registro</h2>
-            <Input text="Ej: Sayu.Crack" id="nombre" onChange={getNombre}></Input>
-            <Input text="sayu@gmail.com" id="mail" onChange={getMail}></Input>
-            <Input text="papita123" id="contraseña" onChange={getContrasenia}></Input>
-            <Input id="fotoContacto" text="link" onChange={getFoto}></Input>
+            <Input texto="Ej: Sayu.Crack" id="nombre" funcion={getNombre}></Input>
+            <Input texto="sayu@gmail.com" id="mail" funcion={getMail}></Input>
+            <Input texto="papita123" id="contraseña" funcion={getContrasenia}></Input>
+            <Input id="fotoContacto" texto="link" funcion={getFoto}></Input>
             <Button texto="Validar" funcion={crearCuenta}></Button>
           </div>
 
@@ -114,8 +114,8 @@ export default function HomePage() {
           <div>
             <h2>Inicio de sesión</h2>
 
-            <Input text="sayu@gmail.com" id="mail" onChange={getMail}></Input>
-            <Input text="papita123" id="contraseña" onChange={getContrasenia}></Input>
+            <Input texto="sayu@gmail.com" id="mail" funcion={getMail}></Input>
+            <Input texto="papita123" id="contraseña" funcion={getContrasenia}></Input>
 
             <Button texto="Validar" funcion={iniciarSesion}></Button>
           </div>
