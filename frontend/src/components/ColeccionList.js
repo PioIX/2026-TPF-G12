@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 import Coleccion from "./Coleccion";
 
-export default function ColeccionList({ funcion1, funcion2, funcion3 }) {
+export default function ColeccionList({ funcion1, funcion2, funcion3}) {
     const [colecciones, setColecciones] = useState([]);
     const [nombres, setNombres] = useState([])
     const searchParams = useSearchParams()

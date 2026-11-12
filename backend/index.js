@@ -148,11 +148,11 @@ app.get('/getcoleccionesporusuario', async function (req, res) {
   res.send(respuesta);
 })
 
-app.get('/getpinesporcoleccion', async function (req, res) {
+/*app.get('/getpinesporcoleccion', async function (req, res) {
   let respuesta = await realizarQuery("SELECT * FROM Pines_por_coleccion_tpf");
   console.log({ respuesta })
   res.send(respuesta);
-})
+})*/
 
 app.get('/getmensajes', async function (req, res) {
   let respuesta = await realizarQuery("SELECT * FROM Mensajes_tpf");
@@ -187,9 +187,24 @@ app.post('/getpinespec', async function (req, res) {
     obj.pin = respuesta
     res.send(obj)
   } catch { res.send({ mensaje: "error del try" }) }
-
-
 })
+
+// pines de una coleccion
+app.post('/getpinesporcoleccion', async function (req, res) {
+  try {
+    let obj = {
+      pines: []
+    }
+    let respuesta = await realizarQuery(`SELECT Pines_tpf.id_pin, link, tag1, tag2, descripcion, me_gusta, id_usuario, id_coleccion FROM Pines_tpf 
+      INNER JOIN Pines_por_coleccion_tpf ON Pines_por_coleccion_tpf.id_pin = Pines_tpf.id_pin
+      WHERE id_coleccion = "${req.body.id_coleccion}"`);
+
+    obj.pines = respuesta
+    res.send(obj)
+
+  } catch { res.send({ mensaje: "error del try" }) }
+})
+
 
 app.post('/getnombreuser', async function (req, res) {
   try {
