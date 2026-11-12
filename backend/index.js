@@ -551,3 +551,32 @@ values(4, 10, 4);
 insert into Pines_por_coleccion_tpf(id_pines_por_coleccion, id_pin, id_coleccion)
 values(5, 11, 4);
 */
+
+
+// delete pin
+app.delete('/deletepin', async function (req, res) {
+  try {
+    console.log(req.body)
+    let res1 = realizarQuery(`DELETE FROM Pines_por_coleccion_tpf  WHERE id_pin = "${req.body.id_pin}" `)
+    let res2 = realizarQuery(`DELETE FROM Pines_tpf WHERE id_pin = "${req.body.id_pin}"`)
+
+    res.send("pin r.i.p")
+  } catch {
+    res.send({ error: "error del try" })
+  }
+})
+
+// delete usuario
+app.delete('/deleteusuario', async function (req, res) {
+  try {
+    console.log(req.body)
+    let res1 = realizarQuery(`DELETE FROM Pines_tpf WHERE id_usuario = "${req.body.id_usuario}"`)
+    let res2 = realizarQuery(`DELETE FROM Mensajes_tpf  WHERE id_usuario = "${req.body.id_usuario}" `)
+    let res3 = realizarQuery(`DELETE FROM Colecciones_por_usuario_tpf  WHERE id_usuario = "${req.body.id_usuario}" `)
+    let res4 = realizarQuery(`DELETE FROM Usuarios_tpf  WHERE id_usuario = "${req.body.id_usuario}" `)
+  
+    res.send("usuario r.i.p")
+  } catch {
+    res.send({ error: "error del try" })
+  }
+})
