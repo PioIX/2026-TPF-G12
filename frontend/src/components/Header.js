@@ -25,11 +25,15 @@ export default function Header({ }) {
         router.push("/vercolecciones?id_user="+id_user)
     }
 
+    function irBuscador() {
+        router.push("/buscador")
+    }
+
 
     return (
         <div className={styles.header}>
             <img src="/PionterestLogo.png"></img>
-            <input></input>
+            <Button funcion={irBuscador} texto="🔎 Buscador"></Button>
             <Button funcion={irColeccion} texto="Mis Colecciones"></Button>
 
             <Button funcion={cerrarSesion} texto="Cerrar sesión"></Button>
