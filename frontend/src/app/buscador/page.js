@@ -19,31 +19,30 @@ export default function BuscadorPage() {
 
     useEffect(() => {
         fetch("http://localhost:4000/getiduser", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({nombre: nombreUser})
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ nombre: nombreUser })
         })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("id del usuario con este nombre especifico:", data);
-            if (data.id.length == 0){
-                console.log("vacio")
-                if (nombreUser == "") {
-                    setIdBuscar(0)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("id del usuario con este nombre especifico:", data);
+                if (data.id.length == 0) {
+                    console.log("vacio")
+                    if (nombreUser == "") {
+                        setIdBuscar(0)
+                    } else {
+                        setIdBuscar(-1)
+                    }
+
+
                 } else {
-                    setIdBuscar(-1)
+                    console.log("no vacio, bien hecho: " + data.id[0].id_usuario)
+                    setIdBuscar(data.id[0].id_usuario)
                 }
-                
-                
-            } else {
-                console.log("no esta vacio")
-                console.log("bine hecho: "+ data.id[0].id_usuario) 
-                setIdBuscar(data.id[0].id_usuario)
-            }            
-        });
-    },[nombreUser])
+            });
+    }, [nombreUser])
 
 
 
@@ -56,20 +55,58 @@ export default function BuscadorPage() {
 
     function volver() { router.back() }
 
-    function test(){
-        console.log("tag 1:"+ tag1)
-        console.log("tag 2:"+ tag2)
-        console.log("nombre del usuario:"+ nombreUser)
-        console.log("id de user a buscar:"+ idBuscar)
+    function test() {
+        console.log("tag 1:" + tag1)
+        console.log("tag 2:" + tag2)
+        console.log("nombre del usuario:" + nombreUser)
+        console.log("id de user a buscar:" + idBuscar)
     }
 
-    function buscar(){
+    async function buscar() {
         console.log("hola")
+
+        // if (tag1 == "" && tag2 == "" && nombreUser == "") {
+        //     console.log("Todo vacio")
+        // }
+        // else if (tag1 != "" || tag2 != "") {
+        //     if (nombreUser == "") {
+        //         console.log("Buscar solamente por tema")
+        //     } else {
+        //         console.log("Buscar por tema y usuario")
+        //     }
+
+        // }
+        // else if (nombreUser != "") {
+        //     console.log("Buscar solamente por usuario")
+        // }
+
+        if (tag1 == "" && tag2 == "" && id_usuario == "") {
+            alert("Completá algún filtro")
+        }
+
+        else {
+            const resultado = await fetch("http://localhost:4000/getpinesbuscador", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    tag1: tag1,
+                    tag2: tag2,
+                    id_usuario: idBuscar
+                })
+            })
+
+            const datos = await resultado.json()
+
+            console.log(datos)
+        }
+
     }
 
     function condicionTags() {
         if (tag1 == tag2) {
-            if (tag1== "") {
+            if (tag1 == "") {
                 if (idBuscar != -1) {
                     return (
                         <Button funcion={buscar} texto={"Buscar"}></Button>
@@ -79,7 +116,7 @@ export default function BuscadorPage() {
                         <p>¡Cuidado! Usuario no encontrado</p>
                     )
                 }
-                
+
             } else {
                 return (
                     <p>¡Cuidado! las etiquetas no pueden ser iguales</p>
@@ -87,14 +124,14 @@ export default function BuscadorPage() {
             }
         } else {
             if (idBuscar != -1) {
-                    return (
-                        <Button funcion={buscar} texto={"Buscar"}></Button>
-                    )
+                return (
+                    <Button funcion={buscar} texto={"Buscar"}></Button>
+                )
             } else {
                 return (
                     <p>¡Cuidado! Usuario no encontrado</p>
                 )
-                
+
             }
         }
     }
@@ -112,7 +149,7 @@ export default function BuscadorPage() {
             <p>Para buscar solo por tema, dejar el espacio de usuario en blanco. Para buscar por tema y por usuario, llenar todos los campos. Para buscar solo por usuario, dejar los temas en "nada"</p>
 
             <h2>Buscar por tema</h2>
-            <SelectTemas nombre={"tag1"} onchangefunc={(select) =>  setTag1(select.target.value)}></SelectTemas>
+            <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
             <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
 
             <Button funcion={test} texto={"prueba borrar despueslog tags"}></Button>
@@ -122,7 +159,7 @@ export default function BuscadorPage() {
             <Input id={"nombreUsuario"} texto={"ingresar nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)} ></Input>
 
             {condicionTags()}
-            
+
 
             <Footer></Footer>
         </div>

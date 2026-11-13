@@ -260,28 +260,6 @@ app.post('/getiduser', async function (req, res) {
 })
 
 
-
-// app.post('/getColeccionespagina', async function (req, res) {
-//   let obj = {
-//     colecciones: []
-//   }
-//   let respuesta = await realizarQuery(`SELECT Colecciones_tpf.nombre_coleccion, Colecciones_tpf.id_coleccion, Usuarios_tpf.nombre FROM Colecciones_tpf
-//     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
-//     INNER JOIN Usuarios_tpf On Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
-//     WHERE Colecciones_por_usuario_tpf.id_usuario = "${req.body.id_usuario}"  `);
-//     //AND Usuarios_tpf.id_usuario = "${req.body.id_usuario}"
-//     // res1 = trae el nombre de la coleccion, su id, y el nombre del usuario logueado / Si es q tiene
-
-//   let respuesta2 = await realizarQuery(`SELECT Usuarios_tpf.nombre FROM Usuarios_tpf
-//     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
-//     INNER JOIN Colecciones_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
-//     WHERE Colecciones_por_usuario_tpf.id_coleccion = "${respuesta[0].id_coleccion}" `)
-//     // res 2 = trae los nombres de los demas usuarios
-
-//   obj.colecciones = respuesta
-//   res.send([obj, respuesta2])
-// })
-
 app.post('/getColeccionespagina', async function (req, res) {
   let obj = {
     colecciones: []
@@ -305,6 +283,30 @@ app.post('/getColeccionespagina', async function (req, res) {
   }
 })
 
+app.post('/getpinesbuscador', async function (req, res) {
+
+  let tag1 = req.body.tag1
+  let tag2 = req.body.tag2
+  let id_usuario = req.body.id_usuario
+
+  let consulta = `SELECT * FROM Pines_tpf WHERE 1=1 `
+
+  if (tag1 != "") {
+    consulta += ` AND (Pines_tpf.tag1 = "${tag1}" OR Pines_tpf.tag2 = "${tag1}") `
+  }
+
+  if (tag2 != "") {
+    consulta += ` AND (Pines_tpf.tag1 = "${tag2}" OR Pines_tpf.tag2 = "${tag2}") `
+  }
+
+  if (id_usuario != "") {
+    consulta += ` AND Pines_tpf.id_usuario = "${id_usuario}" `
+  }
+
+  let respuesta = await realizarQuery(consulta)
+
+  res.send(respuesta)
+})
 
 /* app.get('/getusuarioschatespec', async function (req, res) {
   let respuesta;
@@ -586,7 +588,7 @@ app.delete('/deleteusuario', async function (req, res) {
     let res2 = realizarQuery(`DELETE FROM Mensajes_tpf  WHERE id_usuario = "${req.body.id_usuario}" `)
     let res3 = realizarQuery(`DELETE FROM Colecciones_por_usuario_tpf  WHERE id_usuario = "${req.body.id_usuario}" `)
     let res4 = realizarQuery(`DELETE FROM Usuarios_tpf  WHERE id_usuario = "${req.body.id_usuario}" `)
-  
+
     res.send("usuario r.i.p")
   } catch {
     res.send({ error: "error del try" })
