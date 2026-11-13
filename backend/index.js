@@ -247,6 +247,18 @@ app.post('/getMensajesComponente', async function (req, res) {
   } catch { res.send({ mensaje: "error del try" }) }
 })
 
+app.post('/getiduser', async function (req, res) {
+  try {
+    let obj = {
+      id: ""
+    }
+    let respuesta = await realizarQuery(` SELECT  id_usuario  From Usuarios_tpf Where nombre = "${req.body.nombre}" `);
+
+    obj.id = respuesta
+    res.send(obj)
+  } catch { res.send({ mensaje: "error del try" }) }
+})
+
 
 
 // app.post('/getColeccionespagina', async function (req, res) {
