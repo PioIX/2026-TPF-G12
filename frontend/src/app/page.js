@@ -47,10 +47,10 @@ export default function HomePage() {
         alert("Usuario VERIFICADO")
 
         if (res.es_admin == 0) {
-          router.push(`/principal?id_user=${id_user}`);
+          router.push(`/principal?id_user=${id_user}&A=${0}`);
         } else {
           console.log("ADMIN ALERT")
-          router.push(`/admin?id_user=${id_user}`);
+          router.push(`/admin?id_user=${id_user}&A=${1}`);
         }
 
       } else {
@@ -83,7 +83,7 @@ export default function HomePage() {
 
         alert("u uwa wa uwa")
 
-        router.push(`/principal?id_user=${id_user}`);
+        router.push(`/principal?id_user=${id_user}&A=${0}`);
 
       } else {
         alert("Ya existe la cuenta")

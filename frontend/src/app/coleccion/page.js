@@ -16,9 +16,11 @@ export default function ColeccionPage() {
   console.log("id user: " + id_user);
   let id_coleccion = parseInt(searchParams.get("id_coleccion"));
   console.log("id coleccion: " + id_coleccion);
+  let A = parseInt(searchParams.get("A"))
+
 
   function clickPin(idPin) {
-    router.push("/pin?idpin="+idPin) 
+    router.push("/pin?idpin="+idPin +"&A="+A) 
   }
   function volver(){router.back()}
 

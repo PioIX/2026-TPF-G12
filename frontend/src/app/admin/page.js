@@ -60,7 +60,7 @@ export default function AdminPage() {
   }
 
   function irPrincipal() {
-    router.push(`/principal?id_user=${id_user}`);
+    router.push(`/principal?id_user=${id_user}&A=${1}`);
   }
 
   return (
