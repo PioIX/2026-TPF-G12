@@ -1,0 +1,34 @@
+.contenido {
+  padding: 30px 50px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* Botones arriba */
+.botonesSuperiores {
+  text-align: center;
+  margin-bottom: 40px;
+
+}
+/* + y ir a chats*/
+.botonesSuperiores button {
+  margin: 10px;
+  background-color: #8490d8;
+  color: white;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 50px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-right: 10px;
+  
+}
+
+
