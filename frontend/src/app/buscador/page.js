@@ -80,7 +80,7 @@ export default function BuscadorPage() {
         //     console.log("Buscar solamente por usuario")
         // }
 
-        if (tag1 == "" && tag2 == "" && id_usuario == "") {
+        if (tag1 == "" && tag2 == "" && nombreUser == "") {
             alert("Completá algún filtro")
         }
 

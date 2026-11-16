@@ -293,13 +293,9 @@ app.post('/getpinesbuscador', async function (req, res) {
 
   if (tag1 != "") {
     consulta += ` AND (Pines_tpf.tag1 = "${tag1}" OR Pines_tpf.tag2 = "${tag1}") `
-  }
-
-  if (tag2 != "") {
+  } else if (tag2 != "") {
     consulta += ` AND (Pines_tpf.tag1 = "${tag2}" OR Pines_tpf.tag2 = "${tag2}") `
-  }
-
-  if (id_usuario != "") {
+  } else if (id_usuario != "") {
     consulta += ` AND Pines_tpf.id_usuario = "${id_usuario}" `
   }
 
