@@ -32,11 +32,13 @@ export default function Header({ }) {
             
             <div className={styles.contenedorBotones}>
                 <input></input>
-                <Button funcion={irColeccion} texto="Mis Colecciones"></Button>
+               
+
+                <Button funcion={irColeccion} texto="Mis Colecciones"></Button> 
                 <Button funcion={cerrarSesion} texto="Cerrar sesión"></Button>
+                
             </div>
         </div>
-
 
     )
 

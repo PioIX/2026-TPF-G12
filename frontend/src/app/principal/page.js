@@ -45,8 +45,9 @@ export default function PrincipalPage() {
                     <br></br>
                     <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
                 </div>
-
-                <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
+                <div className={styles.pinlist}>
+                    <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
+                </div>
             </main>
 
             {/* <button className={styles.botonAgregar}>+</button> */}
