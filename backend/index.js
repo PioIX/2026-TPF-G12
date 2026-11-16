@@ -289,14 +289,21 @@ app.post('/getpinesbuscador', async function (req, res) {
   let tag2 = req.body.tag2
   let id_usuario = req.body.id_usuario
 
-  let consulta = `SELECT * FROM Pines_tpf WHERE 1=1 `
+  let consulta = `SELECT * FROM Pines_tpf`
 
-  if (tag1 != "") {
-    consulta += ` AND (Pines_tpf.tag1 = "${tag1}" OR Pines_tpf.tag2 = "${tag1}") `
-  } else if (tag2 != "") {
-    consulta += ` AND (Pines_tpf.tag1 = "${tag2}" OR Pines_tpf.tag2 = "${tag2}") `
-  } else if (id_usuario != "") {
-    consulta += ` AND Pines_tpf.id_usuario = "${id_usuario}" `
+  if (tag1 != "" || tag2 != "") {
+    consulta += ` WHERE Pines_tpf.tag1 = "${tag1}" AND Pines_tpf.tag2 = "${tag2}" `
+    console.log("puse tags")
+    console.log(tag1)
+    console.log(tag2)
+    if (id_usuario != "") {
+      consulta += ` AND Pines_tpf.id_usuario = ${id_usuario} `
+      console.log("puse las tres")
+      console.log(id_usuario) 
+    }
+  } else {
+    consulta +=  ` WHERE Pines_tpf.id_usuario = ${id_usuario} `
+    console.log("no puse tags")
   }
 
   let respuesta = await realizarQuery(consulta)
