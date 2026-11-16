@@ -33,14 +33,19 @@ export default function PrincipalPage() {
     return (
         <>
             <Header></Header>
+            <main className={styles.contenido}>
+                <h2 className={styles.titulo}>Publicaciones</h2>
+    
+    
+                <div className={styles.botonesSuperiores}>
+                    <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
+                    <br></br>
+                    <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
+                </div>
 
-            <h1>FEED</h1>
+                <PinList id_log={id_user} botonOnClick={clickPin}></PinList>p
+            </main>
 
-            <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
-            <br></br>
-            <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
-
-            <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
             <Footer> </Footer>
         </>
     )

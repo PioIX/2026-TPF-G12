@@ -1,3 +1,47 @@
 .header {
-  background-color: rgb(179, 171, 250);
+  background-color: #ffffff;
+  border-bottom: 3px solid var(--color-borde, #7b68ee);
+  padding: 12px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Logo */
+.logoImg {
+  height: 50px;
+  width: auto;
+}
+
+/* Buscador */
+.contenedorBuscador {
+  display: flex;
+  gap: 8px;
+}
+
+.inputBuscar {
+  padding: 8px 12px;
+  border: 2px solid var(--color-borde, #7b68ee);
+  border-radius: 20px;
+  width: 280px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.botonBuscar {
+  padding: 8px 16px;
+  background-color: var(--color-acento, #ffb347);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #2c2c2c;
+}
+
+/* Botones a la derecha */
+.contenedorBotones {
+  display: flex;
+  gap: 10px;
 }

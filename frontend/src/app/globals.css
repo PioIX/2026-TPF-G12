@@ -1,14 +1,18 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fbf3ff;       
+  --foreground: #070707;       
+  
+  /* Colores del diseño */
+  --color-fondo: #e6e6fa;
+  --color-primario: #584a74;    /* Morado medio */
+  --color-acento: #ffb347;      /* Naranja/amarillo botones */
+  --color-amarillo-suave: #ffeb99;
+  --color-blanco: #ffffff;
+  --color-borde: #16050d;
+  --sombra: 0 2px 6px rgba(0,0,0,0.1);
+  --redondeo: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 html {
   height: 100%;
@@ -42,8 +46,17 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+}
+
+h2 {
+  text-align: center;
+  color: var(--color-primario);
+  margin-bottom: 25px;
+  font-size: 22px;
 }
