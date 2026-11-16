@@ -8,6 +8,7 @@ import Input from "@/components/Input";
 import SelectTemas from "@/components/SelectTemas";
 import Footer from "@/components/Footer"
 import Header from '@/components/Header';
+import PinListBuscador from "@/components/PinListBuscador";
 
 
 export default function BuscadorPage() {
@@ -16,6 +17,7 @@ export default function BuscadorPage() {
     const [tag2, setTag2] = useState("")
     const [nombreUser, setNombreUser] = useState("")
     const [idBuscar, setIdBuscar] = useState(0)
+    const [datosBusqueda, setDatosBusqueda] = useState([])
 
     useEffect(() => {
         fetch("http://localhost:4000/getiduser", {
@@ -36,7 +38,6 @@ export default function BuscadorPage() {
                         setIdBuscar(-1)
                     }
 
-
                 } else {
                     console.log("no vacio, bien hecho: " + data.id[0].id_usuario)
                     setIdBuscar(data.id[0].id_usuario)
@@ -44,41 +45,11 @@ export default function BuscadorPage() {
             });
     }, [nombreUser])
 
-
-
-
-
-
-
-
-
-
     function volver() { router.back() }
 
-    function test() {
-        console.log("tag 1:" + tag1)
-        console.log("tag 2:" + tag2)
-        console.log("nombre del usuario:" + nombreUser)
-        console.log("id de user a buscar:" + idBuscar)
-    }
 
     async function buscar() {
-        console.log("hola")
-
-        // if (tag1 == "" && tag2 == "" && nombreUser == "") {
-        //     console.log("Todo vacio")
-        // }
-        // else if (tag1 != "" || tag2 != "") {
-        //     if (nombreUser == "") {
-        //         console.log("Buscar solamente por tema")
-        //     } else {
-        //         console.log("Buscar por tema y usuario")
-        //     }
-
-        // }
-        // else if (nombreUser != "") {
-        //     console.log("Buscar solamente por usuario")
-        // }
+        console.log("hola voy a buscar :P")
 
         if (tag1 == "" && tag2 == "" && nombreUser == "") {
             alert("Completá algún filtro")
@@ -98,10 +69,9 @@ export default function BuscadorPage() {
             })
 
             const datos = await resultado.json()
-
             console.log(datos)
+            setDatosBusqueda(datos)  
         }
-
     }
 
     function condicionTags() {
@@ -136,6 +106,10 @@ export default function BuscadorPage() {
         }
     }
 
+    function clickPin(idPin) {
+    router.push("/pin?idpin="+idPin) 
+  }
+
     return (
         <div>
             <Header></Header>
@@ -152,7 +126,6 @@ export default function BuscadorPage() {
             <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
             <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
 
-            <Button funcion={test} texto={"prueba borrar despueslog tags"}></Button>
             <br></br>
 
             <h2>Buscar por usuario</h2>
@@ -160,7 +133,7 @@ export default function BuscadorPage() {
 
             {condicionTags()}
 
-
+            <PinListBuscador listaDatos= {datosBusqueda} botonOnClick={clickPin}></PinListBuscador>
             <Footer></Footer>
         </div>
     )
