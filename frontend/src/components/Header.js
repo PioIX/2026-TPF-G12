@@ -35,9 +35,10 @@ export default function Header({ }) {
                 
                 <Button funcion={irColeccion} texto="Mis Colecciones" className={styles.botonColecciones}></Button>
                 <Button funcion={cerrarSesion} texto="Cerrar sesión" className={styles.botonCerrarSesion}></Button>
+
+               
             </div>
         </div>
-
 
     )
 

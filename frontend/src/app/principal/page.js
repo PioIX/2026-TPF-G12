@@ -10,8 +10,7 @@ import { useSearchParams } from "next/navigation";
 import Footer from "@/components/Footer"
 import Header from '@/components/Header';
 import Button from "@/components/Button";
-
-import styles from './PrincipalPage.module.css';
+import styles from './page.module.css';
 
 
 export default function PrincipalPage() {
@@ -36,20 +35,24 @@ export default function PrincipalPage() {
     return (
         <>
             <Header></Header>
+
             <main className={styles.contenido}>
+
                 <h2 className={styles.titulo}>Publicaciones</h2>
     
     
                 <div className={styles.botonesSuperiores}>
-                    <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
+                    <Button funcion={nuevoPin} texto={"Nuevo pin"} className={styles.botonAgregar}></Button>
                     <br></br>
                     <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
                 </div>
+
                 <div className={styles.pins}>
                     <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
-
                 </div>
+                {/* <div className={styles.pinlist}> <PinList id_log={id_user} botonOnClick={clickPin}></PinList></div> */}
             </main>
+
 
             <Footer> </Footer>
         </>
