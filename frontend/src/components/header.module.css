@@ -1,47 +1,63 @@
 .header {
-  background-color: #ffffff;
-  border-bottom: 3px solid var(--color-borde, #7b68ee);
-  padding: 12px 25px;
+  background-color: #8490d8;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
+  justify-content: space-between;
+  padding: 12px 25px;
 }
 
-/* Logo */
-.logoImg {
-  height: 50px;
-  width: auto;
+.header img {
+  height: 55px;
 }
 
-/* Buscador */
-.contenedorBuscador {
-  display: flex;
-  gap: 8px;
+.buscador {
+  
+
 }
 
-.inputBuscar {
-  padding: 8px 12px;
-  border: 2px solid var(--color-borde, #7b68ee);
-  border-radius: 20px;
-  width: 280px;
-  font-size: 14px;
-  background-color: #fff;
-}
 
-.botonBuscar {
-  padding: 8px 16px;
-  background-color: var(--color-acento, #ffb347);
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  color: #2c2c2c;
-}
 
-/* Botones a la derecha */
+
 .contenedorBotones {
   display: flex;
-  gap: 10px;
+}
+
+.botonColecciones {
+  background-color: #0d8a13;
+  color: white;             
+  border: none;             
+  padding: 10px 26px;       
+  border-radius: 50px;      
+  font-size: 15px;          
+  cursor: pointer;          
+  margin-right: 10px;    
+}
+
+.botonCerrarSesion {
+  background-color: #e63131;
+  color: white;             
+  border: none;             
+  padding: 10px 26px;       
+  border-radius: 50px;      
+  font-size: 15px;          
+  cursor: pointer;          
+  margin-right: 10px;    
+}   
+
+.buscador{         
+  width: 100%;              
+  padding: 10px 14px;       
+  border: 1px solid #c9b896;
+  border-radius: 12px;
+  background-color: #f9f2e3;
+  font-size: 14px;          
+  margin: 20px ;     
+  box-sizing: border-box;   
+  outline: none;         
+  border-color: #b5a687;   
+  width: 280px;  
+}  
+
+.header img {
+  height: 90px;
 }

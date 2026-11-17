@@ -1,7 +1,7 @@
 "use client"
 
-export default function Button({funcion, texto}){
+export default function Button({funcion, texto, className = ''}){
     return (
-        <button onClick={funcion}> {texto} </button>
+        <button onClick={funcion} className={className}> {texto} </button>
     )
 }

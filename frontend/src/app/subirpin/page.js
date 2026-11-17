@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/Button";
 import SelectTemas from "@/components/SelectTemas";
+import styles from './page.module.css'
 
-
-export default function SubirPinPage(){
+export default function SubirPinPage() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const user = parseInt(searchParams.get("user"))
@@ -18,13 +18,13 @@ export default function SubirPinPage(){
     const [tag2, setTag2] = useState("")
     const [subido, setSubido] = useState(false)
     const [errorSubida, setErrorSubida] = useState(false)
-    
 
-    function volver(){
+
+    function volver() {
         router.back()
     }
 
-    function postPin(){
+    function postPin() {
 
         const cuerpo = {
             link: link,
@@ -36,68 +36,82 @@ export default function SubirPinPage(){
 
 
         fetch('http://localhost:4000/pinnuevo', {
-    
+
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(cuerpo)
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Datos', data);
-            if (data.ok == true) {
-                setSubido(true)
-                setErrorSubida(false)
-            } else {
-                console.log("error")
-                setErrorSubida(true)
-            }
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log('Datos', data);
+                if (data.ok == true) {
+                    setSubido(true)
+                    setErrorSubida(false)
+                } else {
+                    console.log("error")
+                    setErrorSubida(true)
+                }
+            });
 
     }
-    
 
-    
 
-    return(
-        <>
-            <h1>Nuevo Pin</h1>
-            <Button funcion={volver} texto={"Volver"}></Button>
-            <br></br>
-            <SelectTemas nombre={"tag1"} onchangefunc={(select) =>  setTag1(select.target.value)}></SelectTemas>
-            <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
 
-            <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder="link de la imagen"></input>
-            <input type="text" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} placeholder="descripcion"></input>
-            <br></br>
-            
 
-            {
-                tag1==tag2 ? (
-                    <p><b>¡Cuidado! Las etiquetas no pueden ser iguales</b></p>
-                ) : (
+    return (
+        <div className={styles.paginaCompleta}>
+            <h1 className={styles.titulo} > Nuevo Pin</h1>
+            <div className={styles.tarjeta}>
+                <input type="text" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} placeholder="descripcion"></input>
 
-                    link == ""? (
-                        <p><b>¡El link está vacío!</b></p>
-                    ) : (
-                        subido ? (
-                            <p><b>¡Subido! Fijate los pines</b></p>
-                        ) : (
-                            <Button funcion={postPin} texto={"Subir"}></Button>
-                        )
-                    )
-                )
-            }
+                <div className={styles.filaCampos}>                                                                                   
+                    <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder="link de la imagen"></input>
+                </div>                                                                                                                
+                <div className={styles.columnaDerecha}>                                                                               
+                    <div className={styles.selectorWrapper}>                                                                          
+                        <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>           
+                    </div>                                                                                                            
+                    <div className={styles.selectorWrapper}>                                                                          
+                        <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>           
+                    </div>                                                                                                            
+                </div>                                                                                                                
+                <br></br>                                                                                                             
+                <div className={styles.mensajes}>                                                                                     
+                    {                                                                                                                 
+                        tag1 == tag2 ? (                                                                                              
+                            <p className={styles.mensajeError}><b>¡Cuidado! Las etiquetas no pueden ser iguales</b></p>               
+                        ) : (                                                                                                         
+                            link == "" ? (                                                                                            
+                                <p className={styles.mensajeError}><b>¡El link está vacío!</b></p>                                    
+                            ) : (                                                                                                     
+                                subido ? (                                                                                            
+                                    <p className={styles.mensajeExito}><b>¡Subido! Fijate los pines</b></p>                           
+                                ) : (                                                                                                 
+                                    <div className={styles.botonSubir}>                                                               
+                                    <Button funcion={postPin} texto={"Subir"}></Button>                                               
+                                    </div>                                                                                            
+                                )                                                                                                     
+                            )                                                                                                         
+                        )                                                                                                             
+                    }                                                                                                                 
+                    {                                                                                                                 
+                        errorSubida ? (                                                                                               
+                            <p><b>¡Error! El link es demasiado largo, usá otro</b></p>                                                
+                        ) : (                                                                                                         
+                            <p></p>                                                                                                   
+                        )                                                                                                             
+                    }                                                                                                                 
+                </div>                                                                                                                
+                                                                                                                                      
+                                                                                                                                      
+                <div className={styles.botonVolver}>                                                                                  
+                    <Button funcion={volver} texto={"Volver"}></Button>                                                               
 
-            {
-                errorSubida ? (
-                    <p><b>¡Error! El link es demasiado largo, usá otro</b></p>
-                ):(
-                    <p></p>
-                )
-            }
 
-        </>
+                </div>
+           </div>  
+         </div>
     )
 }

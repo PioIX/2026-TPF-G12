@@ -29,11 +29,12 @@ export default function Header({ }) {
     return (
         <div className={styles.header}>
             <img src="/PionterestLogo.png"></img>
-            
+            <input className={styles.buscador} placeholder="🔎 Buscador"></input>
+
             <div className={styles.contenedorBotones}>
-                <input></input>
-                <Button funcion={irColeccion} texto="Mis Colecciones"></Button>
-                <Button funcion={cerrarSesion} texto="Cerrar sesión"></Button>
+                
+                <Button funcion={irColeccion} texto="Mis Colecciones" className={styles.botonColecciones}></Button>
+                <Button funcion={cerrarSesion} texto="Cerrar sesión" className={styles.botonCerrarSesion}></Button>
             </div>
         </div>
 

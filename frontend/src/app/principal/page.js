@@ -11,6 +11,9 @@ import Footer from "@/components/Footer"
 import Header from '@/components/Header';
 import Button from "@/components/Button";
 
+import styles from './PrincipalPage.module.css';
+
+
 export default function PrincipalPage() {
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -42,8 +45,10 @@ export default function PrincipalPage() {
                     <br></br>
                     <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
                 </div>
+                <div className={styles.pins}>
+                    <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
 
-                <PinList id_log={id_user} botonOnClick={clickPin}></PinList>p
+                </div>
             </main>
 
             <Footer> </Footer>

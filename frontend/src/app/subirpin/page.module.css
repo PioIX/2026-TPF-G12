@@ -1,0 +1,127 @@
+.paginaCompleta {
+  min-height: 100vh;
+  background-color: #cfaad8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+
+/* Tarjeta blanca principal con borde negro */
+.tarjeta {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  border-radius: 4px;
+  padding: 30px 40px;
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Título principal grande y centrado */
+.titulo {
+  font-size: 102px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0 0 25px 0;
+  text-align: center;
+}
+
+/* Input del link arriba del todo */
+.inputLink {
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  width: 220px;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+
+/* Fila que contiene descripción + selectores */
+.filaCampos {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  justify-content: center;
+  border-radius: 200px;
+}
+
+/* Área de descripción a la izquierda */
+.areaDescripcion {
+  background-color: #b8b8b8;
+  border: none;
+  border-radius: 20px;
+  padding: 20px;
+  width: 240px;
+  min-height: 200px;
+  resize: none;
+  font-size: 16px;
+}
+
+/* Columna derecha: selectores + botón */
+.columnaDerecha {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Mensajes */
+.mensajes {
+  min-height: 40px;
+  margin: 5px 0;
+}
+
+
+
+.mensajeExito {
+  color: #27ae60;
+  font-size: 14px;
+  margin: 0;
+}
+
+
+/*solo no esta*/
+/* Botón Subir naranja */
+.botonSubir {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.botonSubir button {
+  background-color: #ffb74d;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 35px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000000;
+}
+
+
+
+
+/*bien*/
+/* Botón Volver abajo a la derecha */
+.botonVolver {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.botonVolver button {
+  background-color: #ffb74d;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000000;
+}

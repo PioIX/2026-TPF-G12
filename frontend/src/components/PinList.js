@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Pin from "./Pin";
-
+import styles from './PinList.module.css';
 export default function PinList({botonOnClick}) {
 
     const [pines, setPines] = useState([]);
@@ -24,13 +24,13 @@ export default function PinList({botonOnClick}) {
     },[])
     
     return (
-        <>
+        <div className={styles.contenedorPines}>
            {pines.map((pin, index) => {
                 return(
                     <Pin key={index} link={pin.link} me_gusta={pin.me_gusta} onclick={() => botonOnClick(pin.id_pin)}>
                     </Pin>
                 )
            })} 
-        </>
+        </div>
     );
 }
