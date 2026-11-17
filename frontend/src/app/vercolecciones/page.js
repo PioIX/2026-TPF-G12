@@ -12,16 +12,17 @@ export default function ColeccionesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   let id_user = parseInt(searchParams.get("id_user"));
+  let A = parseInt(searchParams.get("A"))
   console.log("id user: " + id_user);
 
   function irColeccion(id_coleccion) {
     console.log(id_coleccion);
-    router.push("/coleccion?id_coleccion=" + id_coleccion + "&user=" + id_user);
+    router.push("/coleccion?id_coleccion=" + id_coleccion + "&user=" + id_user +"&A="+A);
   }
 
   function irEditar(id_coleccion) {
     console.log(id_coleccion);
-    router.push("/modcoleccion?id_coleccion=" + id_coleccion);
+    router.push("/modcoleccion?id_coleccion=" + id_coleccion +"&A="+A);
   }
 
   function borrarColeccion(id_coleccion) {
@@ -43,7 +44,7 @@ export default function ColeccionesPage() {
   }
 
   function nuevaColeccion(id_coleccion) {
-    router.push("/modcoleccion?id_coleccion=" + id_coleccion);
+    router.push("/modcoleccion?id_coleccion=" + id_coleccion +"&A="+A);
   }
 
   function volver(){router.back()}

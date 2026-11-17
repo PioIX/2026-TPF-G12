@@ -19,6 +19,10 @@ export default function BuscadorPage() {
     const [idBuscar, setIdBuscar] = useState(0)
     const [datosBusqueda, setDatosBusqueda] = useState([])
 
+    const searchParams = useSearchParams();
+    let A = parseInt(searchParams.get("A"))
+
+
     useEffect(() => {
         fetch("http://localhost:4000/getiduser", {
             method: "POST",
@@ -107,7 +111,7 @@ export default function BuscadorPage() {
     }
 
     function clickPin(idPin) {
-    router.push("/pin?idpin="+idPin) 
+    router.push("/pin?idpin="+idPin+"&A="+A) 
   }
 
     return (
