@@ -1,0 +1,7 @@
+.contenedorPines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  padding: 20px;
+}

@@ -1,13 +1,25 @@
 "use client"
+import styles from './Pin.module.css';
+import { useState } from 'react';
+export default function Pin({ link, me_gusta, onclick }) {
+    const [corazonLleno, setCorazonLleno] = useState(false);
 
-export default function Pin({link, me_gusta, onclick}) {
-
-    
     return (
-        <div>
-            <img src={link}></img>
-            <p>{me_gusta}</p>
-            <button onClick={onclick}>Ir al pin</button>
+        <div className={styles.pin}>
+            <img src={link} className={styles.imagenPin}></img>
+            <div className={styles.contenido}>
+
+                <span
+                    className={styles.corazon}
+                    onClick={() => setCorazonLleno(!corazonLleno)}
+                >
+                    {corazonLleno ? '❤️' : '🤍'}
+                </span>
+
+
+                <p>{me_gusta}</p>
+                <button onClick={onclick}>Ir al pin</button>
+            </div>
         </div>
     );
 }

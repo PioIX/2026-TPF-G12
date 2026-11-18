@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pio": "nodemon --env-file=.pio.env index.js",
-    "home": "nodemon --env-file=.home.env index.js"
+    "home": "nodemon --env-file=home.env index.js"
   },
   "author": "Martin Rivas",
   "license": "ISC",

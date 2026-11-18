@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { useRouter } from "next/navigation";
-
+import styles from './page.module.css'
 import Footer from "@/components/Footer"
 
 export default function HomePage() {
@@ -92,29 +92,30 @@ export default function HomePage() {
   }
 
   return (
-    <div>
-      <div id="login-1">
+    <>
+    <div className={styles.contenedorPrincipal}>
+      <div id="login-1" className={styles.columnaIzquierda}>
 
         <img src="/PionterestLogo.png"></img>
         <h1>Login</h1>
-
-        <Button texto="Iniciar Sesion" funcion={() => setRegistrar(false)}></Button>
-        <Button texto="Registrarse" funcion={() => setRegistrar(true)}></Button>
+        <div className={styles.botonesCabecera}>
+          <Button texto="Iniciar Sesion" funcion={() => setRegistrar(false)}></Button>
+          <Button texto="Registrarse" funcion={() => setRegistrar(true)}></Button>
+        </div>
 
         {registrar ? (
-          <div>
-            <h2>Registro</h2>
+          <div className={styles.cajaCampos}>
+            <h2 className={styles.subtitulo}>Registro</h2>
             <Input texto="Ej: Sayu.Crack" id="nombre" funcion={getNombre}></Input>
             <Input texto="sayu@gmail.com" id="mail" funcion={getMail}></Input>
             <Input texto="papita123" id="contraseña" funcion={getContrasenia}></Input>
             <Input id="fotoContacto" texto="link" funcion={getFoto}></Input>
-            <Button texto="Validar" funcion={crearCuenta}></Button>
+            <Button texto="Validar" funcion={crearCuenta} ></Button>
           </div>
 
         ) : (
-          <div>
-            <h2>Inicio de sesión</h2>
-
+          <div className={styles.cajaCampos}>
+            <h2 className={styles.subtitulo}>Inicio de sesión</h2>
             <Input texto="sayu@gmail.com" id="mail" funcion={getMail}></Input>
             <Input texto="papita123" id="contraseña" funcion={getContrasenia}></Input>
 
@@ -123,10 +124,12 @@ export default function HomePage() {
         )}
       </div>
 
-      <div id="login-2">
+      <div id="login-2" className={styles.columnaDerecha}>
         <img src="/PionterestGatos.png"></img>
       </div>
-      <Footer> </Footer>
+      
     </div>
+    <Footer> </Footer>
+    </>
   )
 }

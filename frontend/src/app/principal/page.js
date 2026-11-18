@@ -10,6 +10,8 @@ import { useSearchParams } from "next/navigation";
 import Footer from "@/components/Footer"
 import Header from '@/components/Header';
 import Button from "@/components/Button";
+import styles from './page.module.css';
+
 
 export default function PrincipalPage() {
     const router = useRouter()
@@ -36,13 +38,24 @@ export default function PrincipalPage() {
         <>
             <Header></Header>
 
-            <h1>FEED</h1>
+            <main className={styles.contenido}>
 
-            <Button funcion={nuevoPin} texto={"Nuevo pin"}></Button>
-            <br></br>
-            <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
+                <h2 className={styles.titulo}>Publicaciones</h2>
+    
+    
+                <div className={styles.botonesSuperiores}>
+                    <Button funcion={nuevoPin} texto={"Nuevo pin"} className={styles.botonAgregar}></Button>
+                    <br></br>
+                    <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
+                </div>
 
-            <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
+                <div className={styles.pins}>
+                    <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
+                </div>
+                {/* <div className={styles.pinlist}> <PinList id_log={id_user} botonOnClick={clickPin}></PinList></div> */}
+            </main>
+
+
             <Footer> </Footer>
         </>
     )

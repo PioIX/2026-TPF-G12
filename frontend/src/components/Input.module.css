@@ -1,0 +1,25 @@
+.contenedor {
+  margin-bottom: 15px;
+}
+
+.etiqueta {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: var(--color-primario);
+  font-weight: 500;
+}
+
+.campo {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--redondeo);
+  background-color: white;
+  font-size: 14px;
+}
+
+.campo:focus {
+  outline: none;
+  border-color: var(--color-acento);
+}

@@ -1,0 +1,134 @@
+.paginaCompleta {
+  min-height: 100vh;
+  background-color: #cfaad8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+
+.tituloExterior {
+  font-size: 108px;
+  font-weight: bold;
+  color: #000000;
+  margin: 30px;
+  text-align: center;
+}
+
+.tarjeta {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  border-radius: 4px;
+  padding: 40px 50px;
+  width: 100%;
+  max-width: 1000px;  /* ✅ Más ancha que antes */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputBuscador {
+  background-color: #f3dcae;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  width: 260px;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 30px;
+  margin: 30px;
+}
+
+.filaCampos {
+  display: flex;
+  align-items: flex-start;
+  gap: 50px;
+  width: 100%;
+  justify-content: center;
+  
+}
+
+.cajaTexto {
+  background-color: #f3dcae;
+  border: none;
+  border-radius: 20px;
+  padding: 20px;
+  width: 260px;
+  min-height: 220px;
+  resize: none;
+  font-size: 16px;}
+
+.columnaDerecha {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.selectorContenedor select {
+ width: 100%;              
+  padding: 10px 14px;       
+  border: 1px solid #c9b896;
+  border-radius: 12px;
+  background-color: #f3dcae;
+  font-size: 14px;          
+  margin: 20px ;     
+  box-sizing: border-box;   
+  outline: none;         
+  border-color: #b5a687;   
+  width: 280px;  
+}
+
+.mensajes {
+  min-height: 40px;
+  margin: 8px 0;
+}
+
+.mensajeError {
+  color: #d63031;
+  font-size: 14px;
+  margin: 0;
+   
+
+}
+
+.mensajeExito {
+  color: #27ae60;
+  font-size: 40px;
+  margin: 0;
+}
+
+.botonSubir {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.botonSubir button {
+  background-color: #ffb74d;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 35px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+}
+
+.botonVolver {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.botonVolver button {
+  background-color: #ffb74d;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+}

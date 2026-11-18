@@ -1,3 +1,64 @@
 .header {
-  background-color: rgb(179, 171, 250);
+  background-color: #8490d8;
+  background-color:  #f2c5d2;
+  border-bottom: 3px solid var(--color-borde, #7b68ee);
+  padding: 12px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 25px;
+  height: 150px;
 }
+
+.header img {
+  height: 55px;
+  width: 200px
+
+}
+
+
+.contenedorBotones {
+  display: flex;
+
+}
+
+.botonColecciones {
+  background-color: #0d8a13;
+  color: white;             
+  border: none;             
+  padding: 10px 26px;       
+  border-radius: 50px;      
+  font-size: 15px;          
+  cursor: pointer;          
+  margin-right: 10px;    
+}
+
+.botonCerrarSesion {
+  background-color: #e63131;
+  color: white;             
+  border: none;             
+  padding: 10px 26px;       
+  border-radius: 50px;      
+  font-size: 15px;          
+  cursor: pointer;          
+  margin-right: 10px;    
+}   
+
+.buscador{         
+  width: 100%;              
+  padding: 10px 14px;       
+  border: 1px solid #c9b896;
+  border-radius: 12px;
+  background-color: #f9f2e3;
+  font-size: 14px;          
+  margin: 20px ;     
+  box-sizing: border-box;   
+  outline: none;         
+  border-color: #b5a687;   
+  width: 280px;  
+}  
+
+.header img {
+  height: 90px;
+}
+

@@ -47,14 +47,17 @@ export default function Header({ }) {
     return (
         <div className={styles.header}>
             <img src="/PionterestLogo.png"></img>
-            <Button funcion={irBuscador} texto="🔎 Buscador"></Button>
-            <Button funcion={irColeccion} texto="Mis Colecciones"></Button>
+            <div className={styles.contenedorBotones}>
+              <Button funcion={irBuscador} texto="🔎 Buscador" className={styles.buscador}></Button>
+              <Button funcion={irColeccion} texto="Mis Colecciones" className={styles.botonColecciones}></Button>
 
-            {condicionAdmin()}
+              {condicionAdmin()}
 
-            <Button funcion={cerrarSesion} texto="Cerrar sesión"></Button>
+              <Button funcion={cerrarSesion} texto="Cerrar sesión"  className={styles.botonCerrarSesion></Button>
         </div>
 
+            </div>
+        </div>
 
     )
 
