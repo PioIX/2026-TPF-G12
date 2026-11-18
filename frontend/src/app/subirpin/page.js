@@ -62,22 +62,33 @@ export default function SubirPinPage() {
 
     return (
         <div className={styles.paginaCompleta}>
-            <h1 className={styles.titulo} > Nuevo Pin</h1>
+            <h1 className={styles.tituloExterior}>Nuevo Pin</h1>
+            
             <div className={styles.tarjeta}>
-                <input type="text" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} placeholder="descripcion"></input>
+                <input type="text" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} placeholder="descripcion" className={styles.cajaTexto}></input>
 
                 <div className={styles.filaCampos}>                                                                                   
-                    <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder="link de la imagen"></input>
-                </div>                                                                                                                
+                    <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder="link de la imagen" className={styles.inputBuscador}></input>
+                </div> 
+
+
+                
+
                 <div className={styles.columnaDerecha}>                                                                               
-                    <div className={styles.selectorWrapper}>                                                                          
+                    <div className={styles.selectorContenedor}>                                                                          
                         <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>           
-                    </div>                                                                                                            
-                    <div className={styles.selectorWrapper}>                                                                          
+                    </div>   
+
+                    <div className={styles.selectorContenedor}>                                                                          
                         <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>           
                     </div>                                                                                                            
-                </div>                                                                                                                
-                <br></br>                                                                                                             
+                </div>      
+
+                <br></br>               
+
+
+
+
                 <div className={styles.mensajes}>                                                                                     
                     {                                                                                                                 
                         tag1 == tag2 ? (                                                                                              
@@ -98,7 +109,7 @@ export default function SubirPinPage() {
                     }                                                                                                                 
                     {                                                                                                                 
                         errorSubida ? (                                                                                               
-                            <p><b>¡Error! El link es demasiado largo, usá otro</b></p>                                                
+                            <p className={styles.mensajeError}><b>¡Error! El link es demasiado largo, usá otro</b></p>                                                
                         ) : (                                                                                                         
                             <p></p>                                                                                                   
                         )                                                                                                             

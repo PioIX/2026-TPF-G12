@@ -2,95 +2,107 @@
   min-height: 100vh;
   background-color: #cfaad8;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px;
   position: relative;
 }
 
-/* Tarjeta blanca principal con borde negro */
+.tituloExterior {
+  font-size: 108px;
+  font-weight: bold;
+  color: #000000;
+  margin: 30px;
+  text-align: center;
+}
+
 .tarjeta {
   background-color: #ffffff;
   border: 3px solid #000000;
   border-radius: 4px;
-  padding: 30px 40px;
+  padding: 40px 50px;
   width: 100%;
-  max-width: 700px;
+  max-width: 1000px;  /* ✅ Más ancha que antes */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Título principal grande y centrado */
-.titulo {
-  font-size: 102px;
-  font-weight: bold;
-  color: #000000;
-  margin: 0 0 25px 0;
-  text-align: center;
-}
-
-/* Input del link arriba del todo */
-.inputLink {
+.inputBuscador {
+  background-color: #f3dcae;
   border: none;
   border-radius: 20px;
   padding: 8px 20px;
-  width: 220px;
+  width: 260px;
   text-align: center;
   font-size: 16px;
-  margin-bottom: 0px;
+  margin-bottom: 30px;
+  margin: 30px;
 }
 
-/* Fila que contiene descripción + selectores */
 .filaCampos {
   display: flex;
   align-items: flex-start;
-  gap: 40px;
+  gap: 50px;
   width: 100%;
   justify-content: center;
-  border-radius: 200px;
+  
 }
 
-/* Área de descripción a la izquierda */
-.areaDescripcion {
-  background-color: #b8b8b8;
+.cajaTexto {
+  background-color: #f3dcae;
   border: none;
   border-radius: 20px;
   padding: 20px;
-  width: 240px;
-  min-height: 200px;
+  width: 260px;
+  min-height: 220px;
   resize: none;
-  font-size: 16px;
-}
+  font-size: 16px;}
 
-/* Columna derecha: selectores + botón */
 .columnaDerecha {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* Mensajes */
-.mensajes {
-  min-height: 40px;
-  margin: 5px 0;
+.selectorContenedor select {
+ width: 100%;              
+  padding: 10px 14px;       
+  border: 1px solid #c9b896;
+  border-radius: 12px;
+  background-color: #f3dcae;
+  font-size: 14px;          
+  margin: 20px ;     
+  box-sizing: border-box;   
+  outline: none;         
+  border-color: #b5a687;   
+  width: 280px;  
 }
 
+.mensajes {
+  min-height: 40px;
+  margin: 8px 0;
+}
 
+.mensajeError {
+  color: #d63031;
+  font-size: 14px;
+  margin: 0;
+   
+
+}
 
 .mensajeExito {
   color: #27ae60;
-  font-size: 14px;
+  font-size: 40px;
   margin: 0;
 }
 
-
-/*solo no esta*/
-/* Botón Subir naranja */
 .botonSubir {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 40px;
 }
 
 .botonSubir button {
@@ -101,14 +113,9 @@
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
-  color: #000000;
+  color: #000;
 }
 
-
-
-
-/*bien*/
-/* Botón Volver abajo a la derecha */
 .botonVolver {
   position: fixed;
   bottom: 30px;
@@ -123,5 +130,5 @@
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
-  color: #000000;
+  color: #000;
 }
