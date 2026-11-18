@@ -9,6 +9,7 @@ import SelectTemas from "@/components/SelectTemas";
 import Footer from "@/components/Footer"
 import Header from '@/components/Header';
 import PinListBuscador from "@/components/PinListBuscador";
+import styles from './page.module.css';
 
 
 export default function BuscadorPage() {
@@ -74,7 +75,7 @@ export default function BuscadorPage() {
 
             const datos = await resultado.json()
             console.log(datos)
-            setDatosBusqueda(datos)  
+            setDatosBusqueda(datos)
         }
     }
 
@@ -111,33 +112,49 @@ export default function BuscadorPage() {
     }
 
     function clickPin(idPin) {
-    router.push("/pin?idpin="+idPin+"&A="+A) 
-  }
+        router.push("/pin?idpin=" + idPin + "&A=" + A)
+    }
 
     return (
-        <div>
+        <div className={styles.paginaCompleta}>
             <Header></Header>
+            <div className={styles.contenido}>
+                <h1>BUSCADOR</h1>
+                <div className={styles.seccionInstrucciones}>
+                    <h4>Instrucciones: </h4>
+                    <p>Para buscar solo por tema, dejar el espacio de usuario en blanco. Para buscar por tema y por usuario, llenar todos los campos. Para buscar solo por usuario, dejar los temas en "nada"</p>
+                </div>
 
-            <h1>BUSCADOR</h1>
+                <div className={styles.filaBusquedas}>
+                    <div className={styles.seccionTemas}>
+                        <div className={styles.seccionTemaimg}>
+                            <h2>Buscar por tema</h2>
+                            <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
+                            <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
 
-            <Button funcion={volver} texto={"Volver"}></Button>
-            <br></br>
 
-            <h4>Instrucciones: </h4>
-            <p>Para buscar solo por tema, dejar el espacio de usuario en blanco. Para buscar por tema y por usuario, llenar todos los campos. Para buscar solo por usuario, dejar los temas en "nada"</p>
+                        </div>
 
-            <h2>Buscar por tema</h2>
-            <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
-            <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
 
-            <br></br>
+                        <div className={styles.seccionUsuario}>
+                            <h2>Buscar por usuario</h2>
+                            <Input id={"nombreUsuario"} texto={"ingresar nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)} ></Input>
 
-            <h2>Buscar por usuario</h2>
-            <Input id={"nombreUsuario"} texto={"ingresar nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)} ></Input>
+                        </div>
+
+                        <div className={styles.botonBusqueda}>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {condicionTags()}
+            <div className={styles.grillaPines}>
 
-            <PinListBuscador listaDatos= {datosBusqueda} botonOnClick={clickPin}></PinListBuscador>
+                <PinListBuscador listaDatos={datosBusqueda} botonOnClick={clickPin}></PinListBuscador>
+            </div>
+
+            <Button funcion={volver} texto={"Volver"}></Button>
             <Footer></Footer>
         </div>
     )

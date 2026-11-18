@@ -6,7 +6,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/Button";
-import styles from './pin.css';
+
+import styles from './page.module.css';
 
 export default function PinPage() {
 
@@ -99,43 +100,48 @@ export default function PinPage() {
     return (
         <div className={styles.paginaCompleta}>
             <div className={styles.tarjeta}>
-                <div  className={styles.contenedorColumnas}>
+                <div className={styles.contenedorColumnas}>
+
                     <div className={styles.columnaIzquierda}>
                         <img src={link} className={styles.imagenPin}></img>
+
                         <div className={styles.seccionMeGusta}>
                             <h4 className={styles.textoMeGusta}>Likes: {meGusta} </h4>
-                            <Button funcion={darLike} texto={"darle Me Gusta"}></Button>
+                            <Button funcion={darLike} texto={" LIKE"}></Button>
                         </div>
+
                     </div>
                 </div>
             </div>
 
-            
+
             <div className={styles.columnaDerecha}>
-                <div className={styles.botonVolverArriba}>
-                    <Button funcion={volver} texto={"Volver"}></Button>
-                </div>
+
                 <h1 className={styles.tituloPin}>Pin de {nombreUsuario} (id: {idUsuario}) </h1>
                 <div className={styles.cajaDescripcion}>
                     <p>Descripción: {descripcion}</p>
                 </div>
-            </div>
 
-            <p className={styles.tituloPin}><b>Id de la imagen: {idPin} </b></p>
+                <p className={styles.tituloPin}><b>Id de la imagen: {idPin} </b></p>
 
-            <div className={styles.etiquetasTags}>
-                {tag1 == "" ? (
-                    <p>Tags: {tag2}</p>
-                ) : (
-                    tag2 == "" ? (
-                        <p>Tags: {tag1}</p>
+                <div className={styles.etiquetasTags}>
+                    {tag1 == "" ? (
+                        <p>Tags: {tag2}</p>
                     ) : (
-                        <p>Tags: {tag1}, {tag2}</p>
+                        tag2 == "" ? (
+                            <p>Tags: {tag1}</p>
+                        ) : (
+                            <p>Tags: {tag1}, {tag2}</p>
+                        )
                     )
-                )
-                }
+                    }
+                </div>
+                <div className={styles.botonVolverArriba}>
+                    <Button funcion={volver} texto={"Volver"}></Button>
+                </div>
+
             </div>
-            
+
         </div>
     )
 }
