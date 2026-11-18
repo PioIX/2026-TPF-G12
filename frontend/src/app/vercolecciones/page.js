@@ -20,9 +20,9 @@ export default function ColeccionesPage() {
     router.push("/coleccion?id_coleccion=" + id_coleccion + "&user=" + id_user +"&A="+A);
   }
 
-  function irEditar(id_coleccion) {
-    console.log(id_coleccion);
-    router.push("/modcoleccion?id_coleccion=" + id_coleccion +"&A="+A);
+  function irEditar() {
+    
+    router.push("/modcoleccion?id_user=" + id_user +"&A="+A);
   }
 
   function borrarColeccion(id_coleccion) {
@@ -44,7 +44,7 @@ export default function ColeccionesPage() {
   }
 
   function nuevaColeccion(id_coleccion) {
-    router.push("/modcoleccion?id_coleccion=" + id_coleccion +"&A="+A);
+    router.push("/modcoleccion?id_user=" + id_user +"&A="+A);
   }
 
   function volver(){router.back()}

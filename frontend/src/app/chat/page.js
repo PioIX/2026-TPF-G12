@@ -315,7 +315,7 @@ export default function SocketPage() {
             {
                 conversacion == user ? (
                     <h4><b>¡Esta es tu sala!</b></h4>
-                ) : (
+                ) : ( 
                     <p></p>
                 )
             }
