@@ -10,6 +10,8 @@ export default function Header({ }) {
     const router = useRouter()
     const searchParams = useSearchParams()
     let id_user = parseInt(searchParams.get("id_user"))
+    let A = parseInt(searchParams.get("A"))
+
 
     function cerrarSesion() {
         let cerrar = confirm("Desea cerrar la sesión?")
@@ -22,19 +24,37 @@ export default function Header({ }) {
     }
 
     function irColeccion() {
-        router.push("/vercolecciones?id_user="+id_user)
+        router.push("/vercolecciones?id_user="+id_user+"&A="+A)
+    }
+
+    function irBuscador() {
+        router.push("/buscador?id_user="+id_user+"&A="+A)
+    }
+
+    function irAdmin(){
+        router.push("/admin?id_user="+id_user+"&A="+A)
+    }
+
+    function condicionAdmin(){
+        if (A==1){
+            return(
+                <Button funcion={irAdmin} texto="Admin"></Button>
+            )
+        }
     }
 
 
     return (
         <div className={styles.header}>
             <img src="/PionterestLogo.png"></img>
-            <input className={styles.buscador} placeholder="🔎 Buscador"></input>
-
             <div className={styles.contenedorBotones}>
-                
-                <Button funcion={irColeccion} texto="Mis Colecciones" className={styles.botonColecciones}></Button>
-                <Button funcion={cerrarSesion} texto="Cerrar sesión" className={styles.botonCerrarSesion}></Button>
+              <Button funcion={irBuscador} texto="🔎 Buscador" className={styles.buscador}></Button>
+              <Button funcion={irColeccion} texto="Mis Colecciones" className={styles.botonColecciones}></Button>
+
+              {condicionAdmin()}
+
+              <Button funcion={cerrarSesion} texto="Cerrar sesión"  className={styles.botonCerrarSesion></Button>
+        </div>
 
             </div>
         </div>

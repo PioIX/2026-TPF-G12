@@ -17,19 +17,21 @@ export default function PrincipalPage() {
     const router = useRouter()
     const searchParams = useSearchParams()
     let id_user = parseInt(searchParams.get("id_user"))
+    let A = parseInt(searchParams.get("A"))
+
     console.log("id user: " + id_user)
 
 
     function clickPin(idPin) {
-        router.push("/pin?idpin="+idPin) // +"&user="+id_user
+        router.push("/pin?idpin="+idPin+"&A="+A)
     }
       
     function nuevoPin(){
-        router.push("/subirpin?user="+id_user)
+        router.push("/subirpin?user="+id_user+"&A="+A)
     }
 
     function irAConversaciones(){
-        router.push("/conversaciones?user="+id_user)
+        router.push("/conversaciones?user="+id_user+"&A="+A)
     }
 
     return (
