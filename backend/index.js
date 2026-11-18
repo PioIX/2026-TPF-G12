@@ -148,11 +148,11 @@ app.get('/getcoleccionesporusuario', async function (req, res) {
   res.send(respuesta);
 })
 
-/*app.get('/getpinesporcoleccion', async function (req, res) {
+app.get('/getpinesporcoleccionget', async function (req, res) {
   let respuesta = await realizarQuery("SELECT * FROM Pines_por_coleccion_tpf");
   console.log({ respuesta })
   res.send(respuesta);
-})*/
+})
 
 app.get('/getmensajes', async function (req, res) {
   let respuesta = await realizarQuery("SELECT * FROM Mensajes_tpf");
@@ -564,7 +564,7 @@ app.post('/coleccionnueva', async function (req, res) {
       `)
 
     let id = await realizarQuery(`SELECT id_coleccion FROM Colecciones_tpf;`)
-    res.send({ mensaje: "Mensaje agregado", ok: true, id_coleccion: id[id.length - 1].id_coleccion })
+    res.send({ mensaje: "coleccion agregado", ok: true, id_coleccion: id[id.length - 1].id_coleccion })
 
   } catch {
     res.send({ mensaje: "Error del try" })
@@ -572,6 +572,23 @@ app.post('/coleccionnueva', async function (req, res) {
 })
 
 
+
+app.post('/pinporcoleccionnuevo', async function (req, res) {
+  try {
+    console.log(req.body)
+
+    await realizarQuery(`
+        INSERT INTO Pines_por_coleccion_tpf(id_pin, id_coleccion) VALUES 
+        (${req.body.id_pin}, ${req.body.id_coleccion})
+      `)
+
+    let id = await realizarQuery(`SELECT id_pin_por coleccion FROM Pines_por_coleccion_tpf;`)
+    res.send({ mensaje: "pin por coleccion agregado", ok: true, id_pin_por_coleccion: id[id.length - 1].id_pin_por_coleccion })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
 
 
 // --------------------------------------- --------------------------------------- ---------------------------------------

@@ -28,6 +28,7 @@ export default function ModColeccionPage() {
   const [userExiste, setUserExiste] = useState(0)
   const [cargando, setCargando] = useState(0)
   const [idColeccion, setIdColeccion] = useState(0)
+  const [okColeccion, setOkColeccion] = useState(0)
 
 // ----------------------------------------------- Use effects ------------------------------------------
 
@@ -93,6 +94,7 @@ export default function ModColeccionPage() {
     console.log("input pin: "+inputPin)
     console.log("input user: "+inputUser)
     console.log("idcoleccion: "+ idColeccion)
+    console.log("ok nombre de la coleccion: "+ okColeccion)
   }
 
   function ponerPin(){
@@ -174,37 +176,63 @@ export default function ModColeccionPage() {
     setCargando(1)
     const cuerpo1 = {nombre_coleccion: nombreCol}
 
-        fetch('http://localhost:4000/coleccionnueva', {
-    
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(cuerpo1)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Datos', data);
-            setIdColeccion(data.id_coleccion)
-            console.log(idColeccion)
-            
-            if (data.ok == true) {
-                console.log("se puede seguir")
-                for (let indice; indice < pins.length; indice++) {
-                  const cuerpo2 = {
-                    id_pin: pins[indice],
-                    id_coleccion: idColeccion
-                  }
-                }
-                
+    fetch('http://localhost:4000/coleccionnueva', {
 
-            } else {
-                console.log("error")
-            }
-        });
-        
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cuerpo1)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Datos', data);
+        console.log(idColeccion)
+
+        if (data.ok == true) {
+          console.log("se puede seguir")
+          setIdColeccion(data.id_coleccion)
+          setOkColeccion(1)
+        } else {
+          console.log("error")
+        }
+      });
+
+
+
+      
+  if (okColeccion == 1) {
+    for (let indice; indice < pins.length; indice++) {
+      const cuerpo2 = {
+        id_pin: pins[indice],
+        id_coleccion: idColeccion
+      }
+
+      fetch('http://localhost:4000/pinporcoleccionnuevo', {
+
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cuerpo2)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Datos', data);
+
+        if (data.ok == true) {
+          console.log("funcionó pin por colec")
+        } else {
+          console.log("error")
+        }
+      });
+    }
   }
 
+
+
+  
+}
 
 
   return (
