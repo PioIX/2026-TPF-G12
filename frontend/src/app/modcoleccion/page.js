@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import { useSegmentState } from "next/dist/next-devtools/userspace/app/segment-explorer-node";
 
 export default function ModColeccionPage() {
   const router = useRouter();
@@ -18,16 +19,70 @@ export default function ModColeccionPage() {
 
   const [nombreCol, setNombreCol] = useState("");
   const [pins, setPins] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
+  const [usuarios, setUsuarios] = useState([id_user]);
   const [inputPin, setInputPin] = useState(0)
   const [yaExistePin, setYaExistePin] = useState(false)
   const [inputUser, setInputUser] = useState(0)
   const [yaExisteUser, setYaExisteUser] = useState(false)
+  const [pinExiste, setPinExiste] = useState(0)
+  const [userExiste, setUserExiste] = useState(0)
+  const [cargando, setCargando] = useState(0)
+  const [idColeccion, setIdColeccion] = useState(0)
 
-useEffect(()=>{
-console.log(pins)
+// ----------------------------------------------- Use effects ------------------------------------------
 
-},[pins])
+  useEffect(()=>{
+    console.log(pins)
+
+  },[pins])
+
+
+  useEffect(() => {
+    fetch("http://localhost:4000/getpinespec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id_pin: inputPin })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Datos del pin especifico:", data);
+        if (data.pin.length == 0) {
+          console.log("vacio")
+          setPinExiste(0)
+          console.log(pinExiste)
+        } else {
+          setPinExiste(1)
+          console.log(pinExiste)
+        }
+      });
+  }, [inputPin])
+
+  useEffect(() => {
+    fetch("http://localhost:4000/getuserespec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id_usuario: inputUser })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Datos del usuario especifico:", data);
+        if (data.user.length == 0) {
+          console.log("vacio")
+          setUserExiste(0)
+          console.log(userExiste)
+        } else {
+          setUserExiste(1)
+          console.log(userExiste)
+        }
+      });
+  }, [inputUser])
+
+
+// ------------------------------------------------ Funciones ---------------------------------------------
 
   function prueba(){
     console.log("id user : "+id_user)
@@ -37,15 +92,18 @@ console.log(pins)
     console.log("usuarios: "+usuarios)
     console.log("input pin: "+inputPin)
     console.log("input user: "+inputUser)
-
+    console.log("idcoleccion: "+ idColeccion)
   }
 
   function ponerPin(){
     const noSePuede = pins.some(numero => inputPin == numero)
     console.log(noSePuede)
-    if (noSePuede== false) {
-      setPins((prev)=>[...prev,inputPin])
-      setYaExistePin(false)
+    if (noSePuede == false) {
+      if (pinExiste == 1) {
+        setPins((prev)=>[...prev,inputPin])
+        setYaExistePin(false)
+      }
+        
     } else {
       setYaExistePin(true)
     }
@@ -66,9 +124,12 @@ console.log(pins)
   function ponerUser(){
     const noSePuede = usuarios.some(numero => inputUser == numero)
     console.log(noSePuede)
-    if (noSePuede== false) {
-      setUsuarios((prev)=>[...prev,inputUser])
-      setYaExisteUser(false)
+    if (noSePuede == false) {
+      if (userExiste == 1){
+        setUsuarios((prev)=>[...prev,inputUser])
+        setYaExisteUser(false)
+      }
+      
     } else {
       setYaExisteUser(true)
     }
@@ -87,9 +148,62 @@ console.log(pins)
     }
   }
 
+  function condicionBoton(){
+    if (usuarios.length > 0) {
+      if (pins.length > 0) {
+        if (nombreCol != "") {
+          if (cargando == 0) {
+            return (
+              <Button funcion={crearColeccion} texto={"Crear la Colección"}></Button>
+            )
+          } else {
+            return (<h4>Creando coleccion...</h4>)
+          } 
+          
+        }   return (<p><b>¡Cuidado! la colección tiene que tener un nombre</b></p>)
+      } else{
+        return (<p><b>¡Cuidado! la colección tiene que tener al menos un pin</b></p>)
+      }  
 
+    } else{
+      return (<p><b>¡Cuidado! la colección tiene que tener al menos un usuario</b></p>)
+    }  
+  }
   
+  function crearColeccion(){
+    setCargando(1)
+    const cuerpo1 = {nombre_coleccion: nombreCol}
 
+        fetch('http://localhost:4000/coleccionnueva', {
+    
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cuerpo1)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos', data);
+            setIdColeccion(data.id_coleccion)
+            console.log(idColeccion)
+            
+            if (data.ok == true) {
+                console.log("se puede seguir")
+                for (let indice; indice < pins.length; indice++) {
+                  const cuerpo2 = {
+                    id_pin: pins[indice],
+                    id_coleccion: idColeccion
+                  }
+                }
+                
+
+            } else {
+                console.log("error")
+            }
+        });
+        
+  }
 
 
 
@@ -109,7 +223,16 @@ console.log(pins)
           )
         }
           
-        {textoExistePin()}
+        {yaExistePin == true? (
+          <p>Ya existe este pin</p>
+        ):(<p></p>)}
+
+        {pinExiste == 1? (
+          <p></p>
+        ):(
+          <p>¡Este Pin no existe!</p>
+        )
+        }
          
         <p>Pines hasta ahora: </p>
         {pins.map((p,i)=><p key={i}>{p}</p>)}
@@ -123,8 +246,20 @@ console.log(pins)
           )
         }
         {textoExisteUser()}
-        <p>Usuarios hasta ahora:  </p>
+        {userExiste == 1? (
+          <p></p>
+        ):(
+          <p>¡Este usuario no existe!</p>
+        )
+        }
+        <p>Usuarios hasta ahora (el primero sos vos):  </p>
         {usuarios.map((u,i)=><p key={i}>{u}</p>)}
+
+        <br></br>
+
+        {condicionBoton()}
+
+
       </div>
     </div>
   );
