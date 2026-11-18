@@ -53,9 +53,7 @@ export default function Header({ }) {
 
               {condicionAdmin()}
 
-              <Button funcion={cerrarSesion} texto="Cerrar sesión"  className={styles.botonCerrarSesion></Button>
-        </div>
-
+              <Button funcion={cerrarSesion} texto="Cerrar sesión"  className={styles.botonCerrarSesion}></Button>
             </div>
         </div>
 
