@@ -85,6 +85,7 @@ export default function BuscadorPage() {
                 if (idBuscar != -1) {
                     return (
                         <Button funcion={buscar} texto={"Buscar"}></Button>
+
                     )
                 } else {
                     return (
@@ -100,7 +101,9 @@ export default function BuscadorPage() {
         } else {
             if (idBuscar != -1) {
                 return (
-                    <Button funcion={buscar} texto={"Buscar"}></Button>
+                    <div className={styles.buscar}>
+                        <Button funcion={buscar} texto={"Buscar"}></Button>
+                    </div>
                 )
             } else {
                 return (
