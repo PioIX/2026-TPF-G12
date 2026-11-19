@@ -11,6 +11,7 @@ import Header from '@/components/Header';
 import PinListBuscador from "@/components/PinListBuscador";
 import styles from './page.module.css';
 
+import styles from './page.module.css';
 
 export default function BuscadorPage() {
     const router = useRouter();
@@ -116,46 +117,42 @@ export default function BuscadorPage() {
     }
 
     return (
-        <div className={styles.paginaCompleta}>
+        <div className={styles.buscadorPagina}>
             <Header></Header>
-            <div className={styles.contenido}>
-                <h1>BUSCADOR</h1>
-                <div className={styles.seccionInstrucciones}>
-                    <h4>Instrucciones: </h4>
-                    <p>Para buscar solo por tema, dejar el espacio de usuario en blanco. Para buscar por tema y por usuario, llenar todos los campos. Para buscar solo por usuario, dejar los temas en "nada"</p>
+            <div className={styles.buscadorContenido}>
+                <h1 className={styles.buscador}>BUSCADOR</h1>
+
+                <div className={styles.buscadorBotonvVolver}>
+                    <Button funcion={volver} texto={"Volver"}></Button>
+                </div>
+                <br></br>
+
+                <div className={styles.buscadorInstrucciones}>
+
+                    <h4>instrucciones</h4>
+                    <p>Para buscar solo por tema, dejar el espacio de usuario en blanco. Para buscar por tema y por usuario, llenar todos los campos. Para buscar</p>
+                </div>
+                <div className={styles.buscadorSecciones}>
+                    <h2> Buscar por tema</h2>
+                    <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
+                    <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
+
+                </div>
+                <br></br>
+                <div className={styles.buscadorPorUsuario}>
+                    <h2>Buscar por usuario</h2>
+                    <Input id={"nombreUsuario"} texto={"Ingresar el nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)}> </Input>
+
                 </div>
 
-                <div className={styles.filaBusquedas}>
-                    <div className={styles.seccionTemas}>
-                        <div className={styles.seccionTemaimg}>
-                            <h2>Buscar por tema</h2>
-                            <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
-                            <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
-
-
-                        </div>
-
-
-                        <div className={styles.seccionUsuario}>
-                            <h2>Buscar por usuario</h2>
-                            <Input id={"nombreUsuario"} texto={"ingresar nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)} ></Input>
-
-                        </div>
-
-                        <div className={styles.botonBusqueda}>
-                        </div>
-                    </div>
-                </div>
             </div>
-
             {condicionTags()}
-            <div className={styles.grillaPines}>
 
+            <div className={styles.buscadorResultados}>
                 <PinListBuscador listaDatos={datosBusqueda} botonOnClick={clickPin}></PinListBuscador>
-            </div>
 
-            <Button funcion={volver} texto={"Volver"}></Button>
+            </div>
             <Footer></Footer>
-        </div>
+        </div >
     )
 }
