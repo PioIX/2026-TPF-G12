@@ -29,6 +29,7 @@ export default function ModColeccionPage() {
   const [cargando, setCargando] = useState(0)
   const [idColeccion, setIdColeccion] = useState(0)
   const [okColeccion, setOkColeccion] = useState(0)
+  const [okUsuarios, setOkUsuarios] = useState(0)
 
 // ----------------------------------------------- Use effects ------------------------------------------
 
@@ -84,46 +85,90 @@ export default function ModColeccionPage() {
 
 
 
-    useEffect(() => {
-      let cuerpo2;
-      if (okColeccion == 1) {
-        console.log("holal")
-        console.log(idColeccion)
-        console.log(pins)
-        pins.map((p,i)=>{
-          console.log("hola estoyy en el map")
-          cuerpo2 = {
-            id_pin: p,
-            id_coleccion: idColeccion
-          }
 
-          console.log(cuerpo2)
-          fetch('http://localhost:4000/pinporcoleccionnuevo', {
 
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(cuerpo2)
-          })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Datos', data);
 
-              if (data.ok == true) {
-                console.log("funcionó pin por colec")
-              } else {
-                console.log("error")
-              }
-              if(i==pins.length-1){
-                setOkColeccion(0)
-              }
-            });
+
+
+  useEffect(() => {
+    let cuerpo2;
+    if (okColeccion == 1) {
+      console.log("holal")
+      console.log(idColeccion)
+      console.log(pins)
+      pins.map((p, i) => {
+        console.log("hola estoyy en el map")
+        cuerpo2 = {
+          id_pin: p,
+          id_coleccion: idColeccion
+        }
+
+        console.log(cuerpo2)
+        fetch('http://localhost:4000/pinporcoleccionnuevo', {
+
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(cuerpo2)
         })
-      };
+          .then(response => response.json())
+          .then(data => {
+            console.log('Datos', data);
+
+            if (data.ok == true) {
+              console.log("funcionó pin por colec")
+            } else {
+              console.log("error")
+            }
+            if (i == pins.length - 1) {
+              setOkColeccion(0)
+            }
+          });
+      })
+    };
   }, [okColeccion])
 
 
+
+  useEffect(() => {
+    let cuerpo3;
+    if (okUsuarios == 1) {
+      console.log("hola2")
+      console.log(idColeccion)
+      console.log(usuarios)
+      usuarios.map((u, i) => {
+        console.log("hola estoy en el map de usuarios")
+        cuerpo3 = {
+          id_usuario: u,
+          id_coleccion: idColeccion
+        }
+
+        console.log(cuerpo3)
+        fetch('http://localhost:4000/coleccionporusuarionueva', {
+
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(cuerpo3)
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Datos', data);
+
+            if (data.ok == true) {
+              console.log("funcionó user por colec")
+            } else {
+              console.log("error")
+            }
+            if (i == usuarios.length - 1) {
+              setOkUsuarios(0)
+            }
+          });
+      })
+    };
+  }, [okUsuarios])
 
   
 
@@ -215,6 +260,9 @@ export default function ModColeccionPage() {
       return (<p><b>¡Cuidado! la colección tiene que tener al menos un usuario</b></p>)
     }  
   }
+
+
+  // ------------------------------------------------ Crear coleccion ---------------------------------------------
   
   function crearColeccion(){
     setCargando(1)
@@ -237,12 +285,30 @@ export default function ModColeccionPage() {
           console.log("se puede seguir")
           setIdColeccion(data.id_coleccion)
           setOkColeccion(1)
+          setOkUsuarios(1)
         } else {
           console.log("error")
         }
       });
   
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   return (
@@ -303,13 +369,3 @@ export default function ModColeccionPage() {
   );
 }
 
-/*
- <Input texto={"ID Pin"} funcion={getPinColocar}></Input>
-        <Button></Button>
-        <Input texto={"ID Pin"} funcion={getPinQuitar}></Input>
-boton
-         <Input texto={"ID Usuario"} funcion={getUsuarioColocar}></Input>
-        <Button></Button>
-        <Input texto={"ID Usuario"} funcion={getUsuarioQuitar}></Input>
-        <Button></Button>
-*/
