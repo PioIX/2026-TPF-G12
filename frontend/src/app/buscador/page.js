@@ -121,28 +121,27 @@ export default function BuscadorPage() {
             <div className={styles.buscadorContenido}>
                 <h1 className={styles.buscador}>BUSCADOR</h1>
 
-                <div className={styles.buscadorBotonvVolver}>
-                    <Button funcion={volver} texto={"Volver"}></Button>
-                </div>
-                <br></br>
+
 
                 <div className={styles.buscadorInstrucciones}>
 
                     <h4>instrucciones</h4>
                     <p>Para buscar solo por tema, dejar el espacio de usuario en blanco. Para buscar por tema y por usuario, llenar todos los campos. Para buscar</p>
                 </div>
+
                 <div className={styles.buscadorSecciones}>
                     <h2> Buscar por tema</h2>
                     <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
                     <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
 
                 </div>
-                <br></br>
                 <div className={styles.buscadorPorUsuario}>
                     <h2>Buscar por usuario</h2>
                     <Input id={"nombreUsuario"} texto={"Ingresar el nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)}> </Input>
 
                 </div>
+
+
 
             </div>
             {condicionTags()}
@@ -150,6 +149,10 @@ export default function BuscadorPage() {
             <div className={styles.buscadorResultados}>
                 <PinListBuscador listaDatos={datosBusqueda} botonOnClick={clickPin}></PinListBuscador>
 
+            </div>
+
+            <div className={styles.buscadorBotonvVolver}>
+                <Button funcion={volver} texto={"Volver"}></Button>
             </div>
             <Footer></Footer>
         </div >

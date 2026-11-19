@@ -52,7 +52,6 @@ export default function PrincipalPage() {
                 <div className={styles.pins}>
                     <PinList id_log={id_user} botonOnClick={clickPin}></PinList>
                 </div>
-                {/* <div className={styles.pinlist}> <PinList id_log={id_user} botonOnClick={clickPin}></PinList></div> */}
             </main>
 
 
