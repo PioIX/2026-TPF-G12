@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import ChatItem from "./ChatItem";
 
-
+import styles from "./Chatlist.module.css";
 export default function ChatList({id_log, botonOnClick}) {
 
 
@@ -26,13 +26,13 @@ export default function ChatList({id_log, botonOnClick}) {
     },[])
     
     return (
-        <>
+        <div className={styles.listaConversaciones}>
            {usuarios.map((usuario, index) => {
                 return(
                     <ChatItem key={index} id={usuario.id_usuario} foto={usuario.foto_perfil} nombre={usuario.nombre} onClick={() => botonOnClick(usuario.id_usuario)}>
                     </ChatItem>
                 )
            })} 
-        </>
+        </div>
     );
 }

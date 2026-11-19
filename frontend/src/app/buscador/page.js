@@ -10,6 +10,7 @@ import Footer from "@/components/Footer"
 import Header from '@/components/Header';
 import PinListBuscador from "@/components/PinListBuscador";
 
+import styles from './page.module.css';
 
 export default function BuscadorPage() {
     const router = useRouter();
@@ -74,7 +75,7 @@ export default function BuscadorPage() {
 
             const datos = await resultado.json()
             console.log(datos)
-            setDatosBusqueda(datos)  
+            setDatosBusqueda(datos)
         }
     }
 
@@ -84,6 +85,7 @@ export default function BuscadorPage() {
                 if (idBuscar != -1) {
                     return (
                         <Button funcion={buscar} texto={"Buscar"}></Button>
+
                     )
                 } else {
                     return (
@@ -99,7 +101,9 @@ export default function BuscadorPage() {
         } else {
             if (idBuscar != -1) {
                 return (
-                    <Button funcion={buscar} texto={"Buscar"}></Button>
+                    <div className={styles.buscar}>
+                        <Button funcion={buscar} texto={"Buscar"}></Button>
+                    </div>
                 )
             } else {
                 return (
@@ -111,34 +115,49 @@ export default function BuscadorPage() {
     }
 
     function clickPin(idPin) {
-    router.push("/pin?idpin="+idPin+"&A="+A) 
-  }
+        router.push("/pin?idpin=" + idPin + "&A=" + A)
+    }
 
     return (
-        <div>
+        <div className={styles.buscadorPagina}>
             <Header></Header>
+            <div className={styles.buscadorContenido}>
+                <h1 className={styles.buscador}>BUSCADOR</h1>
 
-            <h1>BUSCADOR</h1>
 
-            <Button funcion={volver} texto={"Volver"}></Button>
-            <br></br>
 
-            <h4>Instrucciones: </h4>
-            <p>Para buscar solo por tema, dejar el espacio de usuario en blanco. Para buscar por tema y por usuario, llenar todos los campos. Para buscar solo por usuario, dejar los temas en "nada"</p>
+                <div className={styles.buscadorInstrucciones}>
 
-            <h2>Buscar por tema</h2>
-            <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
-            <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
+                    <h4>instrucciones</h4>
+                    <p>Para buscar solo por tema, dejar el espacio de usuario en blanco. Para buscar por tema y por usuario, llenar todos los campos. Para buscar</p>
+                </div>
 
-            <br></br>
+                <div className={styles.buscadorSecciones}>
+                    <h2> Buscar por tema</h2>
+                    <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
+                    <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
 
-            <h2>Buscar por usuario</h2>
-            <Input id={"nombreUsuario"} texto={"ingresar nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)} ></Input>
+                </div>
+                <div className={styles.buscadorPorUsuario}>
+                    <h2>Buscar por usuario</h2>
+                    <Input id={"nombreUsuario"} texto={"Ingresar el nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)}> </Input>
 
+                </div>
+
+
+
+            </div>
             {condicionTags()}
 
-            <PinListBuscador listaDatos= {datosBusqueda} botonOnClick={clickPin}></PinListBuscador>
+            <div className={styles.buscadorResultados}>
+                <PinListBuscador listaDatos={datosBusqueda} botonOnClick={clickPin}></PinListBuscador>
+
+            </div>
+
+            <div className={styles.buscadorBotonvVolver}>
+                <Button funcion={volver} texto={"Volver"}></Button>
+            </div>
             <Footer></Footer>
-        </div>
+        </div >
     )
 }
