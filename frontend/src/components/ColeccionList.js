@@ -23,10 +23,13 @@ export default function ColeccionList({ funcion1, funcion2, funcion3}) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Datos', data);
+                console.log('Datos coleccionlist', data);
+                console.log("data [0].nombres[0].nombre: " + data[0].nombres[0].nombre)
                 if (data.ok == 1) {}
-                else{setColecciones(data[0].colecciones);
-                    setNombres(data[1])}
+                else{
+                    setColecciones(data[0].colecciones);
+                    if (data[0].nombres[1].id_coleccion == data[0].colecciones[1].id_coleccion)
+                    setNombres(data[0].nombres)}
             });
     }, [])
 
