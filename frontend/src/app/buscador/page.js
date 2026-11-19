@@ -9,7 +9,6 @@ import SelectTemas from "@/components/SelectTemas";
 import Footer from "@/components/Footer"
 import Header from '@/components/Header';
 import PinListBuscador from "@/components/PinListBuscador";
-import styles from './page.module.css';
 
 import styles from './page.module.css';
 
