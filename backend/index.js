@@ -11,7 +11,7 @@ const { Server } = require("socket.io");
 var app = express(); //Inicializo express
 var port = process.env.PORT || 4000; //Ejecuto el servidor en el puerto 4000
 
-// Convierte una petición recibida (POST-GET...) a objeto JSON
+// Convierte una petición recibida (POST-GET...) a objeto JSON 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -149,9 +149,14 @@ app.get('/getcoleccionesporusuario', async function (req, res) {
 })
 
 app.get('/getpinesporcoleccionget', async function (req, res) {
-  let respuesta = await realizarQuery("SELECT * FROM Pines_por_coleccion_tpf");
-  console.log({ respuesta })
-  res.send(respuesta);
+  console.log("lel")
+  try {
+    let respuesta = await realizarQuery("SELECT * FROM Pines_por_coleccion_tpf");
+    console.log(respuesta)
+    res.send(respuesta);
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 app.get('/getmensajes', async function (req, res) {
@@ -582,7 +587,7 @@ app.post('/pinporcoleccionnuevo', async function (req, res) {
         (${req.body.id_pin}, ${req.body.id_coleccion})
       `)
 
-    let id = await realizarQuery(`SELECT id_pin_por coleccion FROM Pines_por_coleccion_tpf;`)
+    let id = await realizarQuery(`SELECT id_pines_por_coleccion FROM Pines_por_coleccion_tpf;`)
     res.send({ mensaje: "pin por coleccion agregado", ok: true, id_pin_por_coleccion: id[id.length - 1].id_pin_por_coleccion })
 
   } catch {

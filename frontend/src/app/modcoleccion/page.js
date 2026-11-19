@@ -83,6 +83,50 @@ export default function ModColeccionPage() {
   }, [inputUser])
 
 
+
+    useEffect(() => {
+      let cuerpo2;
+      if (okColeccion == 1) {
+        console.log("holal")
+        console.log(idColeccion)
+        console.log(pins)
+        pins.map((p,i)=>{
+          console.log("hola estoyy en el map")
+          cuerpo2 = {
+            id_pin: p,
+            id_coleccion: idColeccion
+          }
+
+          console.log(cuerpo2)
+          fetch('http://localhost:4000/pinporcoleccionnuevo', {
+
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cuerpo2)
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Datos', data);
+
+              if (data.ok == true) {
+                console.log("funcionó pin por colec")
+              } else {
+                console.log("error")
+              }
+              if(i==pins.length-1){
+                setOkColeccion(0)
+              }
+            });
+        })
+      };
+  }, [okColeccion])
+
+
+
+  
+
 // ------------------------------------------------ Funciones ---------------------------------------------
 
   function prueba(){
@@ -197,40 +241,6 @@ export default function ModColeccionPage() {
           console.log("error")
         }
       });
-
-
-
-      
-  if (okColeccion == 1) {
-    for (let indice; indice < pins.length; indice++) {
-      const cuerpo2 = {
-        id_pin: pins[indice],
-        id_coleccion: idColeccion
-      }
-
-      fetch('http://localhost:4000/pinporcoleccionnuevo', {
-
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(cuerpo2)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Datos', data);
-
-        if (data.ok == true) {
-          console.log("funcionó pin por colec")
-        } else {
-          console.log("error")
-        }
-      });
-    }
-  }
-
-
-
   
 }
 
