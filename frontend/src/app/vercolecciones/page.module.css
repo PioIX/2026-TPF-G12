@@ -1,0 +1,113 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;          /* evita que el main se encoja por el margin auto del global */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 8px 0 40px;
+}
+
+/* Grilla de carpetas */
+.lista {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 48px 32px;
+  align-content: start;
+  padding-top: 16px;    /* lugar para la pestañita de la carpeta */
+}
+
+/* Mensaje cuando no hay colecciones */
+.lista > p {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+/* Cada card (el elemento raíz de <Coleccion>) con forma de carpeta */
+.lista > * {
+  position: relative;
+  background: #fbf3a8;
+  border-radius: 0 16px 16px 16px;
+  padding: 20px 16px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Pestañita de la carpeta */
+.lista > *::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 0;
+  width: 45%;
+  height: 16px;
+  background: #fbf3a8;
+  border-radius: 12px 12px 0 0;
+}
+
+/* El nombre (primer hijo de la card) */
+.lista > * > :first-child {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Botones Editar / Borrar / Ver dentro de las cards */
+.lista button {
+  background: #ffb347;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 12px 4px 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lista button:nth-of-type(2) {   /* Borrar */
+  background: #ff5c5c;
+}
+
+/* Fila de abajo: Volver a la izquierda, + a la derecha */
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.botonVolver {
+  background-color: #ffb347;
+  color: #2c2c2c;
+  border: 2px solid #e69933;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.botonMas {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: #8599dc;
+  color: #000;
+  font-size: 36px;
+  line-height: 1;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.botonVolver:hover,
+.botonMas:hover {
+  transform: translateY(-1px);
+}
