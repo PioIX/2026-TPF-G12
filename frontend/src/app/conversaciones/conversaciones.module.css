@@ -74,15 +74,3 @@
   padding: 20px;
 }
 
-/* 📱 Para pantallas más chicas: que pase a 2 columnas y luego a 1 sola */
-@media (max-width: 900px) {
-  .conversacionesLista {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .conversacionesLista {
-    grid-template-columns: 1fr;
-  }
-}
