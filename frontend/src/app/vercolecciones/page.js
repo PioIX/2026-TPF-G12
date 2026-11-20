@@ -17,6 +17,8 @@ export default function ColeccionesPage() {
   let id_user = parseInt(searchParams.get("id_user"));
   let A = parseInt(searchParams.get("A"))
   console.log("id user: " + id_user);
+  const [k,setK]=useState(0)
+  
 
   function irColeccion(id_coleccion) {
     console.log(id_coleccion);
@@ -32,17 +34,24 @@ export default function ColeccionesPage() {
     console.log(id_coleccion);
     let borrar = confirm("¿Desea borrar la colección?");
     if (borrar) {
-      const resultado = fetch("http://localhost:4000/deletecoleccion", {
+      fetch("http://localhost:4000/deletecoleccion", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id_coleccion: id_coleccion }),
-      });
-      console.log(resultado);
+      }).then((data)=> {
+        console.log(data)
+        console.log("Se borró la colección");
+        if(data.ok == true) {
+          console.log("data ok")
+          setK((prev)=>prev++)
+          router.push(`/principal?id_user=${id_user}&A=${A}`);
+        }
+        
 
-      console.log("Se borró la colección");
-      router.refresh();
+      })
+      
     }
   }
 

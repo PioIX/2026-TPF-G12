@@ -206,6 +206,39 @@ app.post('/getuserespec', async function (req, res) {
   } catch { res.send({ mensaje: "error del try" }) }
 })
 
+app.post('/getcoleccionespec', async function (req, res) {
+  //try {
+    let obj = {
+      pines: [],
+      usuarios: [],
+      nombre: ""
+    }
+    let respuestaPines = await realizarQuery(` SELECT  id_pin  From Pines_por_coleccion_tpf 
+      WHERE id_coleccion = "${req.body.id_coleccion}" 
+    `);
+
+    obj.pines = respuestaPines
+    
+    let respuestaUsers = await realizarQuery(` SELECT  id_usuario  From Colecciones_por_usuario_tpf 
+      WHERE id_coleccion = "${req.body.id_coleccion}" 
+    `);
+
+    obj.usuarios = respuestaUsers
+
+    let respuestaNombre = await realizarQuery(` SELECT  nombre_coleccion  From Colecciones_tpf 
+      WHERE id_coleccion = "${req.body.id_coleccion}" 
+    `);
+
+    obj.nombre = respuestaNombre
+
+    res.send(obj) 
+
+
+  //} catch { res.send({ mensaje: "error del try" }) }
+})
+
+
+
 // pines de una coleccion
 app.post('/getpinesporcoleccion', async function (req, res) {
   try {
@@ -548,16 +581,68 @@ app.post('/getchatsej4', async function (req, res) {
 app.delete('/deletecoleccion', async function (req, res) {
   try {
     console.log(req.body)
-    let res1 = realizarQuery(`DELETE FROM Colecciones_por_usuario_tpf WHERE id_coleccion = "${req.body.id_coleccion}"`)
-    let res2 = realizarQuery(`DELETE FROM Pines_por_coleccion_tpf  WHERE id_coleccion = "${req.body.id_coleccion}" `)
-    let res3 = realizarQuery(`DELETE FROM Colecciones_tpf WHERE id_coleccion = "${req.body.id_coleccion}" `)
-    res.send("Coleccion eliminada")
+    let res1 = await realizarQuery(`DELETE FROM Colecciones_por_usuario_tpf WHERE id_coleccion = "${req.body.id_coleccion}"`)
+    let res2 = await realizarQuery(`DELETE FROM Pines_por_coleccion_tpf  WHERE id_coleccion = "${req.body.id_coleccion}" `)
+    let res3 = await realizarQuery(`DELETE FROM Colecciones_tpf WHERE id_coleccion = "${req.body.id_coleccion}" `)
+    res.send({mensaje: "Coleccion eliminada", ok: true})
   } catch {
-    res.send({ error: "error del try" })
+    res.send({ error: "error del try", ok:false })
   }
 })
 
 
+
+
+
+
+
+
+
+app.post('/modificarcoleccion', async function (req, res) {
+  try {
+    console.log(req.body)
+
+    await realizarQuery(`
+        UPDATE Colecciones_tpf
+        SET nombre_coleccion =  "${req.body.nombre_coleccion}"
+        WHERE id_coleccion = ${req.body.id_coleccion}
+      `)
+
+    res.send({ mensaje: "coleccion modificada", ok: true})
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
+
+app.post('/pinporcoleccionmodificar', async function (req, res) {
+  try {
+    console.log(req.body)
+
+    let resp = realizarQuery(`DELETE FROM Pines_por_coleccion_tpf  WHERE id_coleccion = "${req.body.id_coleccion}" `)
+
+    
+    res.send({ mensaje: "pin por coleccion borrado", ok: true})
+
+  } catch(error) {
+    res.send({ mensaje: "Error del try" })
+    console.log(error)
+  }
+})
+
+app.post('/coleccionporusuariomodificar', async function (req, res) {
+  try {
+    console.log(req.body)
+
+    let resp = realizarQuery(`DELETE FROM Colecciones_por_usuario_tpf WHERE id_coleccion = "${req.body.id_coleccion}"`)
+
+    
+    res.send({ mensaje: "colec por usuario borrado", ok: true})
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
 
 
 
