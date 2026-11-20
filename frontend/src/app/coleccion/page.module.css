@@ -1,0 +1,44 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 8px 0 32px;
+}
+
+.pins {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  justify-items: center;   /* cada card centrada en su columna */
+  align-content: start;
+  gap: 32px;
+}
+
+.zonaVolver {
+  margin-top: 40px;
+}
+
+.botonVolver {
+  background-color: #ffb347;
+  color: #2c2c2c;
+  border: 2px solid #e69933;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.botonVolver:hover {
+  transform: translateY(-1px);
+}
