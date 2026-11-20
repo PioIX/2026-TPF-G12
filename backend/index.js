@@ -11,7 +11,7 @@ const { Server } = require("socket.io");
 var app = express(); //Inicializo express
 var port = process.env.PORT || 4000; //Ejecuto el servidor en el puerto 4000
 
-// Convierte una petición recibida (POST-GET...) a objeto JSON
+// Convierte una petición recibida (POST-GET...) a objeto JSON 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -148,11 +148,16 @@ app.get('/getcoleccionesporusuario', async function (req, res) {
   res.send(respuesta);
 })
 
-/*app.get('/getpinesporcoleccion', async function (req, res) {
-  let respuesta = await realizarQuery("SELECT * FROM Pines_por_coleccion_tpf");
-  console.log({ respuesta })
-  res.send(respuesta);
-})*/
+app.get('/getpinesporcoleccionget', async function (req, res) {
+  console.log("lel")
+  try {
+    let respuesta = await realizarQuery("SELECT * FROM Pines_por_coleccion_tpf");
+    console.log(respuesta)
+    res.send(respuesta);
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 app.get('/getmensajes', async function (req, res) {
   let respuesta = await realizarQuery("SELECT * FROM Mensajes_tpf");
@@ -185,6 +190,18 @@ app.post('/getpinespec', async function (req, res) {
     let respuesta = await realizarQuery(` SELECT  *  From Pines_tpf Where id_pin = "${req.body.id_pin}" `);
 
     obj.pin = respuesta
+    res.send(obj)
+  } catch { res.send({ mensaje: "error del try" }) }
+})
+
+app.post('/getuserespec', async function (req, res) {
+  try {
+    let obj = {
+      user: ""
+    }
+    let respuesta = await realizarQuery(` SELECT  *  From Usuarios_tpf Where id_usuario = "${req.body.id_usuario}" `);
+
+    obj.user = respuesta
     res.send(obj)
   } catch { res.send({ mensaje: "error del try" }) }
 })
@@ -426,26 +443,7 @@ app.post('/mensajenuevo', async function (req, res) {
 
 
 
-// creacion chat grupal
-app.post('/gruponuevo', async function (req, res) {
-  try {
-    console.log(req.body)
-    await realizarQuery(`
-      INSERT INTO Chats_tpi2(nombre_chat, foto) VALUES 
-      ("${req.body.nombre_chat}", "${req.body.foto}")
-    `)
-    let id_chat = await realizarQuery(`SELECT id_chat FROM Chats_tpi2 WHERE nombre_chat = "${req.body.nombre_chat}"`)
-    let respuesta2 = await realizarQuery(`
-      INSERT INTO Chats_por_usuario_tpi2(id_usuario, id_chat) VALUES 
-      (${req.body.id_usuario}, ${id_chat[0].id_chat})
-    `)
 
-    res.send({ mensaje: "Chat agregado", ok: true })
-  } catch {
-    res.send({ mensaje: "Error del try" })
-  }
-
-})
 
 
 
@@ -552,8 +550,81 @@ app.delete('/deletecoleccion', async function (req, res) {
 })
 
 
+
+
+
+
+
+// --------------------------------------- CREAR COLECCION Y PEDIDOS RELACIONADOS ---------------------------------------
+// --------------------------------------- --------------------------------------- ---------------------------------------
+// --------------------------------------- --------------------------------------- ---------------------------------------
+
+app.post('/coleccionnueva', async function (req, res) {
+  try {
+    console.log(req.body)
+
+    await realizarQuery(`
+        INSERT INTO Colecciones_tpf(nombre_coleccion) VALUES 
+        ("${req.body.nombre_coleccion}")
+      `)
+
+    let id = await realizarQuery(`SELECT id_coleccion FROM Colecciones_tpf;`)
+    res.send({ mensaje: "coleccion agregado", ok: true, id_coleccion: id[id.length - 1].id_coleccion })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
+
+
+
+app.post('/pinporcoleccionnuevo', async function (req, res) {
+  try {
+    console.log(req.body)
+
+    await realizarQuery(`
+        INSERT INTO Pines_por_coleccion_tpf(id_pin, id_coleccion) VALUES 
+        (${req.body.id_pin}, ${req.body.id_coleccion})
+      `)
+
+    let id = await realizarQuery(`SELECT id_pines_por_coleccion FROM Pines_por_coleccion_tpf;`)
+    res.send({ mensaje: "pin por coleccion agregado", ok: true, id_pines_por_coleccion: id[id.length - 1].id_pines_por_coleccion })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
+
+app.post('/coleccionporusuarionueva', async function (req, res) {
+  try {
+    console.log(req.body)
+
+    await realizarQuery(`
+        INSERT INTO Colecciones_por_usuario_tpf(id_usuario, id_coleccion) VALUES 
+        (${req.body.id_usuario}, ${req.body.id_coleccion})
+      `)
+
+    let id = await realizarQuery(`SELECT id_coleccion_por_usuario FROM Colecciones_por_usuario_tpf;`)
+    res.send({ mensaje: "coleccion por usuario", ok: true, id_coleccion_por_usuario: id[id.length - 1].id_coleccion_por_usuario })
+
+  } catch {
+    res.send({ mensaje: "Error del try" })
+  }
+})
+
+
+// --------------------------------------- --------------------------------------- ---------------------------------------
+// --------------------------------------- --------------------------------------- ---------------------------------------
+// --------------------------------------- --------------------------------------- ---------------------------------------
+
+
+
+
+
+
+
 /* crear colecciones nuevas en mysql
-INSERT INTO Colecciones_tpf (id_coleccion, nombre_coleccion)
+
 VALUES (4, 'Coleccion4');
 
 //usu 1 y 2
@@ -568,6 +639,18 @@ values(4, 10, 4);
 insert into Pines_por_coleccion_tpf(id_pines_por_coleccion, id_pin, id_coleccion)
 values(5, 11, 4);
 */
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // delete pin
