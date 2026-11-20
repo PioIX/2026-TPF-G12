@@ -8,61 +8,81 @@ import Header from "@/components/Header";
 import Button from "@/components/Button";
 import ColeccionList from "@/components/ColeccionList";
 
+import styles from "./page.module.css";
+
+
 export default function ColeccionesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   let id_user = parseInt(searchParams.get("id_user"));
   let A = parseInt(searchParams.get("A"))
   console.log("id user: " + id_user);
+  const [k,setK]=useState(0)
+  
 
   function irColeccion(id_coleccion) {
     console.log(id_coleccion);
-    router.push("/coleccion?id_coleccion=" + id_coleccion + "&user=" + id_user +"&A="+A);
+    router.push("/coleccion?id_coleccion=" + id_coleccion + "&id_user=" + id_user + "&A=" + A);
   }
 
   function irEditar(id_coleccion) {
-    console.log(id_coleccion);
-    router.push("/modcoleccion?id_coleccion=" + id_coleccion +"&A="+A);
+    
+    router.push("/modcoleccion?id_user=" + id_user +"&A="+A+"&id_coleccion="+id_coleccion);
   }
 
   function borrarColeccion(id_coleccion) {
     console.log(id_coleccion);
     let borrar = confirm("¿Desea borrar la colección?");
     if (borrar) {
-      const resultado = fetch("http://localhost:4000/deletecoleccion", {
+      fetch("http://localhost:4000/deletecoleccion", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id_coleccion: id_coleccion }),
-      });
-      console.log(resultado);
+      }).then((data)=> {
+        console.log(data)
+        console.log("Se borró la colección");
+        if(data.ok == true) {
+          console.log("data ok")
+          setK((prev)=>prev++)
+          router.push(`/principal?id_user=${id_user}&A=${A}`);
+        }
+        
 
-      console.log("Se borró la colección");
-      router.refresh();
+      })
+      
     }
   }
 
   function nuevaColeccion(id_coleccion) {
-    router.push("/modcoleccion?id_coleccion=" + id_coleccion +"&A="+A);
+    router.push("/crearcoleccion?id_user=" + id_user +"&A="+A);
   }
 
-  function volver(){router.back()}
+  function volver() { router.back() }
 
   return (
     <>
       <Header></Header>
 
-      <h1>MIS COLECCIONES</h1>
+      <main className={styles.contenedor}>
 
-      <ColeccionList
-        funcion1={irEditar}
-        funcion2={borrarColeccion}
-        funcion3={irColeccion}
-      ></ColeccionList>
+        <h1 className={styles.titulo}>MIS COLECCIONES</h1>
 
-      <Button funcion={volver} texto={"Volver"}></Button>
-      <Button funcion={nuevaColeccion} texto={"+"}></Button>
+        <div className={styles.lista}>
+          <ColeccionList
+            funcion1={irEditar}
+            funcion2={borrarColeccion}
+            funcion3={irColeccion}
+          ></ColeccionList>
+        </div>
+
+        <div className={styles.acciones}>
+          <Button funcion={volver} texto={"Volver"} className={styles.botonVolver}></Button>
+          <Button funcion={nuevaColeccion} texto={"+"} className={styles.botonMas}></Button>
+        </div>
+
+      </main>
 
       <Footer> </Footer>
     </>

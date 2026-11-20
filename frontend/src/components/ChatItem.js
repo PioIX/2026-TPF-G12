@@ -2,7 +2,7 @@
 
 import Button from "./Button";
 import styles from "./Chatitem.module.css";
-import clsx from "clsx";
+// import clsx from "clsx";
 
 export default function ChatItem({ id, idfunc, foto, nombre, onClick, esFlex }) {
 

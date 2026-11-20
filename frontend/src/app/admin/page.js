@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import styles from "./page.module.css";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 
@@ -64,21 +64,28 @@ export default function AdminPage() {
   }
 
   return (
-    <div>
-      <h1>ADMIN</h1>
+    <main className={styles.contenedor}>
+      <h1 className={styles.titulo}>ADMIN</h1>
 
-      <h2>Eliminar USUARIO</h2>
-      <Input id={usu} texto={"ID USUARIO"} funcion={getUsuario}></Input>
-      <Button funcion={() => matarUsuario(usu)} texto={"MATAR"}></Button>
+      <section className={styles.seccion}>
+        <h2 className={styles.subtitulo}>Eliminar USUARIO</h2>
+        <div className={styles.fila}>
+          <Input id={usu} texto={"ID USUARIO"} funcion={getUsuario}></Input>
+          <Button funcion={() => matarUsuario(usu)} texto={"MATAR"} className={styles.botonMatar}></Button>
+        </div>
+      </section>
 
-      <h2>Eliminar PIN</h2>
-      <Input id={pin} texto={"ID PIN"} funcion={getPin}></Input>
-      <Button funcion={() => matarPin(pin)} texto={"MATAR"}>
-        {" "}
-      </Button>
+      <section className={styles.seccion}>
+        <h2 className={styles.subtitulo}>Eliminar PIN</h2>
+        <div className={styles.fila}>
+          <Input id={pin} texto={"ID PIN"} funcion={getPin}></Input>
+          <Button funcion={() => matarPin(pin)} texto={"MATAR"} className={styles.botonMatar}></Button>
+        </div>
+      </section>
 
-      <br></br>
-      <Button funcion={irPrincipal} texto={"Página principal"}></Button>
-    </div>
+      <div className={styles.volver}>
+        <Button funcion={irPrincipal} texto={"Página principal"} className={styles.botonPrincipal}></Button>
+      </div>
+    </main>
   );
 }

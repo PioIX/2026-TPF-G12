@@ -1,0 +1,80 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;           /* evita que el main se encoja por el margin auto del global */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.titulo {
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.seccion {
+  width: 100%;
+  max-width: 420px;      /* columna angosta, como en el diseño */
+  margin-bottom: 40px;
+}
+
+/* El h2 del global está centrado y morado: acá lo alineamos a la izquierda */
+.subtitulo {
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--foreground);
+  margin-bottom: 12px;
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* El input (sin tocar el componente Input) */
+.fila input {
+  flex: 1;
+  min-width: 0;
+  background: #a6a6a6;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  text-align: center;
+  color: #000;
+}
+
+.fila input::placeholder {
+  color: #222;
+}
+
+.fila input:focus {
+  outline: 2px solid #e69933;
+}
+
+.botonMatar,
+.botonPrincipal {
+  background-color: #ffb347;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.botonMatar:hover,
+.botonPrincipal:hover {
+  transform: translateY(-1px);
+}
+
+.volver {
+  margin-top: 16px;
+}

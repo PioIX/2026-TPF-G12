@@ -44,8 +44,6 @@ export default function HomePage() {
       if (res.ok == true) {
         id_user = res.id_user
 
-        alert("Usuario VERIFICADO")
-
         if (res.es_admin == 0) {
           router.push(`/principal?id_user=${id_user}&A=${0}`);
         } else {
@@ -80,9 +78,6 @@ export default function HomePage() {
 
       if (res.ok == true) {
         id_user = res.id_user
-
-        alert("u uwa wa uwa")
-
         router.push(`/principal?id_user=${id_user}&A=${0}`);
 
       } else {

@@ -288,8 +288,13 @@ export default function SocketPage() {
                 <div className={styles.botonVolver}>
                     <Button funcion={volver} texto={"Volver"} ></Button>
 
-                </div>
-            </div>
+            {
+                conversacion == user ? (
+                    <h4><b>¡Esta es tu sala!</b></h4>
+                ) : ( 
+                    <p></p>
+                )
+            }
 
 
             <br></br>
