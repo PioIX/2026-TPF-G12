@@ -53,7 +53,7 @@ export default function ColeccionList({ funcion1, funcion2, funcion3}) {
         console.log("colecciones cambiadas un saludo")
         console.log(colecciones)
         if(colecciones.length>0){
-            console.log("false loading")
+            console.log("falso loading")
             setLoading(0)
         }
     }, [colecciones])

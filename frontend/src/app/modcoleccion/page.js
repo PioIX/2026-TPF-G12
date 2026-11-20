@@ -18,7 +18,7 @@ export default function ModColeccionPage() {
 
   // ver desde acá
 
-  const [nombreCol, setNombreCol] = useState("");
+  const [nombreCol, setNombreCol] = useState(""); 
   const [pins, setPins] = useState([]);
   const [usuarios, setUsuarios] = useState([id_user]);
   const [inputPin, setInputPin] = useState("")
@@ -28,11 +28,12 @@ export default function ModColeccionPage() {
   const [pinExiste, setPinExiste] = useState(0)
   const [userExiste, setUserExiste] = useState(0)
   const [cargando, setCargando] = useState(0)
-  const [idColeccion, setIdColeccion] = useState(0)
   const [okColeccion, setOkColeccion] = useState(0)
   const [okUsuarios, setOkUsuarios] = useState(0)
   const [listoUsuarios, setListoUsuarios] = useState(0)
   const [listoColeccion, setListoColeccion] = useState(0)
+  const [okColeccion2, setOkColeccion2] = useState(0)
+  const [okUsuarios2, setOkUsuarios2] = useState(0) 
 
 // ----------------------------------------------- Use effects ------------------------------------------
 
@@ -109,18 +110,21 @@ export default function ModColeccionPage() {
 
 
 
-
-  useEffect(() => {
+ useEffect(() => {
     let cuerpo2;
-    if (okColeccion == 1) {
+    console.log("coleccion effect ")
+     console.log(okColeccion)
+    console.log(okColeccion2)
+
+    if (okColeccion == 1 && okColeccion2 == 1) {
       console.log("holal")
-      console.log(idColeccion)
+      console.log(id_coleccion)
       console.log(pins)
       pins.map((p, i) => {
         console.log("hola estoyy en el map")
         cuerpo2 = {
           id_pin: p,
-          id_coleccion: idColeccion
+          id_coleccion: id_coleccion
         }
 
         console.log(cuerpo2)
@@ -143,26 +147,30 @@ export default function ModColeccionPage() {
             }
             if (i == pins.length - 1) {
               setOkColeccion(0)
+              setOkColeccion2(0)
               setListoColeccion(1)
             }
           });
       })
     };
-  }, [okColeccion])
+  }, [okColeccion2, okColeccion])
 
 
 
   useEffect(() => {
     let cuerpo3;
-    if (okUsuarios == 1) {
+        console.log("usuarios effect ")
+     console.log(okUsuarios)
+    console.log(okUsuarios2)
+    if (okUsuarios == 1 && okUsuarios2 == 1) {
       console.log("hola2")
-      console.log(idColeccion)
+      console.log(id_coleccion)
       console.log(usuarios)
       usuarios.map((u, i) => {
         console.log("hola estoy en el map de usuarios")
         cuerpo3 = {
           id_usuario: u,
-          id_coleccion: idColeccion
+          id_coleccion: id_coleccion
         }
 
         console.log(cuerpo3)
@@ -185,12 +193,13 @@ export default function ModColeccionPage() {
             }
             if (i == usuarios.length - 1) {
               setOkUsuarios(0)
+              setOkUsuarios2(0)
               setListoUsuarios(1)
             }
           });
       })
     };
-  }, [okUsuarios])
+  }, [okUsuarios, okUsuarios2])
 
   useEffect(() => {
     if (listoColeccion == 1 && listoUsuarios == 1) {
@@ -280,10 +289,10 @@ export default function ModColeccionPage() {
         if (nombreCol != "") {
           if (cargando == 0) {
             return (
-              <Button funcion={crearColeccion} texto={"Crear la Colección"}></Button>
+              <Button funcion={modColeccion} texto={"Editar la Colección"}></Button>
             )
           } else {
-            return (<h4>Creando coleccion...</h4>)
+            return (<h4>Modificando coleccion...</h4>)
           } 
           
         }   return (<p><b>¡Cuidado! la colección tiene que tener un nombre</b></p>)
@@ -299,11 +308,12 @@ export default function ModColeccionPage() {
 
   // ------------------------------------------------ Crear coleccion ---------------------------------------------
   
-  function crearColeccion(){
+  function modColeccion(){
     setCargando(1)
-    const cuerpo1 = {nombre_coleccion: nombreCol}
+    const cuerpo1 = {nombre_coleccion: nombreCol, id_coleccion: id_coleccion}
+    const cuerpoId = {id_coleccion: id_coleccion}
 
-    fetch('http://localhost:4000/coleccionnueva', {
+    fetch('http://localhost:4000/modificarcoleccion', {
 
       method: 'POST',
       headers: {
@@ -314,13 +324,52 @@ export default function ModColeccionPage() {
       .then(response => response.json())
       .then(data => {
         console.log('Datos', data);
-        console.log(idColeccion)
 
         if (data.ok == true) {
           console.log("se puede seguir")
-          setIdColeccion(data.id_coleccion)
           setOkColeccion(1)
           setOkUsuarios(1)
+        } else {
+          console.log("error")
+        }
+      });
+
+    fetch('http://localhost:4000/pinporcoleccionmodificar', {
+
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cuerpoId)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Datos pinporcolec', data);
+        console.log(cuerpoId)
+
+        if (data.ok == true) {
+          console.log("se puede seguir colec")
+          setOkColeccion2(1)
+        } else {
+          console.log("error")
+        }
+      });
+
+    fetch('http://localhost:4000/coleccionporusuariomodificar', {
+
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cuerpoId)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Datos', data);
+
+        if (data.ok == true) {
+          console.log("se puede seguir user")
+          setOkUsuarios2(1)
         } else {
           console.log("error")
         }
