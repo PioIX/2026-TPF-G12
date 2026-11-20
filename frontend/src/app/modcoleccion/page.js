@@ -9,7 +9,7 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { useSegmentState } from "next/dist/next-devtools/userspace/app/segment-explorer-node";
 
-export default function ModColeccionPage() {
+export default function CrearColeccionPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   let id_user = parseInt(searchParams.get("id_user"));
@@ -20,9 +20,9 @@ export default function ModColeccionPage() {
   const [nombreCol, setNombreCol] = useState("");
   const [pins, setPins] = useState([]);
   const [usuarios, setUsuarios] = useState([id_user]);
-  const [inputPin, setInputPin] = useState(0)
+  const [inputPin, setInputPin] = useState("")
   const [yaExistePin, setYaExistePin] = useState(false)
-  const [inputUser, setInputUser] = useState(0)
+  const [inputUser, setInputUser] = useState("")
   const [yaExisteUser, setYaExisteUser] = useState(false)
   const [pinExiste, setPinExiste] = useState(0)
   const [userExiste, setUserExiste] = useState(0)
@@ -30,6 +30,8 @@ export default function ModColeccionPage() {
   const [idColeccion, setIdColeccion] = useState(0)
   const [okColeccion, setOkColeccion] = useState(0)
   const [okUsuarios, setOkUsuarios] = useState(0)
+  const [listoUsuarios, setListoUsuarios] = useState(0)
+  const [listoColeccion, setListoColeccion] = useState(0)
 
 // ----------------------------------------------- Use effects ------------------------------------------
 
@@ -123,6 +125,7 @@ export default function ModColeccionPage() {
             }
             if (i == pins.length - 1) {
               setOkColeccion(0)
+              setListoColeccion(1)
             }
           });
       })
@@ -164,11 +167,23 @@ export default function ModColeccionPage() {
             }
             if (i == usuarios.length - 1) {
               setOkUsuarios(0)
+              setListoUsuarios(1)
             }
           });
       })
     };
   }, [okUsuarios])
+
+  useEffect(() => {
+    if (listoColeccion == 1 && listoUsuarios == 1) {
+      console.log("tiki tiki")
+      router.push("/vercolecciones?id_user="+id_user+"&A="+A)
+    }
+  }, [listoColeccion, listoUsuarios])
+
+  
+
+
 
   
 
@@ -193,6 +208,7 @@ export default function ModColeccionPage() {
       if (pinExiste == 1) {
         setPins((prev)=>[...prev,inputPin])
         setYaExistePin(false)
+        setInputPin("")
       }
         
     } else {
@@ -219,6 +235,7 @@ export default function ModColeccionPage() {
       if (userExiste == 1){
         setUsuarios((prev)=>[...prev,inputUser])
         setYaExisteUser(false)
+        setInputUser("")
       }
       
     } else {
@@ -294,11 +311,38 @@ export default function ModColeccionPage() {
 }
 
 
+  function volver(){
+    router.back()
+  }
+
+  function quitarPin(){
+    const noSePuede = pins.some(numero => inputPin == numero)
+    console.log(noSePuede)
+    if (noSePuede == true) {
+      if (pinExiste == 1) {
+        let t =pins.filter((p)=>p!=inputPin)
+        setPins(t)
+        setInputPin("")
+      }
+    } else {
+      
+    }
+  }
 
 
-
-
-
+  function quitarUser(){
+    const noSePuede = usuarios.some(numero => inputUser == numero)
+    console.log(noSePuede)
+    if (noSePuede == true) {
+      if (userExiste == 1&&inputUser!=id_user) {
+        let t =usuarios.filter((p)=>p!=inputUser)
+        setUsuarios(t)
+        setInputUser("")
+      }
+    } else {
+      
+    }
+  }
 
 
 
@@ -315,15 +359,21 @@ export default function ModColeccionPage() {
     <div>
       <div>
         <h1>Nueva colección</h1>
-        <input type="text" value={nombreCol} onChange={(e) => setNombreCol(e.target.value)} placeholder="Nombre de la colección"></input>
-        <Button funcion={prueba} texto={"prueba scar luego console log"}></Button>   
         <br></br>
-        <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputPin(e.target.value)} } placeholder="Escribir el id de los pines acá"></input>
+        <Button funcion={volver} texto={"Volver"}></Button>
+        <br></br>
+        <input type="text" value={nombreCol} onChange={(e) => setNombreCol(e.target.value)} placeholder="Nombre de la colección"></input>
+        <br></br>
+        <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputPin(e.target.value)} } value={inputPin} placeholder="Escribir el id de los pines acá"></input>
         {
           inputPin == 0 ? (
             <p></p>
           ) : (
-            <Button funcion={ponerPin} texto={"Poner pin"}></Button>
+            <>
+            
+              <Button funcion={ponerPin} texto={"Poner pin"}></Button>
+              <Button funcion={quitarPin} texto={"Quitar pin"}></Button>
+            </>
           )
         }
           
@@ -334,26 +384,35 @@ export default function ModColeccionPage() {
         {pinExiste == 1? (
           <p></p>
         ):(
-          <p>¡Este Pin no existe!</p>
+          inputPin != ""? (<p>¡Este Pin no existe!</p>):(
+            <p></p>
+          )
+          
         )
         }
          
         <p>Pines hasta ahora: </p>
         {pins.map((p,i)=><p key={i}>{p}</p>)}
         <br></br>
-        <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputUser(e.target.value)} } placeholder="Escribir el id de los usuarios acá"></input>
+        <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputUser(e.target.value)} } value={inputUser} placeholder="Escribir el id de los usuarios acá"></input>
         {
           inputUser == 0 ? (
             <p></p>
           ) : (
-            <Button funcion={ponerUser} texto={"Poner User"}></Button>
+            <>
+              <Button funcion={ponerUser} texto={"Poner Usuario"}></Button>
+              <Button funcion={quitarUser} texto={"Quitar usuario"}></Button>
+            </>
           )
         }
         {textoExisteUser()}
         {userExiste == 1? (
           <p></p>
         ):(
-          <p>¡Este usuario no existe!</p>
+          inputUser != ""? ( <p>¡Este usuario no existe!</p>):(
+            <p></p>
+          )
+         
         )
         }
         <p>Usuarios hasta ahora (el primero sos vos):  </p>
