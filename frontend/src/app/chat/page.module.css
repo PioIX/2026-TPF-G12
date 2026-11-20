@@ -1,0 +1,142 @@
+.paginaChat {
+    background-color: #8690d8;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+
+}
+
+/* --- ENCABEZADO --- */
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #2a3b8c;
+    margin-bottom: 20px;
+}
+
+
+
+.tituloChat {
+    font-size: 2.500rem;
+    font-weight: bold;
+    color: #252554;
+    margin: 0;
+}
+
+.estadoConexion {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.100rem;
+    color: #000000;
+}
+
+.puntoVerde {
+    width: 10px;
+    height: 10px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    display: inline-block;
+
+}
+
+.botonPin button {
+    background-color: #daa4d8;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 16px;
+    font-size: 19px;
+    font-weight: normal;
+    color: #000;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+
+.botonVolver button {
+    background-color: #ffb74d;
+    border: none;
+    border-radius: 14px;
+    padding: 4px 16px;
+    font-size: 1.500rem;
+    font-weight: normal;
+    color: #000;
+    cursor: pointer;
+}
+
+
+/* --- ÁREA DE REDACCIÓN --- */
+.seccionRedaccion {
+    margin-bottom: 20px;
+}
+
+.etiquetaRedaccion {
+    font-size: 15px;
+    font-weight: bold;
+    color: #2d2d2d;
+    margin: 0 0 8px 0;
+}
+
+.inputTexto {
+    width: 100%;
+    max-width: 450px;
+    border-radius: 4px;
+    font-size: 19px;
+    margin-bottom: 12px;
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e79c07;
+    border-radius: 12px;
+    background-color: #d7c7a6;
+    margin: 6px 0 16px 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.filaBotones {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+
+}
+
+.filaBotones button {
+    background-color: #daa4d8;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 16px;
+    font-size: 19px;
+    font-weight: normal;
+    color: #000;
+    cursor: pointer;
+    row-gap: 40px;
+    /* Espacio entre filas, lo dejamos cómodo */
+    margin-right: 20px;
+    /* ← Margen DERECHO: 200px */
+    margin-top: 20px;
+
+}
+
+.filaPin {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.textoPin {
+    font-size: 13px;
+    color: #333;
+    margin: 0;
+}
+
+/* --- CAJA DE MENSAJES --- */
+.cajaMensajes {
+    border-top: 2px solid #000000;
+    padding-top: 20px;
+    margin-top: 10px;
+}

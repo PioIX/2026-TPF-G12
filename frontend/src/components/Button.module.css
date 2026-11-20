@@ -49,3 +49,17 @@
   font-size: 13px;
   margin: 3px;
 }
+
+.boton {
+  background-color: #5c6bc0; /* Color azul-violeta */
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.boton:hover {
+  background-color: #4a59a8; /* Un poco más oscuro al pasar el mouse */
+}

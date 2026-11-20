@@ -134,25 +134,34 @@ export default function BuscadorPage() {
 
                 <div className={styles.buscadorSecciones}>
                     <h2> Buscar por tema</h2>
-                    <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
-                    <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
+                    <div className={styles.tags}>
+                        
+                        <div className={styles.tags1}>
+                            <SelectTemas nombre={"tag1"} onchangefunc={(select) => setTag1(select.target.value)}></SelectTemas>
 
-                </div>
-                <div className={styles.buscadorPorUsuario}>
+                        </div>
+                        <div className={styles.tags2}>
+                            <SelectTemas nombre={"tag2"} onchangefunc={(select) => setTag2(select.target.value)}></SelectTemas>
+
+                        </div>
+
+                    </div>
                     <h2>Buscar por usuario</h2>
-                    <Input id={"nombreUsuario"} texto={"Ingresar el nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)}> </Input>
+                    <div className={styles.buscadorPorUsuario}>
+                        <Input id={"nombreUsuario"} texto={"Ingresar el nombre del usuario"} funcion={(e) => setNombreUser(e.target.value)}> </Input>
 
+                    </div>
                 </div>
+
 
 
 
             </div>
             {condicionTags()}
 
-            <div className={styles.buscadorResultados}>
-                <PinListBuscador listaDatos={datosBusqueda} botonOnClick={clickPin}></PinListBuscador>
+            <PinListBuscador listaDatos={datosBusqueda} botonOnClick={clickPin} className={styles.buscadorResultados}></PinListBuscador>
 
-            </div>
+
 
             <div className={styles.buscadorBotonvVolver}>
                 <Button funcion={volver} texto={"Volver"}></Button>
