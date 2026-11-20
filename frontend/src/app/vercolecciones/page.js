@@ -8,6 +8,9 @@ import Header from "@/components/Header";
 import Button from "@/components/Button";
 import ColeccionList from "@/components/ColeccionList";
 
+import styles from "./page.module.css";
+
+
 export default function ColeccionesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -17,7 +20,7 @@ export default function ColeccionesPage() {
 
   function irColeccion(id_coleccion) {
     console.log(id_coleccion);
-    router.push("/coleccion?id_coleccion=" + id_coleccion + "&user=" + id_user +"&A="+A);
+    router.push("/coleccion?id_coleccion=" + id_coleccion + "&user=" + id_user + "&A=" + A);
   }
 
   function irEditar() {
@@ -47,22 +50,30 @@ export default function ColeccionesPage() {
     router.push("/modcoleccion?id_user=" + id_user +"&A="+A);
   }
 
-  function volver(){router.back()}
+  function volver() { router.back() }
 
   return (
     <>
       <Header></Header>
 
-      <h1>MIS COLECCIONES</h1>
+      <main className={styles.contenedor}>
 
-      <ColeccionList
-        funcion1={irEditar}
-        funcion2={borrarColeccion}
-        funcion3={irColeccion}
-      ></ColeccionList>
+        <h1 className={styles.titulo}>MIS COLECCIONES</h1>
 
-      <Button funcion={volver} texto={"Volver"}></Button>
-      <Button funcion={nuevaColeccion} texto={"+"}></Button>
+        <div className={styles.lista}>
+          <ColeccionList
+            funcion1={irEditar}
+            funcion2={borrarColeccion}
+            funcion3={irColeccion}
+          ></ColeccionList>
+        </div>
+
+        <div className={styles.acciones}>
+          <Button funcion={volver} texto={"Volver"} className={styles.botonVolver}></Button>
+          <Button funcion={nuevaColeccion} texto={"+"} className={styles.botonMas}></Button>
+        </div>
+
+      </main>
 
       <Footer> </Footer>
     </>

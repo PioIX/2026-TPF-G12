@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Pin from "./Pin";
 
-export default function PinList({botonOnClick, id_coleccion}) {
+export default function PinListColeccion({botonOnClick, id_coleccion, className = "" }) {
 
     const [pines, setPines] = useState([]);
 

@@ -46,7 +46,7 @@ export default function PrincipalPage() {
                 <div className={styles.botonesSuperiores}>
                     <Button funcion={nuevoPin} texto={"Nuevo pin"} className={styles.botonAgregar}></Button>
                     <br></br>
-                    <Button funcion={irAConversaciones} texto={"ir a chats"}></Button>
+                    <Button funcion={irAConversaciones} texto={"Chats"}></Button>
                 </div>
 
                 <div className={styles.pins}>
