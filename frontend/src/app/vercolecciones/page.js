@@ -20,7 +20,7 @@ export default function ColeccionesPage() {
 
   function irColeccion(id_coleccion) {
     console.log(id_coleccion);
-    router.push("/coleccion?id_coleccion=" + id_coleccion + "&user=" + id_user + "&A=" + A);
+    router.push("/coleccion?id_coleccion=" + id_coleccion + "&id_user=" + id_user + "&A=" + A);
   }
 
   function irEditar(id_coleccion) {

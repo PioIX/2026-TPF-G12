@@ -13,7 +13,7 @@ export default function ColeccionPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  let id_user = parseInt(searchParams.get("user"));
+  let id_user = parseInt(searchParams.get("id_user"));
   console.log("id user: " + id_user);
   let id_coleccion = parseInt(searchParams.get("id_coleccion"));
   console.log("id coleccion: " + id_coleccion);
