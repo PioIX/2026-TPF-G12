@@ -120,11 +120,8 @@ export default function BuscadorPage() {
 
     return (
         <div className={styles.buscadorPagina}>
-            <Header></Header>
             <div className={styles.buscadorContenido}>
                 <h1 className={styles.buscador}>BUSCADOR</h1>
-
-
 
                 <div className={styles.buscadorInstrucciones}>
 

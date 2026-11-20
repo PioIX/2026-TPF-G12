@@ -63,17 +63,11 @@ export default function PinPage() {
             });
     }, [idUsuario])
 
-
-
-
-
-
     function volver() {
         router.back()
     }
 
     function darLike() {
-
         fetch('http://localhost:4000/darlike', {
 
             method: 'PUT',
@@ -86,16 +80,12 @@ export default function PinPage() {
             .then(data => {
                 console.log('Datos', data.nombre);
                 if (data.ok == true) {
-                    router.back()//router.push("/principal?id_user="+user)
+                    router.back()
                 } else {
                     console.log("error")
                 }
             });
-
     }
-
-
-
 
     return (
         <div className={styles.paginaCompleta}>
@@ -106,14 +96,13 @@ export default function PinPage() {
                         <img src={link} className={styles.imagenPin}></img>
 
                         <div className={styles.seccionMeGusta}>
-                            <h4 className={styles.textoMeGusta}>Likes: {meGusta} </h4>
-                            <Button funcion={darLike} texto={" LIKE"}></Button>
+                            <Button funcion={darLike} texto={"🤍"} className={styles.corazon}></Button>
+                            <h4 className={styles.cantidadLikes}>{meGusta} </h4>
                         </div>
 
                     </div>
                 </div>
             </div>
-
 
             <div className={styles.columnaDerecha}>
 
@@ -139,9 +128,8 @@ export default function PinPage() {
                 <div className={styles.botonVolverArriba}>
                     <Button funcion={volver} texto={"Volver"}></Button>
                 </div>
-
             </div>
-
         </div>
     )
 }
+
