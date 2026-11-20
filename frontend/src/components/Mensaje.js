@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import styles from "./Mensaje.module.css";
 export default function Mensaje({pruebaEffect, nuevosMensajes}) {
 
   return (
-    <div>
+    <div className={styles.contenedorMensajes}>
       {nuevosMensajes && nuevosMensajes.map((mensaje, index) => {
-        return (<div key={mensaje.id_mensaje}>
+        
+        return (<div key={mensaje.id_mensaje } className={styles.mensajeIndividual}>
+
           <p><b>Mensaje de {mensaje.sender}: </b></p>
           {mensaje.es_imagen == 1 ? (
             <img src={mensaje.contenido}></img>

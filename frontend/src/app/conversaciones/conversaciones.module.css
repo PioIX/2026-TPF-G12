@@ -7,8 +7,8 @@
 }
 
 .conversacionesContenido {
-  max-width: 900px;
-  width: 90%;
+  max-width: 1200px; /* ← Ampliamos un poco para que entren 3 columnas bien */
+  width: 95%;
   margin: 0 auto;
   padding: 30px 20px;
 }
@@ -27,6 +27,8 @@
   font-weight: bold;
   color: #6b2758;
   margin: 0;
+    font-size: 3.125rem;
+
 }
 
 .conversacionesBotonVolver button {
@@ -34,15 +36,41 @@
   border: none;
   border-radius: 20px;
   padding: 8px 25px;
-  font-size: 15px;
+  font-size: 25px;
   font-weight: bold;
   cursor: pointer;
   color: #000;
+    font-size: 1.500rem;
+
+}
+
+.conversacionesBotonVolver button:hover {
+  background-color: #ffa726;
 }
 
 .conversacionesLista {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 32px;
   margin-top: 20px;
+  width: 100%;
 }
+
+.pins {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.imagenPin {
+  font-size: 49px;
+  margin-bottom: 25px;
+}
+
+.contenedorPines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  padding: 20px;
+}
+

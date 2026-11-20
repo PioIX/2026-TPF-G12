@@ -1,7 +1,8 @@
 "use client"
-
-export default function Button({funcion, texto, className = ''}){
+import styles from "./Button.module.css";
+export default function Button({ funcion, texto, className = '' }) {
     return (
-        <button onClick={funcion} className={className}> {texto} </button>
+            <button onClick={funcion} className={`${styles.button} $ {className}`}> {texto} </button>
+
     )
 }

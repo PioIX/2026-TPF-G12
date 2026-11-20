@@ -1,0 +1,23 @@
+.contenedorMensajes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mensajeIndividual {
+  padding: 10px 14px;
+  background-color: #e9d5f0;
+  border-radius: 8px;
+  max-width: 80%;
+}
+
+.mensajeIndividual img {
+  max-width: 180px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.mensajeIndividual a {
+  color: #5c2075;
+  word-break: break-all;
+}

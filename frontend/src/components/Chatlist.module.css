@@ -1,10 +1,12 @@
 .listaConversaciones {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 32px;
-  width: 100%;
-  padding: 30px 20px;
-  box-sizing: border-box;
+ display: grid;
+  grid-template-columns: repeat(3, auto); /* 3 columnas, tamaño según contenido */
+  justify-content: flex-start; /* Alinea desde la izquierda */
+  column-gap: 150px; /* ← Espacio ENTRE imágenes: 150px */
+  row-gap: 40px; /* Espacio entre filas, lo dejamos cómodo */
+  margin-left: 20px;  /* ← Margen IZQUIERDO: 200px */
+  margin-right: 00px; /* ← Margen DERECHO: 200px */
+  margin-top: 20px;
 }
 
 .tarjetaConversacion {
