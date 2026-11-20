@@ -277,28 +277,36 @@ app.post('/getiduser', async function (req, res) {
 })
 
 
-app.post('/getColeccionespagina', async function (req, res) {
-  let obj = {
-    colecciones: []
-  }
+app.post('/getColeccionesDeUsuario', async function (req, res) {
+  let respuesta2
   let respuesta = await realizarQuery(`SELECT Colecciones_tpf.nombre_coleccion, Colecciones_tpf.id_coleccion, Usuarios_tpf.nombre FROM Colecciones_tpf
     INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
     INNER JOIN Usuarios_tpf On Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
-    WHERE Colecciones_por_usuario_tpf.id_usuario = "${req.body.id_usuario}"  `);
-
-  obj.colecciones = respuesta
+    WHERE Colecciones_por_usuario_tpf.id_usuario = ${req.body.id_usuario} `);
+  console.log(respuesta)
 
   if (respuesta.length != 0) {
-    let respuesta2 = await realizarQuery(`SELECT Usuarios_tpf.nombre FROM Usuarios_tpf
-    INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
-    INNER JOIN Colecciones_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
-    WHERE Colecciones_por_usuario_tpf.id_coleccion = "${respuesta[0].id_coleccion}" `)
-
-    res.send([obj, respuesta2])
+    res.send(respuesta)
   } else {
-    res.send({ obj, ok: 1 })
+    res.send({ respuesta, ok: 1 })
   }
 })
+
+
+app.post('/getMiembrosDeColeccion', async function (req, res) {
+
+  let respuesta = await realizarQuery(`SELECT Usuarios_tpf.nombre FROM Usuarios_tpf
+      INNER JOIN Colecciones_por_usuario_tpf ON Colecciones_por_usuario_tpf.id_usuario = Usuarios_tpf.id_usuario
+      INNER JOIN Colecciones_tpf ON Colecciones_tpf.id_coleccion = Colecciones_por_usuario_tpf.id_coleccion
+      WHERE Colecciones_por_usuario_tpf.id_coleccion = ${req.body.id_coleccion}`)
+  console.log(respuesta)
+  let m = respuesta.map((r) => r.nombre)
+  console.log(m)
+  res.send(m)
+})
+
+
+
 
 app.post('/getpinesbuscador', async function (req, res) {
 
@@ -316,10 +324,10 @@ app.post('/getpinesbuscador', async function (req, res) {
     if (id_usuario != "") {
       consulta += ` AND Pines_tpf.id_usuario = ${id_usuario} `
       console.log("puse las tres")
-      console.log(id_usuario) 
+      console.log(id_usuario)
     }
   } else {
-    consulta +=  ` WHERE Pines_tpf.id_usuario = ${id_usuario} `
+    consulta += ` WHERE Pines_tpf.id_usuario = ${id_usuario} `
     console.log("no puse tags")
   }
 

@@ -9,40 +9,73 @@ import Coleccion from "./Coleccion";
 export default function ColeccionList({ funcion1, funcion2, funcion3}) {
     const [colecciones, setColecciones] = useState([]);
     const [nombres, setNombres] = useState([])
+    const [loading, setLoading] = useState(1)
     const searchParams = useSearchParams()
 
     let id_user = parseInt(searchParams.get("id_user"))
 
     useEffect(() => {
-        fetch('http://localhost:4000/getcoleccionespagina', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id_usuario: id_user })
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Datos', data);
-                if (data.ok == 1) {}
-                else{setColecciones(data[0].colecciones);
-                    setNombres(data[1])}
-            });
+        if(colecciones.length==0&&loading){
+
+            fetch('http://localhost:4000/getColeccionesDeUsuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id_usuario: id_user })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Datos colecciones de usuario', data);
+                    if (data.ok == 1) { }
+                    else {
+                        data.map((d, i) => {
+                            fetch('http://localhost:4000/getMiembrosDeColeccion', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ id_coleccion: d.id_coleccion })
+                            })
+                                .then(response => response.json())
+                                .then(members => {
+                                    console.log('Miembros coleccion ind de usuario', members);
+
+                                    setColecciones((prev)=>([...prev,{nombre_coleccion:d.nombre_coleccion,id_coleccion:d.id_coleccion,nombres:members}]))
+                                });
+                        })
+                    }
+                });
+        }
     }, [])
 
+    useEffect(() => {
+        console.log("colecciones cambiadas un saludo")
+        console.log(colecciones)
+        if(colecciones.length>0){
+            console.log("false loading")
+            setLoading(0)
+        }
+    }, [colecciones])
 
 
     return (
         <>
-            {colecciones.length == 0 ? (
+            {loading?
+            <p>cargando.....</p>
+            :
+            colecciones.length == 0 ? (
                 <p>no hay nada tonto</p>
             ) : (
-                colecciones.map((col, i) => {
+                <>
+               { colecciones.map((col, i) => {
                     return (
-                        <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={nombres} funcion1={() => funcion1(col.id_coleccion)} funcion2={() => funcion2(col.id_coleccion)} funcion3={() => funcion3(col.id_coleccion)}  >
+                        <Coleccion key={i} nombre={col.nombre_coleccion} usuarios={col.nombres} funcion1={() => funcion1(col.id_coleccion)} funcion2={() => funcion2(col.id_coleccion)} funcion3={() => funcion3(col.id_coleccion)}  >
                         </Coleccion>
                     )
-                })
+                })}
+                </>
+                
             )
             }
 

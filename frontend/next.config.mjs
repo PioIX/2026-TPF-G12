@@ -3,6 +3,7 @@ const nextConfig = {
   /* config options here */
   reactCompiler: true,
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  reactStrictMode:false,
 };
 
 export default nextConfig;

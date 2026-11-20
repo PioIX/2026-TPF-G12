@@ -12,7 +12,7 @@ export default function Coleccion({ nombre, usuarios, funcion1, funcion2, funcio
         for (let i = 0; i < usuarios.length; i++) {
             const usuario = usuarios[i];
             
-            aux += usuario.nombre
+            aux += usuario
             if (i < (usuarios.length-1) ) {
                 aux += ", "
             }
