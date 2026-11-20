@@ -7,12 +7,13 @@ import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import PinListColeccion from "@/components/PinListColeccion";
+import styles from "./page.module.css";
 
 export default function ColeccionPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  let id_user = parseInt(searchParams.get("user"));
+  let id_user = parseInt(searchParams.get("id_user"));
   console.log("id user: " + id_user);
   let id_coleccion = parseInt(searchParams.get("id_coleccion"));
   console.log("id coleccion: " + id_coleccion);
@@ -20,16 +21,26 @@ export default function ColeccionPage() {
 
 
   function clickPin(idPin) {
-    router.push("/pin?idpin="+idPin +"&A="+A) 
+    router.push("/pin?idpin=" + idPin + "&A=" + A)
   }
-  function volver(){router.back()}
+  function volver() { router.back() }
 
   return (
     <>
       <Header></Header>
-      <p>Coleccion numero {id_coleccion} </p>
-      <Button funcion={volver} texto={"Volver"}></Button>
-      <PinListColeccion id_log={id_user} botonOnClick={clickPin} id_coleccion={id_coleccion}></PinListColeccion>
+
+      <main className={styles.contenedor}>
+        <h1 className={styles.titulo}>Colección n°{id_coleccion} </h1>
+
+        <section className={styles.pins}>
+          <PinListColeccion id_log={id_user} botonOnClick={clickPin} id_coleccion={id_coleccion}></PinListColeccion>
+        </section>
+
+        <div className={styles.zonaVolver}>
+          <Button funcion={volver} texto={"Volver"} className={styles.botonVolver}></Button>
+        </div>
+
+      </main>
     </>
   );
 }

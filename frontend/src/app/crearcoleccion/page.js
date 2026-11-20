@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { useSegmentState } from "next/dist/next-devtools/userspace/app/segment-explorer-node";
+import styles from "./page.module.css";
 
 export default function CrearColeccionPage() {
   const router = useRouter();
@@ -33,12 +34,12 @@ export default function CrearColeccionPage() {
   const [listoUsuarios, setListoUsuarios] = useState(0)
   const [listoColeccion, setListoColeccion] = useState(0)
 
-// ----------------------------------------------- Use effects ------------------------------------------
+  // ----------------------------------------------- Use effects ------------------------------------------
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(pins)
 
-  },[pins])
+  }, [pins])
 
 
   useEffect(() => {
@@ -177,86 +178,86 @@ export default function CrearColeccionPage() {
   useEffect(() => {
     if (listoColeccion == 1 && listoUsuarios == 1) {
       console.log("tiki tiki")
-      router.push("/vercolecciones?id_user="+id_user+"&A="+A)
+      router.push("/vercolecciones?id_user=" + id_user + "&A=" + A)
     }
   }, [listoColeccion, listoUsuarios])
 
-  
 
 
 
-  
 
-// ------------------------------------------------ Funciones ---------------------------------------------
 
-  function prueba(){
-    console.log("id user : "+id_user)
-    console.log("A: "+A)
-    console.log("nombre col: "+nombreCol)
-    console.log("pins: "+pins)
-    console.log("usuarios: "+usuarios)
-    console.log("input pin: "+inputPin)
-    console.log("input user: "+inputUser)
-    console.log("idcoleccion: "+ idColeccion)
-    console.log("ok nombre de la coleccion: "+ okColeccion)
+
+  // ------------------------------------------------ Funciones ---------------------------------------------
+
+  function prueba() {
+    console.log("id user : " + id_user)
+    console.log("A: " + A)
+    console.log("nombre col: " + nombreCol)
+    console.log("pins: " + pins)
+    console.log("usuarios: " + usuarios)
+    console.log("input pin: " + inputPin)
+    console.log("input user: " + inputUser)
+    console.log("idcoleccion: " + idColeccion)
+    console.log("ok nombre de la coleccion: " + okColeccion)
   }
 
-  function ponerPin(){
+  function ponerPin() {
     const noSePuede = pins.some(numero => inputPin == numero)
     console.log(noSePuede)
     if (noSePuede == false) {
       if (pinExiste == 1) {
-        setPins((prev)=>[...prev,inputPin])
+        setPins((prev) => [...prev, inputPin])
         setYaExistePin(false)
         setInputPin("")
       }
-        
+
     } else {
       setYaExistePin(true)
     }
   }
 
-  function textoExistePin(){
+  function textoExistePin() {
     if (yaExistePin == true) {
-      return(
+      return (
         <p>Este pin ya está en la lista</p>
       )
     } else {
-      return(
+      return (
         <p></p>
       )
     }
   }
 
-  function ponerUser(){
+  function ponerUser() {
     const noSePuede = usuarios.some(numero => inputUser == numero)
     console.log(noSePuede)
     if (noSePuede == false) {
-      if (userExiste == 1){
-        setUsuarios((prev)=>[...prev,inputUser])
+      if (userExiste == 1) {
+        setUsuarios((prev) => [...prev, inputUser])
         setYaExisteUser(false)
         setInputUser("")
       }
-      
+
     } else {
       setYaExisteUser(true)
     }
   }
 
 
-  function textoExisteUser(){
+  function textoExisteUser() {
     if (yaExisteUser == true) {
-      return(
+      return (
         <p>Este usuario ya está en la lista</p>
       )
     } else {
-      return(
+      return (
         <p></p>
       )
     }
   }
 
-  function condicionBoton(){
+  function condicionBoton() {
     if (usuarios.length > 0) {
       if (pins.length > 0) {
         if (nombreCol != "") {
@@ -266,24 +267,24 @@ export default function CrearColeccionPage() {
             )
           } else {
             return (<h4>Creando coleccion...</h4>)
-          } 
-          
-        }   return (<p><b>¡Cuidado! la colección tiene que tener un nombre</b></p>)
-      } else{
-        return (<p><b>¡Cuidado! la colección tiene que tener al menos un pin</b></p>)
-      }  
+          }
 
-    } else{
+        } return (<p><b>¡Cuidado! la colección tiene que tener un nombre</b></p>)
+      } else {
+        return (<p><b>¡Cuidado! la colección tiene que tener al menos un pin</b></p>)
+      }
+
+    } else {
       return (<p><b>¡Cuidado! la colección tiene que tener al menos un usuario</b></p>)
-    }  
+    }
   }
 
 
   // ------------------------------------------------ Crear coleccion ---------------------------------------------
-  
-  function crearColeccion(){
+
+  function crearColeccion() {
     setCargando(1)
-    const cuerpo1 = {nombre_coleccion: nombreCol}
+    const cuerpo1 = { nombre_coleccion: nombreCol }
 
     fetch('http://localhost:4000/coleccionnueva', {
 
@@ -307,40 +308,40 @@ export default function CrearColeccionPage() {
           console.log("error")
         }
       });
-  
-}
+
+  }
 
 
-  function volver(){
+  function volver() {
     router.back()
   }
 
-  function quitarPin(){
+  function quitarPin() {
     const noSePuede = pins.some(numero => inputPin == numero)
     console.log(noSePuede)
     if (noSePuede == true) {
       if (pinExiste == 1) {
-        let t =pins.filter((p)=>p!=inputPin)
+        let t = pins.filter((p) => p != inputPin)
         setPins(t)
         setInputPin("")
       }
     } else {
-      
+
     }
   }
 
 
-  function quitarUser(){
+  function quitarUser() {
     const noSePuede = usuarios.some(numero => inputUser == numero)
     console.log(noSePuede)
     if (noSePuede == true) {
-      if (userExiste == 1&&inputUser!=id_user) {
-        let t =usuarios.filter((p)=>p!=inputUser)
+      if (userExiste == 1 && inputUser != id_user) {
+        let t = usuarios.filter((p) => p != inputUser)
         setUsuarios(t)
         setInputUser("")
       }
     } else {
-      
+
     }
   }
 
@@ -356,75 +357,178 @@ export default function CrearColeccionPage() {
 
 
   return (
-    <div>
-      <div>
-        <h1>Nueva colección</h1>
-        <br></br>
-        <Button funcion={volver} texto={"Volver"}></Button>
-        <br></br>
-        <input type="text" value={nombreCol} onChange={(e) => setNombreCol(e.target.value)} placeholder="Nombre de la colección"></input>
-        <br></br>
-        <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputPin(e.target.value)} } value={inputPin} placeholder="Escribir el id de los pines acá"></input>
-        {
-          inputPin == 0 ? (
-            <p></p>
-          ) : (
-            <>
-            
-              <Button funcion={ponerPin} texto={"Poner pin"}></Button>
-              <Button funcion={quitarPin} texto={"Quitar pin"}></Button>
-            </>
-          )
-        }
-          
-        {yaExistePin == true? (
-          <p>Ya existe este pin</p>
-        ):(<p></p>)}
+    // <div>
+    //   <div>
+    //     <h1>Nueva colección</h1>
+    //     <br></br>
+    //     <Button funcion={volver} texto={"Volver"}></Button>
+    //     <br></br>
+    //     <input type="text" value={nombreCol} onChange={(e) => setNombreCol(e.target.value)} placeholder="Nombre de la colección"></input>
+    //     <br></br>
+    //     <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputPin(e.target.value)} } value={inputPin} placeholder="Escribir el id de los pines acá"></input>
+    //     {
+    //       inputPin == 0 ? (
+    //         <p></p>
+    //       ) : (
+    //         <>
 
-        {pinExiste == 1? (
-          <p></p>
-        ):(
-          inputPin != ""? (<p>¡Este Pin no existe!</p>):(
-            <p></p>
-          )
-          
-        )
-        }
-         
-        <p>Pines hasta ahora: </p>
-        {pins.map((p,i)=><p key={i}>{p}</p>)}
-        <br></br>
-        <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputUser(e.target.value)} } value={inputUser} placeholder="Escribir el id de los usuarios acá"></input>
-        {
-          inputUser == 0 ? (
-            <p></p>
-          ) : (
-            <>
-              <Button funcion={ponerUser} texto={"Poner Usuario"}></Button>
-              <Button funcion={quitarUser} texto={"Quitar usuario"}></Button>
-            </>
-          )
-        }
-        {textoExisteUser()}
-        {userExiste == 1? (
-          <p></p>
-        ):(
-          inputUser != ""? ( <p>¡Este usuario no existe!</p>):(
-            <p></p>
-          )
-         
-        )
-        }
-        <p>Usuarios hasta ahora (el primero sos vos):  </p>
-        {usuarios.map((u,i)=><p key={i}>{u}</p>)}
+    //           <Button funcion={ponerPin} texto={"Poner pin"}></Button>
+    //           <Button funcion={quitarPin} texto={"Quitar pin"}></Button>
+    //         </>
+    //       )
+    //     }
 
-        <br></br>
+    //     {yaExistePin == true? (
+    //       <p>Ya existe este pin</p>
+    //     ):(<p></p>)}
 
-        {condicionBoton()}
+    //     {pinExiste == 1? (
+    //       <p></p>
+    //     ):(
+    //       inputPin != ""? (<p>¡Este Pin no existe!</p>):(
+    //         <p></p>
+    //       )
+
+    //     )
+    //     }
+
+    //     <p>Pines hasta ahora: </p>
+    //     {pins.map((p,i)=><p key={i}>{p}</p>)}
+    //     <br></br>
+    //     <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputUser(e.target.value)} } value={inputUser} placeholder="Escribir el id de los usuarios acá"></input>
+    //     {
+    //       inputUser == 0 ? (
+    //         <p></p>
+    //       ) : (
+    //         <>
+    //           <Button funcion={ponerUser} texto={"Poner Usuario"}></Button>
+    //           <Button funcion={quitarUser} texto={"Quitar usuario"}></Button>
+    //         </>
+    //       )
+    //     }
+    //     {textoExisteUser()}
+    //     {userExiste == 1? (
+    //       <p></p>
+    //     ):(
+    //       inputUser != ""? ( <p>¡Este usuario no existe!</p>):(
+    //         <p></p>
+    //       )
+
+    //     )
+    //     }
+    //     <p>Usuarios hasta ahora (el primero sos vos):  </p>
+    //     {usuarios.map((u,i)=><p key={i}>{u}</p>)}
+
+    //     <br></br>
+
+    //     {condicionBoton()}
 
 
-      </div>
+    //   </div>
+    // </div>
+
+    //
+    <div className={styles.fondo}>
+      <main className={styles.contenedor}>
+        <section className={styles.card}>
+          <h1 className={styles.titulo}>Nueva colección</h1>
+
+          <div className={styles.nombre}>
+            <input
+              type="text"
+              value={nombreCol}
+              onChange={(e) => setNombreCol(e.target.value)}
+              placeholder="Nombre de la colección"
+            ></input>
+          </div>
+
+          <div className={styles.columnas}>
+            <div className={styles.izquierda}>
+              <div className={styles.grupo}>
+                <input
+                  type="number"
+                  onChange={(e) => { if (e.target.value <= 999) setInputPin(e.target.value) }}
+                  value={inputPin}
+                  placeholder="Escribir el id de los pines acá"
+                ></input>
+
+                {inputPin == 0 ? (
+                  <p></p>
+                ) : (
+                  <div className={styles.botones}>
+                    <Button funcion={ponerPin} texto={"Poner pin"} className={styles.boton}></Button>
+                    <Button funcion={quitarPin} texto={"Quitar pin"} className={styles.boton}></Button>
+                  </div>
+                )}
+
+                {yaExistePin == true ? (
+                  <p className={styles.aviso}>Ya existe este pin</p>
+                ) : (<p></p>)}
+
+                {pinExiste == 1 ? (
+                  <p></p>
+                ) : (
+                  inputPin != "" ? (<p className={styles.aviso}>¡Este Pin no existe!</p>) : (
+                    <p></p>
+                  )
+                )}
+              </div>
+
+              <div className={styles.grupo}>
+                <input
+                  type="number"
+                  onChange={(e) => { if (e.target.value <= 999) setInputUser(e.target.value) }}
+                  value={inputUser}
+                  placeholder="Escribir el id de los usuarios acá"
+                ></input>
+
+                {inputUser == 0 ? (
+                  <p></p>
+                ) : (
+                  <div className={styles.botones}>
+                    <Button funcion={ponerUser} texto={"Poner Usuario"} className={styles.boton}></Button>
+                    <Button funcion={quitarUser} texto={"Quitar usuario"} className={styles.boton}></Button>
+                  </div>
+                )}
+
+                {textoExisteUser()}
+
+                {userExiste == 1 ? (
+                  <p></p>
+                ) : (
+                  inputUser != "" ? (<p className={styles.aviso}>¡Este usuario no existe!</p>) : (
+                    <p></p>
+                  )
+                )}
+              </div>
+            </div>
+
+            <div className={styles.derecha}>
+              <div className={styles.resumen}>
+                <p>Pines hasta ahora: </p>
+                <div className={styles.lista}>
+                  {pins.map((p, i) => <p key={i}>{p}</p>)}
+                </div>
+              </div>
+
+              <div className={styles.resumen}>
+                <p>Usuarios hasta ahora (el primero sos vos): </p>
+                <div className={styles.lista}>
+                  {usuarios.map((u, i) => <p key={i}>{u}</p>)}
+                </div>
+              </div>
+
+              <div className={styles.crear}>{condicionBoton()}</div>
+            </div>
+          </div>
+        </section>
+
+        <div className={styles.volver}>
+          <Button funcion={volver} texto={"Volver"} className={styles.botonVolver}></Button>
+        </div>
+      </main>
     </div>
+
   );
 }
 

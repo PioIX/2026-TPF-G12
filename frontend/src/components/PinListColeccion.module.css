@@ -1,0 +1,16 @@
+.lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.card {
+  width: 170px;
+}
+
+.card img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
