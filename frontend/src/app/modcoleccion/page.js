@@ -9,11 +9,12 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { useSegmentState } from "next/dist/next-devtools/userspace/app/segment-explorer-node";
 
-export default function CrearColeccionPage() {
+export default function ModColeccionPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   let id_user = parseInt(searchParams.get("id_user"));
   let A = parseInt(searchParams.get("A"));
+  let id_coleccion = parseInt(searchParams.get("id_coleccion"))
 
   // ver desde acá
 
@@ -35,11 +36,27 @@ export default function CrearColeccionPage() {
 
 // ----------------------------------------------- Use effects ------------------------------------------
 
-  useEffect(()=>{
-    console.log(pins)
-
-  },[pins])
-
+  useEffect(() => {
+    fetch("http://localhost:4000/getcoleccionespec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id_coleccion: id_coleccion })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Datos de la coleccion especifica:", data);
+        if (data.pines.length == 0) {
+          console.log("vacio")
+          
+        } else {
+          setPins(data.pines.map((pin) => pin.id_pin))
+          setUsuarios(data.usuarios.map((user) => user.id_usuario))
+          setNombreCol(data.nombre[0].nombre_coleccion)
+        }
+      });
+  }, [])
 
   useEffect(() => {
     fetch("http://localhost:4000/getpinespec", {
@@ -62,6 +79,7 @@ export default function CrearColeccionPage() {
         }
       });
   }, [inputPin])
+
 
   useEffect(() => {
     fetch("http://localhost:4000/getuserespec", {
@@ -197,7 +215,7 @@ export default function CrearColeccionPage() {
     console.log("usuarios: "+usuarios)
     console.log("input pin: "+inputPin)
     console.log("input user: "+inputUser)
-    console.log("idcoleccion: "+ idColeccion)
+    console.log("id coleccion: "+ id_coleccion)
     console.log("ok nombre de la coleccion: "+ okColeccion)
   }
 
@@ -358,11 +376,12 @@ export default function CrearColeccionPage() {
   return (
     <div>
       <div>
-        <h1>Nueva colección</h1>
+        <h1>Editar colección</h1>
+        <Button funcion={prueba} texto={"consnole logs"}></Button>
         <br></br>
         <Button funcion={volver} texto={"Volver"}></Button>
         <br></br>
-        <input type="text" value={nombreCol} onChange={(e) => setNombreCol(e.target.value)} placeholder="Nombre de la colección"></input>
+        <input type="text" value={nombreCol} onChange={(e) => setNombreCol(e.target.value)} placeholder="Cambiar nombre de la colección"></input>
         <br></br>
         <input type="number" onChange={(e) =>{if(e.target.value<=999) setInputPin(e.target.value)} } value={inputPin} placeholder="Escribir el id de los pines acá"></input>
         {
