@@ -12,7 +12,7 @@
   width: 50%;
   flex-shrink: 0;
   padding: 80px 40px 40px 40px;
-  box-sizing: border-box
+  box-sizing: border-box;
   align-items: center; 
   text-align: center;
 }

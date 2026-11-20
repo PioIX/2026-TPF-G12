@@ -1,10 +1,8 @@
 "use client"
 import Button from "@/components/Button";
 import styles from "./header.module.css";
-
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-
 
 export default function Header({ }) {
     const router = useRouter()
@@ -24,20 +22,24 @@ export default function Header({ }) {
     }
 
     function irColeccion() {
-        router.push("/vercolecciones?id_user="+id_user+"&A="+A)
+        router.push("/vercolecciones?id_user=" + id_user + "&A=" + A)
     }
 
     function irBuscador() {
-        router.push("/buscador?id_user="+id_user+"&A="+A)
+        router.push("/buscador?id_user=" + id_user + "&A=" + A)
     }
 
-    function irAdmin(){
-        router.push("/admin?id_user="+id_user+"&A="+A)
+    function irAdmin() {
+        router.push("/admin?id_user=" + id_user + "&A=" + A)
     }
 
-    function condicionAdmin(){
-        if (A==1){
-            return(
+    function irPrincipal(){
+        router.push("/principal?id_user=" + id_user + "&A=" + A)
+    }
+
+    function condicionAdmin() {
+        if (A == 1) {
+            return (
                 <Button funcion={irAdmin} texto="Admin"></Button>
             )
         }
@@ -46,24 +48,21 @@ export default function Header({ }) {
 
     return (
         <div className={styles.header}>
-            <img src="/PionterestLogo.png"></img>
-
+            <button onClick={irPrincipal} className={styles.logo}>
+                <img src="/PionterestLogo.png"></img>
+            </button>
 
             <div className={styles.contenedorBuscador}>
-              <Button funcion={irBuscador} texto="🔎 Buscador" className={styles.buscador}></Button>
+                <Button funcion={irBuscador} texto="🔎 Buscador" className={styles.buscador}></Button>
             </div>
             <div className={styles.contenedorBotones}>
 
-              <Button funcion={irColeccion} texto="Mis Colecciones" className={styles.botonColecciones}></Button>
+                <Button funcion={irColeccion} texto="Mis Colecciones" className={styles.botonColecciones}></Button>
 
-              {condicionAdmin()}
+                {condicionAdmin()}
 
-              <Button funcion={cerrarSesion} texto="Cerrar sesión"  className={styles.botonCerrarSesion}></Button>
+                <Button funcion={cerrarSesion} texto="Cerrar sesión" className={styles.botonCerrarSesion}></Button>
             </div>
-
-            
         </div>
-
     )
-
 }
